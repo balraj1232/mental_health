@@ -13,6 +13,7 @@ class Price1 extends StatefulWidget {
 class _Price1State extends State<Price1> {
 
   int radioValue = -1;
+  bool selected = false;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -63,6 +64,7 @@ class _Price1State extends State<Price1> {
                   value: 1, groupValue: radioValue, onChanged: (value){
                     setState(() {
                       radioValue = value;
+                      selected = true;
                     });
               },
               title: Text("Counselling Therapist",style: TextStyle(
@@ -74,6 +76,7 @@ class _Price1State extends State<Price1> {
                 value: 2, groupValue: radioValue, onChanged: (value){
                 setState(() {
                   radioValue = value;
+                  selected = true;
                 });
               },
                 title: Text("Listener",style: TextStyle(
@@ -85,6 +88,7 @@ class _Price1State extends State<Price1> {
                 value: 3, groupValue: radioValue, onChanged: (value){
                 setState(() {
                   radioValue = value;
+                  selected = true;
                 });
               },
                 title: Text("Alternative Therapist",style: TextStyle(
@@ -93,13 +97,18 @@ class _Price1State extends State<Price1> {
             ),
             Container(
               margin: EdgeInsets.only(
-                top: SizeConfig.screenHeight * 0.25,
+                  top: SizeConfig.screenHeight * 0.1,
+                  right: SizeConfig.screenWidth * 0.05,
+                  bottom: SizeConfig.blockSizeVertical * 10
               ),
               alignment: Alignment.bottomRight,
-              child: InkWell(child: Image.asset('assets/icons/next icon.png',width: SizeConfig.blockSizeHorizontal * 20,),
-              onTap: (){
-                Navigator.of(context).pushNamed('/Price2');
-              },),
+              child: FloatingActionButton(
+                child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
+                backgroundColor: selected == true? Colors.blue : Colors.grey,
+                onPressed: (){
+                  Navigator.of(context).pushNamed('/Price2');
+                },
+              ),
             ),
 
           ],

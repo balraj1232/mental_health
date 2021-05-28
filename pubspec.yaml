@@ -50,6 +50,11 @@ flutter:
     - assets/logo/Group.png
     - assets/icons/info.png
     - assets/icons/next icon.png
+    - assets/icons/user.png
+    - assets/icons/user bg.png
+    - assets/icons/circle bg.png
+    - assets/icons/blue circle bg.png
+    - assets/icons/done.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

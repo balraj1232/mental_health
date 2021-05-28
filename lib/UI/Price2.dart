@@ -18,6 +18,11 @@ class _Price2State extends State<Price2> {
   FocusNode firstNameFocusNode;
   FocusNode lastNameFocusNode;
 
+  bool selected = false;
+  bool filledFn = false;
+  bool filledLn = false;
+
+
   int radioValue = -1;
 
   @override void initState() {
@@ -134,6 +139,7 @@ class _Price2State extends State<Price2> {
                       onFieldSubmitted: (term){
                         firstNameFocusNode.unfocus();
                         FocusScope.of(context).requestFocus(lastNameFocusNode);
+                        filledFn = true;
                       },
                     ),
                     SizedBox(
@@ -187,6 +193,7 @@ class _Price2State extends State<Price2> {
                       ),
                       onFieldSubmitted: (term){
                         lastNameFocusNode.unfocus();
+                        filledLn = true;
                       },
                     ),
                   ],
@@ -210,6 +217,7 @@ class _Price2State extends State<Price2> {
                 value: 1, groupValue: radioValue, onChanged: (value){
                 setState(() {
                   radioValue = value;
+                  selected = true;
                 });
               },
                 title: Text("Male",style: TextStyle(
@@ -221,6 +229,7 @@ class _Price2State extends State<Price2> {
                 value: 2, groupValue: radioValue, onChanged: (value){
                 setState(() {
                   radioValue = value;
+                  selected = true;
                 });
               },
                 title: Text("Female",style: TextStyle(
@@ -232,6 +241,7 @@ class _Price2State extends State<Price2> {
                 value: 3, groupValue: radioValue, onChanged: (value){
                 setState(() {
                   radioValue = value;
+                  selected = true;
                 });
               },
                 title: Text("Other",style: TextStyle(
@@ -240,15 +250,19 @@ class _Price2State extends State<Price2> {
             ),
             Container(
               margin: EdgeInsets.only(
-                top: SizeConfig.blockSizeVertical * 10,
+                  top: SizeConfig.screenHeight * 0.1,
+                  right: SizeConfig.screenWidth * 0.05,
+                  bottom: SizeConfig.blockSizeVertical * 10
               ),
               alignment: Alignment.bottomRight,
-              child: InkWell(child: Image.asset('assets/icons/next icon.png',width: SizeConfig.blockSizeHorizontal * 20,),
-                onTap: (){
-                  Navigator.of(context).pushNamed('/');
-                },),
+              child: FloatingActionButton(
+                child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
+                backgroundColor: selected == true && filledLn == true && filledFn == true? Colors.blue : Colors.grey,
+                onPressed: (){
+                  Navigator.of(context).pushNamed('/Price3');
+                },
+              ),
             ),
-
           ],
         ),
       ),
