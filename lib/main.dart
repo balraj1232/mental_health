@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health/UI/Cafe1.dart';
+import 'package:mental_health/UI/Cafe2.dart';
 import 'package:mental_health/UI/Info%203.dart';
 import 'package:mental_health/UI/Info1.dart';
 import 'package:mental_health/UI/Info2.dart';
@@ -40,6 +42,8 @@ class MentalHealth extends StatelessWidget {
         '/Info3' : (context)=> Info3(),
         '/Price4' : (context)=> Price4(),
         '/Price5' : (context)=> Price5(),
+        '/Cafe1' : (context)=> Cafe1(),
+        '/Cafe2' : (context)=> Cafe2(),
 
       },
     );

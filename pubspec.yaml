@@ -55,6 +55,13 @@ flutter:
     - assets/icons/circle bg.png
     - assets/icons/blue circle bg.png
     - assets/icons/done.png
+    - assets/icons/call.png
+    - assets/icons/Ellipse 3.png
+    - assets/icons/video call.png
+    - assets/icons/nav home.png
+    - assets/icons/nav booking.png
+    - assets/icons/nav cafe.png
+    - assets/icons/nav explore.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
