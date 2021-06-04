@@ -12,7 +12,7 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-
+  bool selected = false;
   FocusNode firstDigit;
   FocusNode secondDigit;
   FocusNode thirdDigit;
@@ -58,6 +58,13 @@ class _OTPScreenState extends State<OTPScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
+        floatingActionButton:FloatingActionButton(
+          child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
+          backgroundColor: selected == true? Colors.blue : Colors.grey,
+          onPressed: (){
+            Navigator.of(context).pushNamed('/Price1');
+          },
+        ),
         body: Container(
           margin: EdgeInsets.only(
             left: SizeConfig.screenWidth * 0.05,

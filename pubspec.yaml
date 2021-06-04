@@ -29,6 +29,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons:
   google_fonts:
+  dio:
+  fluttertoast: ^8.0.7
+
+
 
 dev_dependencies:
   flutter_test:

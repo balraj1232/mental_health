@@ -11,12 +11,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   GlobalKey<FormState> loginForm = GlobalKey<FormState>();
   TextEditingController mobileController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
+    return SafeArea(
+        child: Scaffold(
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Stack(
@@ -49,18 +49,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Welcome Back!",
-                    style: GoogleFonts.openSans(
-                      color: Color(backgroundColorBlue),
-                      fontWeight: FontWeight.w700,
-                      fontSize: SizeConfig.blockSizeVertical * 2.5
-                    ),),
-                    Text("Log in to continue",
-                    style: GoogleFonts.openSans(
-                      color: Color(fontColorGray),
-                      fontWeight: FontWeight.w400,
-                      fontSize: SizeConfig.blockSizeVertical * 1.5,
-                    ),),
+                    Text(
+                      "Welcome Back!",
+                      style: GoogleFonts.openSans(
+                          color: Color(backgroundColorBlue),
+                          fontWeight: FontWeight.w700,
+                          fontSize: SizeConfig.blockSizeVertical * 2.5),
+                    ),
+                    Text(
+                      "Log in to continue",
+                      style: GoogleFonts.openSans(
+                        color: Color(fontColorGray),
+                        fontWeight: FontWeight.w400,
+                        fontSize: SizeConfig.blockSizeVertical * 1.5,
+                      ),
+                    ),
                     Container(
                       margin: EdgeInsets.only(
                         top: SizeConfig.blockSizeVertical * 4,
@@ -72,7 +75,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextFormField(
                               decoration: InputDecoration(
                                 isDense: true,
-                                contentPadding: EdgeInsets.all(SizeConfig.blockSizeVertical * 1.5),
+                                contentPadding: EdgeInsets.all(
+                                    SizeConfig.blockSizeVertical * 1.5),
                                 hintText: "Enter Mobile Number",
                                 hintStyle: GoogleFonts.openSans(
                                   color: Color(fontColorGray),
@@ -119,45 +123,56 @@ class _LoginScreenState extends State<LoginScreen> {
                               controller: mobileController,
                               keyboardType: TextInputType.phone,
                               textInputAction: TextInputAction.done,
+                              validator: (s){
+                                return validateMobile(mobileController.text);
+                              },
                             ),
                             SizedBox(
                               height: SizeConfig.blockSizeVertical * 2,
                             ),
-                            MaterialButton(onPressed: (){
-                              Navigator.of(context).pushNamed('/OTP');
-                            },
-                            minWidth: SizeConfig.screenWidth,
-                            color: Color(backgroundColorBlue),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)
-                            ),
-                            height: SizeConfig.blockSizeVertical * 6,
-                              child: Text("LOGIN",
-                              style: GoogleFonts.openSans(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
+                            MaterialButton(
+                              onPressed: () {
+                                if(loginForm.currentState.validate()){
+                                  Navigator.of(context).pushNamed('/OTP');
+                                }
+                              },
+                              minWidth: SizeConfig.screenWidth,
+                              color: Color(backgroundColorBlue),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              height: SizeConfig.blockSizeVertical * 6,
+                              child: Text(
+                                "LOGIN",
+                                style: GoogleFonts.openSans(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    Container(child: Text("By tapping continue or Login you agree to our",
-                    style: GoogleFonts.openSans(
-                      color: Color(fontColorGray),
-                      fontSize: SizeConfig.blockSizeVertical * 1.5,
-                      fontWeight: FontWeight.w400
-                    ),),
-                    width: SizeConfig.screenWidth,
-                    alignment: Alignment.center,),
                     Container(
-                      child: Text("Terms of service & Privacy Policy.",
-                      style: GoogleFonts.openSans(
-                        color: Color(backgroundColorBlue),
-                        fontSize: SizeConfig.blockSizeVertical * 1.5,
-                        fontWeight: FontWeight.w400
-                      ),),
+                      child: Text(
+                        "By tapping continue or Login you agree to our",
+                        style: GoogleFonts.openSans(
+                            color: Color(fontColorGray),
+                            fontSize: SizeConfig.blockSizeVertical * 1.5,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      width: SizeConfig.screenWidth,
+                      alignment: Alignment.center,
+                    ),
+                    Container(
+                      child: Text(
+                        "Terms of service & Privacy Policy.",
+                        style: GoogleFonts.openSans(
+                            color: Color(backgroundColorBlue),
+                            fontSize: SizeConfig.blockSizeVertical * 1.5,
+                            fontWeight: FontWeight.w400),
+                      ),
                       width: SizeConfig.screenWidth,
                       alignment: Alignment.center,
                     )
@@ -170,4 +185,16 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     ));
   }
+  String validateMobile(String value) {
+    String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    RegExp regExp = new RegExp(pattern);
+    if (value.length == 0) {
+      return 'Please enter mobile number';
+    }
+    else if (!regExp.hasMatch(value)) {
+      return 'Please enter valid mobile number';
+    }
+    return null;
+  }
+
 }

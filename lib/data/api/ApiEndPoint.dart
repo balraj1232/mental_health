@@ -1,0 +1,33 @@
+class ApiEndpoint {
+  static String BaseUrl = "https://unicohub.softuvo.xyz/api" /*"http://192.168.1.187:4032/api"*/;
+  static String socketUrl = "https://unicohub.softuvo.xyz";
+  static String createChatRoom = "/createRoom";
+  static String signUp = "/signup";
+  static String signIn = "/signin";
+  static String forgetPassword = "/forgotpassword";
+  static String updateProfile = "/updateProfile";
+  static String logout = "/logout";
+  static String changePassword = "/changePassword";
+  static String inviteFriend = "/inviteFriend";
+  static String joinGroup = "/inviteGroup";
+  static String acceptFriendRequest = "/acceptFriendRequest";
+  static String declineFriendRequest = "/declineRequest";
+  static String acceptGroupRequest = "/acceptGroupRequest";
+  static String declineGroupRequest = "/declineGroupRequest";
+  static String createGroup = "/createGroup";
+  static String createPost = "/createPost";
+  static String updateGroupCount = "/updateGroupCount";
+  static String leaveGroup = "/leaveGroup";
+  static String deleteGroup = "/deleteGroup";
+  static String unfriend = "/unfollowFriend";
+  static String likePost = "/likePost";
+  static String unlikePost = "/UnlikePost";
+  static String addComment = "/addComment";
+  static String updategroup = "/updategroup";
+  static String deletePost = "/deletePost";
+  static String updatePost = "/updatePost";
+  static String updateNotifStatus = "/updateNotificationStatus";
+  static String removeMember = "/removeMember";
+  static String uploadImages = "/uploadSocketImages";
+  static String searchFriend = "/friendSearchByKeyword";
+}
