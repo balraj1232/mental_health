@@ -22,13 +22,13 @@ import 'package:dio/dio.dart';
 class SendOtptoPhone extends BaseRepository {
 
 
-  Future<SendOtp> sendOtp({String phone,
+  Future<SendOtp> sendOtp({String phone,String otp,
     BuildContext context,
   }) async {
-    final uri = '${ApiEndpoint.BaseUrl}sendotp';
+    final uri = '${ApiEndpoint.BaseUrl}verifyOtp';
     var response = await Dio().get(uri,
         queryParameters:
-        {'phone': phone, },
+        {'phone': phone, "otp":otp},
         options: Options(
           headers: {
             'Content-Type': 'application/json',

@@ -146,7 +146,9 @@ bool selected = false;
                     "",
                   );
                 });*/
-              } toast("Otp is required");
+              }else{
+                toast("Otp is required");
+              }
             }
         ),
         body: Container(
@@ -353,11 +355,14 @@ bool selected = false;
                             fontSize: SizeConfig.blockSizeVertical * 3.75,
                             fontWeight: FontWeight.bold
                         ),
+                        onChanged: (v){
+                          setState(() {
+                            selected = true;
+                          });
+                        },
                         onSubmitted: (term){
                           sixthDigit.unfocus();
-                         setState(() {
-                           selected = true;
-                         });
+
                        //   Navigator.of(context).pushNamed('/Price1');
                         },
                       ),

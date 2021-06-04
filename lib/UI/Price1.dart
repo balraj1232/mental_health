@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class Price1 extends StatefulWidget {
   final String getOtp;
@@ -18,7 +20,6 @@ class _Price1State extends State<Price1> {
 
   @override
   void initState() {
-    print("getData" + widget.getOtp.toString());
     super.initState();
   }
   @override
@@ -80,10 +81,11 @@ class _Price1State extends State<Price1> {
               ),),),
             ),
             Container(
-              child: RadioListTile(
-                value: 2, groupValue: radioValue, onChanged: (value){
+              child: RadioListTile<String>(
+                value: "Listener", groupValue: radioValue.toString(), onChanged: (String value){
                 setState(() {
                   radioValue = value;
+                  print("val" + radioValue.toString());
                   selected = true;
                 });
               },
@@ -92,10 +94,11 @@ class _Price1State extends State<Price1> {
                 ),),),
             ),
             Container(
-              child: RadioListTile(
-                value: 3, groupValue: radioValue, onChanged: (value){
+              child: RadioListTile<String>(
+                value: "Alternative Therapist", groupValue: radioValue.toString(), onChanged: (String value){
                 setState(() {
                   radioValue = value;
+                  print("val" + radioValue.toString());
                   selected = true;
                 });
               },
@@ -114,7 +117,15 @@ class _Price1State extends State<Price1> {
                 child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
                 backgroundColor: selected == true? Colors.blue : Colors.grey,
                 onPressed: (){
-                  Navigator.of(context).pushNamed('/Price2');
+                  if(radioValue!= null && radioValue!= ""){
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return Price2(occupation: radioValue,);
+                    }));
+                  }else{
+                    toast("Please select value");
+                  }
+
+             //     Navigator.of(context).pushNamed('/Price2');
                 },
               ),
             ),

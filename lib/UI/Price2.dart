@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/Price3.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
 class Price2 extends StatefulWidget {
-  const Price2({Key key}) : super(key: key);
+  final String occupation;
+  const Price2({Key key, this.occupation}) : super(key: key);
 
   @override
   _Price2State createState() => _Price2State();
@@ -23,7 +25,7 @@ class _Price2State extends State<Price2> {
   bool filledLn = false;
 
 
-  int radioValue = -1;
+  String radioValue = "";
 
   @override void initState() {
     // TODO: implement initState
@@ -141,6 +143,10 @@ class _Price2State extends State<Price2> {
                         FocusScope.of(context).requestFocus(lastNameFocusNode);
                         filledFn = true;
                       },
+                      validator: (c){
+                        if(c.isEmpty)
+                          return "Please fill required fields";
+                      },
                     ),
                     SizedBox(
                       height: SizeConfig.blockSizeVertical * 2,
@@ -195,6 +201,10 @@ class _Price2State extends State<Price2> {
                         lastNameFocusNode.unfocus();
                         filledLn = true;
                       },
+                      validator: (c){
+                        if(c.isEmpty)
+                          return "Please fill required fields";
+                      },
                     ),
                   ],
                 ),
@@ -213,8 +223,8 @@ class _Price2State extends State<Price2> {
               ),),
             ),
             Container(
-              child: RadioListTile(
-                value: 1, groupValue: radioValue, onChanged: (value){
+              child: RadioListTile<String>(
+                value: "Male", groupValue: radioValue.toString(), onChanged: (String value){
                 setState(() {
                   radioValue = value;
                   selected = true;
@@ -225,8 +235,8 @@ class _Price2State extends State<Price2> {
                 ),),),
             ),
             Container(
-              child: RadioListTile(
-                value: 2, groupValue: radioValue, onChanged: (value){
+              child: RadioListTile<String>(
+                value: "Female", groupValue: radioValue.toString(), onChanged: (String value){
                 setState(() {
                   radioValue = value;
                   selected = true;
@@ -237,8 +247,8 @@ class _Price2State extends State<Price2> {
                 ),),),
             ),
             Container(
-              child: RadioListTile(
-                value: 3, groupValue: radioValue, onChanged: (value){
+              child: RadioListTile<String>(
+                value: "Other", groupValue: radioValue.toString(), onChanged: (String value){
                 setState(() {
                   radioValue = value;
                   selected = true;
@@ -259,7 +269,12 @@ class _Price2State extends State<Price2> {
                 child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
                 backgroundColor: selected == true && filledLn == true && filledFn == true? Colors.blue : Colors.grey,
                 onPressed: (){
-                  Navigator.of(context).pushNamed('/Price3');
+                  if(firstNameController.text.isNotEmpty && lastNameController.text.isNotEmpty && radioValue != null && radioValue!= ""){
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return Price3();
+                    }));
+                  }
+                 // Navigator.of(context).pushNamed('/Price3');
                 },
               ),
             ),
