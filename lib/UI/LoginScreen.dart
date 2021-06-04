@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/OTPScreen.dart';
+import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
+import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/data/repo/sendOtpRepo.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -13,6 +18,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> loginForm = GlobalKey<FormState>();
   TextEditingController mobileController = TextEditingController();
+  final GlobalKey<State> loginLoader = new GlobalKey<State>();
+
+  var sendOtp = SendOtptoPhone();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -131,11 +139,62 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: SizeConfig.blockSizeVertical * 2,
                             ),
                             MaterialButton(
-                              onPressed: () {
-                                if(loginForm.currentState.validate()){
-                                  Navigator.of(context).pushNamed('/OTP');
-                                }
-                              },
+                                onPressed: () {
+                                  if (loginForm.currentState.validate()) {
+                                    loginForm.currentState.save();
+                                    Dialogs.showLoadingDialog(context, loginLoader);
+                                    sendOtp
+                                        .sendOtp(
+                                        context: context,
+                                       phone: mobileController.text,
+                                       )
+                                        .then((value) {
+                                      if (value != null) {
+                                        if (value.meta.status == "200") {
+                                          Navigator.of(loginLoader.currentContext,
+                                              rootNavigator: true)
+                                              .pop();
+                                          //toast(value.meta.message);
+                                        /*  SharedPreferencesTest().checkIsLogin("0");
+                                          SharedPreferencesTest()
+                                              .saveToken("set", value: value.token);*/
+
+                                          Navigator.push(context, MaterialPageRoute(builder: (conext){
+                                            return OTPScreen(phoneNumber:  mobileController.text,);
+                                          }));
+                                        } else {
+                                          Navigator.of(loginLoader.currentContext,
+                                              rootNavigator: true)
+                                              .pop();
+                                          showAlertDialog(
+                                            context,
+                                            value.meta.message,
+                                            "",
+                                          );
+                                        }
+                                      } else {
+                                        Navigator.of(loginLoader.currentContext,
+                                            rootNavigator: true)
+                                            .pop();
+                                        showAlertDialog(
+                                          context,
+                                          value.meta.message,
+                                          "",
+                                        );
+                                      }
+                                    }).catchError((error) {
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                      showAlertDialog(
+                                        context,
+                                        error.toString(),
+                                        "",
+                                      );
+                                    });
+                                  }
+                                },
+
                               minWidth: SizeConfig.screenWidth,
                               color: Color(backgroundColorBlue),
                               shape: RoundedRectangleBorder(

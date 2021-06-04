@@ -1,24 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/Price1.dart';
+import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
+import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/data/repo/verifyOtpRepo.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class OTPScreen extends StatefulWidget {
-  const OTPScreen({Key key}) : super(key: key);
+  final String phoneNumber;
+  const OTPScreen({Key key, this.phoneNumber}) : super(key: key);
 
   @override
   _OTPScreenState createState() => _OTPScreenState();
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-  bool selected = false;
+  final GlobalKey<State> loginLoader = new GlobalKey<State>();
+
+
+bool selected = false;
   FocusNode firstDigit;
   FocusNode secondDigit;
   FocusNode thirdDigit;
   FocusNode fourthDigit;
   FocusNode fifthDigit;
   FocusNode sixthDigit;
+  var verifyOtp = VerifyOtpRepo();
 
   TextEditingController firstController = TextEditingController();
   TextEditingController secondController = TextEditingController();
@@ -61,9 +71,83 @@ class _OTPScreenState extends State<OTPScreen> {
         floatingActionButton:FloatingActionButton(
           child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
           backgroundColor: selected == true? Colors.blue : Colors.grey,
-          onPressed: (){
-            Navigator.of(context).pushNamed('/Price1');
-          },
+            onPressed: () {
+              if (firstController.text.isNotEmpty &&
+                  secondController.text.isNotEmpty &&
+                  thirdController.text.isNotEmpty &&
+                  fourthController.text.isNotEmpty &&
+                  fifthController.text.isNotEmpty &&
+                  sixthController.text.isNotEmpty) {
+                Navigator.push(context, MaterialPageRoute(builder: (conext){
+                  return Price1(getOtp:  firstController.text +
+                      secondController.text +
+                      thirdController.text +
+                      fourthController.text +
+                      fifthController.text +
+                      sixthController.text,);
+                }));
+             /*   Dialogs.showLoadingDialog(context, loginLoader);
+                verifyOtp
+                    .verifyOtp(
+                  context: context,
+                  phone: widget.phoneNumber,
+                  otp: firstController.text +
+                      secondController.text+
+                      thirdController.text+
+                      fourthController.text+
+                      fifthController.text+
+                      sixthController.text
+                ).then((value) {
+                  if (value != null) {
+                    if (value.meta.status == "200") {
+                      Navigator.of(loginLoader.currentContext,
+                          rootNavigator: true)
+                          .pop();
+                      toast(value.meta.message);
+                      *//*  SharedPreferencesTest().checkIsLogin("0");
+                                          SharedPreferencesTest()
+                                              .saveToken("set", value: value.token);*//*
+
+                      Navigator.push(context, MaterialPageRoute(builder: (conext){
+                        return Price1(getOtp:  firstController.text +
+                            secondController.text +
+                            thirdController.text +
+                            fourthController.text +
+                            fifthController.text +
+                            sixthController.text,);
+                      }));
+                    } else {
+                      Navigator.of(loginLoader.currentContext,
+                          rootNavigator: true)
+                          .pop();
+                      showAlertDialog(
+                        context,
+                        value.meta.message,
+                        "",
+                      );
+                    }
+                  } else {
+                    Navigator.of(loginLoader.currentContext,
+                        rootNavigator: true)
+                        .pop();
+                    showAlertDialog(
+                      context,
+                      value.meta.message,
+                      "",
+                    );
+                  }
+                }).catchError((error) {
+                  Navigator.of(loginLoader.currentContext,
+                      rootNavigator: true)
+                      .pop();
+                  showAlertDialog(
+                    context,
+                    error.toString(),
+                    "",
+                  );
+                });*/
+              } toast("Otp is required");
+            }
         ),
         body: Container(
           margin: EdgeInsets.only(
@@ -83,7 +167,7 @@ class _OTPScreenState extends State<OTPScreen> {
               SizedBox(
                 height: SizeConfig.blockSizeVertical,
               ),
-              Text("Sent to +91 7497975353",style:
+              Text("Sent to ${widget.phoneNumber}",style:
               GoogleFonts.openSans(
                 fontWeight: FontWeight.w400,
                 fontSize: SizeConfig.blockSizeVertical * 1.5,
@@ -271,7 +355,10 @@ class _OTPScreenState extends State<OTPScreen> {
                         ),
                         onSubmitted: (term){
                           sixthDigit.unfocus();
-                          Navigator.of(context).pushNamed('/Price1');
+                         setState(() {
+                           selected = true;
+                         });
+                       //   Navigator.of(context).pushNamed('/Price1');
                         },
                       ),
                     ),

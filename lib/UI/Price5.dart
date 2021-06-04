@@ -20,32 +20,37 @@ class _Price5State extends State<Price5> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
-              child: Container(
-                    margin: EdgeInsets.only(
-                      top: SizeConfig.screenHeight * 0.3
-                    ),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/icons/circle bg.png'),
-                        fit: BoxFit.cover
+              child: InkWell(
+                onTap: (){
+                  Navigator.of(context).pushNamed('/Cafe1');
+                },
+                child: Container(
+                      margin: EdgeInsets.only(
+                        top: SizeConfig.screenHeight * 0.3
                       ),
-                      shape: BoxShape.circle
-                    ),
-                    width: SizeConfig.screenWidth * 0.5,
-                    height: SizeConfig.screenHeight * 0.3,
-                    padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 3),
-                    child: Container(
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/icons/blue circle bg.png'),
-                              fit: BoxFit.cover
-                          ),
-                          shape: BoxShape.circle
+                        image: DecorationImage(
+                          image: AssetImage('assets/icons/circle bg.png'),
+                          fit: BoxFit.cover
+                        ),
+                        shape: BoxShape.circle
                       ),
-                      child: Image.asset('assets/icons/done.png',
-                        scale: SizeConfig.blockSizeVertical * 0.5,)
+                      width: SizeConfig.screenWidth * 0.5,
+                      height: SizeConfig.screenHeight * 0.3,
+                      padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 3),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/icons/blue circle bg.png'),
+                                fit: BoxFit.cover
+                            ),
+                            shape: BoxShape.circle
+                        ),
+                        child: Image.asset('assets/icons/done.png',
+                          scale: SizeConfig.blockSizeVertical * 0.5,)
+                      ),
                     ),
-                  ),
+              ),
             ),
             Container(
               margin: EdgeInsets.only(

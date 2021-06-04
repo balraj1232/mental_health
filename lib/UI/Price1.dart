@@ -4,7 +4,8 @@ import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
 class Price1 extends StatefulWidget {
-  const Price1({Key key}) : super(key: key);
+  final String getOtp;
+  const Price1({Key key, this.getOtp}) : super(key: key);
 
   @override
   _Price1State createState() => _Price1State();
@@ -12,8 +13,14 @@ class Price1 extends StatefulWidget {
 
 class _Price1State extends State<Price1> {
 
-  int radioValue = -1;
+  String radioValue = "";
   bool selected = false;
+
+  @override
+  void initState() {
+    print("getData" + widget.getOtp.toString());
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -60,10 +67,11 @@ class _Price1State extends State<Price1> {
               ),
             ),
             Container(
-              child: RadioListTile(
-                  value: 1, groupValue: radioValue, onChanged: (value){
+              child: RadioListTile<String>(
+                  value: "Counselling Therapist", groupValue: radioValue.toString(), onChanged: (String value){
                     setState(() {
                       radioValue = value;
+                      print("val" + radioValue.toString());
                       selected = true;
                     });
               },
