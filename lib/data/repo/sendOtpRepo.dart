@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health/base/BaseRepository.dart';
 import 'package:mental_health/data/api/ApiEndPoint.dart';
-import 'package:mental_health/data/api/ApiHitter.dart';
-import 'package:mental_health/models/CreateCounsellorModel.dart';
 import 'package:mental_health/models/sendOtpModel.dart';
 import 'package:dio/dio.dart';
 
@@ -33,30 +31,4 @@ class SendOtptoPhone extends BaseRepository {
       }
     } catch (error, stacktrace) {}
   }
-/*  // BuildContext context;
-  Future<SendOtp> sendOtp(
-      {String phone,
-        BuildContext context,
-       }) async {
-    ApiResponse apiResponse =
-    await apiHitter.getPostApiResponse(ApiEndpoint.sendOtp,
-        context: context,
-        data: {
-          "phone ": phone,
-        }, headers: {
-        'Content-Type': 'application/json',
-      },
-     );
-    {
-      try {
-        if (apiResponse.status) {
-          final passEntity =
-          SendOtp.fromJson(apiResponse.response.data);
-          return passEntity;
-        } else {
-          return SendOtp(meta: apiResponse.response.data);
-        }
-      } catch (error, stacktrace) {}
-    }
-  }*/
 }
