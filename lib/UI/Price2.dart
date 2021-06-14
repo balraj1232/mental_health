@@ -23,8 +23,6 @@ class _Price2State extends State<Price2> {
   bool selected = false;
   bool filledFn = false;
   bool filledLn = false;
-
-
   String radioValue = "";
 
   @override void initState() {

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/UI/Price1.dart';
-import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
-import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/data/repo/verifyOtpRepo.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -362,7 +360,6 @@ bool selected = false;
                         },
                         onSubmitted: (term){
                           sixthDigit.unfocus();
-
                        //   Navigator.of(context).pushNamed('/Price1');
                         },
                       ),
