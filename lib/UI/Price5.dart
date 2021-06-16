@@ -24,6 +24,8 @@ class _Price5State extends State<Price5> {
                 onTap: (){
                   Navigator.of(context).pushNamed('/Cafe1');
                 },
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
                 child: Container(
                       margin: EdgeInsets.only(
                         top: SizeConfig.screenHeight * 0.3

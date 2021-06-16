@@ -5,6 +5,8 @@ import 'package:mental_health/UI/Cafe3.dart';
 import 'package:mental_health/UI/Info%203.dart';
 import 'package:mental_health/UI/Info1.dart';
 import 'package:mental_health/UI/Info2.dart';
+import 'package:mental_health/UI/MyContent.dart';
+import 'package:mental_health/UI/MyProfile.dart';
 import 'package:mental_health/UI/OTPScreen.dart';
 import 'package:mental_health/UI/Price1.dart';
 import 'package:mental_health/UI/Price2.dart';
@@ -48,6 +50,8 @@ class MentalHealth extends StatelessWidget {
         '/Cafe2' : (context)=> Cafe2(),
         '/Cafe3' : (context)=> Cafe3(),
         '/CancelAppointment' : (context)=> CancelAppointment(),
+        '/MyProfile' : (context)=> MyProfile(),
+        '/MyContent' : (context)=> MyContent(),
 
       },
     );

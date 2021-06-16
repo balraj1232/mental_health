@@ -64,6 +64,16 @@ flutter:
     - assets/icons/nav explore.png
     - assets/bg/Frame.png
     - assets/bg/profile.png
+    - assets/icons/availability.png
+    - assets/icons/content.png
+    - assets/icons/assessments.png
+    - assets/icons/payment.png
+    - assets/icons/help.png
+    - assets/icons/about.png
+    - assets/icons/settings.png
+    - assets/bg/my profile bg.png
+    - assets/bg/circle.png
+    - assets/icons/star.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

@@ -226,25 +226,15 @@ class _Price3State extends State<Price3> {
                 ),
               ],
             ),
-
-            Container(
-              margin: EdgeInsets.only(
-                top: SizeConfig.screenHeight * 0.1,
-                right: SizeConfig.screenWidth * 0.05,
-                bottom: SizeConfig.blockSizeVertical * 10
-              ),
-              alignment: Alignment.bottomRight,
-              child: FloatingActionButton(
-                child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
-                backgroundColor: selected == true? Colors.blue : Colors.grey,
-                onPressed: (){
-                  Navigator.of(context).pushNamed('/ProfessionalInfo1');
-                },
-              ),
-            ),
-
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
+        backgroundColor: selected == true? Colors.blue : Colors.grey,
+        onPressed: (){
+          Navigator.of(context).pushNamed('/ProfessionalInfo1');
+        },
       ),
     ));
   }

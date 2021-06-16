@@ -248,23 +248,15 @@ class _Price2State extends State<Price2> {
                     color: Color(fontColorGray)
                 ),),),
             ),
-            Container(
-              margin: EdgeInsets.only(
-                  top: SizeConfig.screenHeight * 0.1,
-                  right: SizeConfig.screenWidth * 0.05,
-                  bottom: SizeConfig.blockSizeVertical * 10
-              ),
-              alignment: Alignment.bottomRight,
-              child: FloatingActionButton(
-                child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
-                backgroundColor: selected == true && filledLn == true && filledFn == true? Colors.blue : Colors.grey,
-                onPressed: (){
-                  Navigator.of(context).pushNamed('/Price3');
-                },
-              ),
-            ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
+        backgroundColor: selected == true && filledLn == true && filledFn == true? Colors.blue : Colors.grey,
+        onPressed: (){
+          Navigator.of(context).pushNamed('/Price3');
+        },
       ),
     ));
   }
