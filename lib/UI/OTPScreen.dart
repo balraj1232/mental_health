@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/UI/Price1.dart';
+import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
+import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/data/repo/verifyOtpRepo.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -32,8 +34,6 @@ bool selected = false;
   TextEditingController secondController = TextEditingController();
   TextEditingController thirdController = TextEditingController();
   TextEditingController fourthController = TextEditingController();
-  TextEditingController fifthController = TextEditingController();
-  TextEditingController sixthController = TextEditingController();
 
 
 
@@ -45,8 +45,7 @@ bool selected = false;
     secondDigit = FocusNode();
     thirdDigit = FocusNode();
     fourthDigit = FocusNode();
-    fifthDigit = FocusNode();
-    sixthDigit = FocusNode();
+
   }
   @override
   void dispose() {
@@ -55,8 +54,7 @@ bool selected = false;
     secondDigit.dispose();
     thirdDigit.dispose();
     fourthDigit.dispose();
-    fifthDigit.dispose();
-    sixthDigit.dispose();
+
     super.dispose();
   }
 
@@ -73,18 +71,14 @@ bool selected = false;
               if (firstController.text.isNotEmpty &&
                   secondController.text.isNotEmpty &&
                   thirdController.text.isNotEmpty &&
-                  fourthController.text.isNotEmpty &&
-                  fifthController.text.isNotEmpty &&
-                  sixthController.text.isNotEmpty) {
+                  fourthController.text.isNotEmpty) {
                 Navigator.push(context, MaterialPageRoute(builder: (conext){
                   return Price1(getOtp:  firstController.text +
                       secondController.text +
                       thirdController.text +
-                      fourthController.text +
-                      fifthController.text +
-                      sixthController.text,);
+                      fourthController.text );
                 }));
-             /*   Dialogs.showLoadingDialog(context, loginLoader);
+                Dialogs.showLoadingDialog(context, loginLoader);
                 verifyOtp
                     .verifyOtp(
                   context: context,
@@ -92,9 +86,7 @@ bool selected = false;
                   otp: firstController.text +
                       secondController.text+
                       thirdController.text+
-                      fourthController.text+
-                      fifthController.text+
-                      sixthController.text
+                      fourthController.text
                 ).then((value) {
                   if (value != null) {
                     if (value.meta.status == "200") {
@@ -102,17 +94,11 @@ bool selected = false;
                           rootNavigator: true)
                           .pop();
                       toast(value.meta.message);
-                      *//*  SharedPreferencesTest().checkIsLogin("0");
-                                          SharedPreferencesTest()
-                                              .saveToken("set", value: value.token);*//*
-
                       Navigator.push(context, MaterialPageRoute(builder: (conext){
                         return Price1(getOtp:  firstController.text +
                             secondController.text +
                             thirdController.text +
-                            fourthController.text +
-                            fifthController.text +
-                            sixthController.text,);
+                            fourthController.text,);
                       }));
                     } else {
                       Navigator.of(loginLoader.currentContext,
@@ -143,7 +129,7 @@ bool selected = false;
                     error.toString(),
                     "",
                   );
-                });*/
+                });
               }else{
                 toast("Otp is required");
               }
@@ -299,72 +285,6 @@ bool selected = false;
                           FocusScope.of(context).requestFocus(fifthDigit);
                         },),
                     ),
-                    Container(
-                      width: SizeConfig.screenWidth * 0.1,
-                      margin: EdgeInsets.only(
-                        right: SizeConfig.screenWidth * 0.03,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: TextField(
-                        controller: fifthController,
-                        focusNode: fifthDigit,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        textAlign: TextAlign.center,
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(1)
-                        ],
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: SizeConfig.blockSizeVertical * 3.75,
-                            fontWeight: FontWeight.bold
-                        ),
-                        onSubmitted: (term){
-                          fifthDigit.unfocus();
-                          FocusScope.of(context).requestFocus(sixthDigit);
-                        },
-                      ),
-                    ),
-                    Container(
-                      width: SizeConfig.screenWidth * 0.1,
-                      margin: EdgeInsets.only(
-                        right: SizeConfig.screenWidth * 0.03,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: TextField(
-                        controller: sixthController,
-                        focusNode: sixthDigit,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.done,
-                        textAlign: TextAlign.center,
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(1)
-                        ],
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: SizeConfig.blockSizeVertical * 3.75,
-                            fontWeight: FontWeight.bold
-                        ),
-                        onChanged: (v){
-                          setState(() {
-                            selected = true;
-                          });
-                        },
-                        onSubmitted: (term){
-                          sixthDigit.unfocus();
-                       //   Navigator.of(context).pushNamed('/Price1');
-                        },
-                      ),
-                    ),
-
                   ],
                 ),
               ),

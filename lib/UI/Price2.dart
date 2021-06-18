@@ -4,9 +4,22 @@ import 'package:mental_health/UI/Price3.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
+
+
+TextEditingController firstNameController = TextEditingController();
+TextEditingController lastNameController = TextEditingController();
+FocusNode firstNameFocusNode;
+FocusNode lastNameFocusNode;
+
+bool selected = false;
+bool filledFn = false;
+bool filledLn = false;
+String radioValue = "";
+
+
 class Price2 extends StatefulWidget {
-  final String occupation;
-  const Price2({Key key, this.occupation}) : super(key: key);
+
+  const Price2({Key key}) : super(key: key);
 
   @override
   _Price2State createState() => _Price2State();
@@ -15,15 +28,7 @@ class Price2 extends StatefulWidget {
 class _Price2State extends State<Price2> {
 
   GlobalKey<FormState> nameForm = GlobalKey<FormState>();
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  FocusNode firstNameFocusNode;
-  FocusNode lastNameFocusNode;
 
-  bool selected = false;
-  bool filledFn = false;
-  bool filledLn = false;
-  String radioValue = "";
 
   @override void initState() {
     // TODO: implement initState

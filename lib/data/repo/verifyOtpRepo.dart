@@ -74,13 +74,13 @@ class SendOtptoPhone extends BaseRepository {
 
 class VerifyOtpRepo extends BaseRepository {
   // BuildContext context;
-  Future<SendOtp> verifyOtp({String phone,
+  Future<SendOtp> verifyOtp({String phone,String otp,
     BuildContext context,
   }) async {
-    final uri = '${ApiEndpoint.BaseUrl}sendotp';
+    final uri = '${ApiEndpoint.BaseUrl}verifyotp';
     var response = await Dio().get(uri,
         queryParameters:
-        {'phone': phone, },
+        {'phone': phone, 'otp': otp},
         options: Options(
           headers: {
             'Content-Type': 'application/json',

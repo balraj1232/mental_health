@@ -3,6 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
+
+int experienceYears = 1;
+bool selected = false;
+bool counselling = false;
+bool psychiatrist = false;
+bool clinicalPsychologist = false;
+bool psychotherapist = false;
+bool others = false;
+
 class ProfessionalInfo2 extends StatefulWidget {
   const ProfessionalInfo2({Key key}) : super(key: key);
 
@@ -12,13 +21,7 @@ class ProfessionalInfo2 extends StatefulWidget {
 
 class _ProfessionalInfo2State extends State<ProfessionalInfo2> {
 
-  int experienceYears = 1;
-  bool selected = false;
-  bool counselling = false;
-  bool psychiatrist = false;
-  bool clinicalPsychologist = false;
-  bool psychotherapist = false;
-  bool others = false;
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);

@@ -5,6 +5,12 @@ import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+
+
+String radioValue = "";
+bool selected = false;
+
+
 class Price1 extends StatefulWidget {
   final String getOtp;
   const Price1({Key key, this.getOtp}) : super(key: key);
@@ -15,8 +21,7 @@ class Price1 extends StatefulWidget {
 
 class _Price1State extends State<Price1> {
 
-  String radioValue = "";
-  bool selected = false;
+
 
   @override
   void initState() {
@@ -119,7 +124,7 @@ class _Price1State extends State<Price1> {
                 onPressed: (){
                   if(radioValue!= null && radioValue!= ""){
                     Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return Price2(occupation: radioValue,);
+                      return Price2();
                     }));
                   }else{
                     toast("Please select value");

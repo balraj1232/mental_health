@@ -3,6 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
+
+int radioValue = -1;
+bool selected = false;
+
 class Info1 extends StatefulWidget {
   const Info1({Key key}) : super(key: key);
 
@@ -11,8 +15,7 @@ class Info1 extends StatefulWidget {
 }
 
 class _Info1State extends State<Info1> {
-  int radioValue = -1;
-  bool selected = false;
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -223,4 +226,43 @@ class _Info1State extends State<Info1> {
     ),
     ));
   }
+
+
+/*  Future<File> chooseCameraFile() async {
+
+    await ImagePicker.platform.pickImage(
+      source: ImageSource.camera,
+    ).then((value) async {
+      setState(() {
+        FocusScope.of(context).unfocus();
+        _image = new File(value.path);
+      });
+      if(_image.path != null){
+      }
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return _image;
+  }
+
+
+
+
+  Future<File> androidchooseImageFile() async {
+    await ImagePicker.platform.pickImage(
+      source: ImageSource.gallery,
+
+    ).then((value) async {
+      setState(() {
+        FocusScope.of(context).unfocus();
+        _image = new File(value.path);
+      });
+      if(_image.path != null){
+
+      }
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return _image;
+  }*/
 }

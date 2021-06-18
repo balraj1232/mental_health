@@ -3,6 +3,27 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
+
+
+
+bool engCheckBox = false;
+bool hindiCheckBox = false;
+bool tamilCheckBox = false;
+bool gujaratiCheckBox = false;
+bool teluguCheckBox = false;
+bool urduCheckBox = false;
+bool punjabiCheckBox = false;
+bool bengaliCheckBox = false;
+bool marathiCheckBox = false;
+bool kannadaCheckBox = false;
+bool odiaCheckBox = false;
+bool malayalamCheckBox = false;
+bool assamCheckBox = false;
+bool maithiliCheckBox = false;
+bool sanskritCheckBox = false;
+bool selected = false;
+
+
 class Price3 extends StatefulWidget {
   const Price3({Key key}) : super(key: key);
 
@@ -12,23 +33,7 @@ class Price3 extends StatefulWidget {
 
 class _Price3State extends State<Price3> {
 
-  bool engCheckBox = false;
-  bool hindiCheckBox = false;
-  bool tamilCheckBox = false;
-  bool gujaratiCheckBox = false;
-  bool teluguCheckBox = false;
-  bool urduCheckBox = false;
-  bool punjabiCheckBox = false;
-  bool bengaliCheckBox = false;
-  bool marathiCheckBox = false;
-  bool kannadaCheckBox = false;
-  bool odiaCheckBox = false;
-  bool malayalamCheckBox = false;
-  bool assamCheckBox = false;
-  bool maithiliCheckBox = false;
-  bool sanskritCheckBox = false;
 
-  bool selected = false;
 
 
   @override

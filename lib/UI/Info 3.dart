@@ -1,8 +1,14 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mental_health/Utils/ActionSheet.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
+
+File _image;
 class Info3 extends StatefulWidget {
   const Info3({Key key}) : super(key: key);
 
@@ -74,9 +80,35 @@ class _Info3State extends State<Info3> {
                     ),
                     Image.asset('assets/icons/user.png',color: Colors.grey,
                     scale: SizeConfig.blockSizeVertical * 0.7,),
-                    Container(child: Icon(Icons.add_circle,color: Colors.blue,
-                    size: SizeConfig.blockSizeVertical * 5,),
-                    alignment: Alignment.centerRight,),
+                    InkWell(
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                        showCupertinoModalPopup(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                ActionSheet().actionSheet(context,
+                                    onCamera: () {
+                                      FocusScope.of(context).unfocus();
+                                      chooseCameraFile().then((File file) {
+                                        if (file != null) {
+                                          setState(() {
+                                            //   loading = true;
+                                          });
+                                        }
+                                      }).catchError((onError) {});
+                                    }, onGallery: () {
+                                      FocusScope.of(context).unfocus();
+                                      androidchooseImageFile().then((value) {
+                                        setState(() {
+                                          //  loading = true;
+                                        });
+                                      }).catchError((onError) {});
+                                    },text: "Select cover image"));
+                      },
+                      child: Container(child: Icon(Icons.add_circle,color: Colors.blue,
+                      size: SizeConfig.blockSizeVertical * 5,),
+                      alignment: Alignment.centerRight,),
+                    ),
                   ],
                 ),
                 radius: SizeConfig.blockSizeVertical * 8,
@@ -107,5 +139,44 @@ class _Info3State extends State<Info3> {
         ),
       ),
     ));
+  }
+
+
+  Future<File> chooseCameraFile() async {
+
+    await ImagePicker.platform.pickImage(
+      source: ImageSource.camera,
+    ).then((value) async {
+      setState(() {
+        FocusScope.of(context).unfocus();
+        _image = new File(value.path);
+      });
+      if(_image.path != null){
+      }
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return _image;
+  }
+
+
+
+
+  Future<File> androidchooseImageFile() async {
+    await ImagePicker.platform.pickImage(
+      source: ImageSource.gallery,
+
+    ).then((value) async {
+      setState(() {
+        FocusScope.of(context).unfocus();
+        _image = new File(value.path);
+      });
+      if(_image.path != null){
+
+      }
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return _image;
   }
 }

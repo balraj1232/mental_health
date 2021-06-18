@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
+
+bool selected = false;
 class Info2 extends StatefulWidget {
   const Info2({Key key}) : super(key: key);
 
@@ -12,7 +14,7 @@ class Info2 extends StatefulWidget {
 
 class _Info2State extends State<Info2> {
 
-  bool selected = false;
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
