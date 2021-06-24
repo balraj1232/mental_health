@@ -5,6 +5,7 @@ import 'package:mental_health/Utils/SizeConfig.dart';
 
 
 bool selected = false;
+var aboutController = TextEditingController();
 class Info2 extends StatefulWidget {
   const Info2({Key key}) : super(key: key);
 
@@ -78,6 +79,7 @@ class _Info2State extends State<Info2> {
                   )
               ),
               child: TextFormField(
+                controller: aboutController,
                 decoration: InputDecoration(
                     hintText: "Enter here",
                     hintStyle: GoogleFonts.openSans(
@@ -85,8 +87,9 @@ class _Info2State extends State<Info2> {
                     ),
                     border: InputBorder.none,
                   isDense: true,
-                  contentPadding: EdgeInsets.all(SizeConfig.blockSizeVertical * 0.5)
+                  contentPadding: EdgeInsets.all(SizeConfig.blockSizeVertical * 1)
                 ),
+                maxLines: 3,
                 maxLength: 500,
                 onFieldSubmitted: (term){
                   setState(() {
@@ -111,7 +114,8 @@ class _Info2State extends State<Info2> {
                 child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
                 backgroundColor: selected == true? Colors.blue : Colors.grey,
                 onPressed: (){
-                  Navigator.of(context).pushNamed('/Info3');
+
+                    Navigator.of(context).pushNamed('/Info3');
                 },
               ),
             ),

@@ -280,6 +280,11 @@ bool selected = false;
                             fontSize: SizeConfig.blockSizeVertical * 3.75,
                             fontWeight: FontWeight.bold
                         ),
+                        onChanged: (v){
+                          setState(() {
+                            selected = true;
+                          });
+                        },
                         onSubmitted: (term){
                           fourthDigit.unfocus();
                           FocusScope.of(context).requestFocus(fifthDigit);

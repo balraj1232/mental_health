@@ -31,7 +31,7 @@ class _Cafe2State extends State<Cafe2> {
         items: [
           BottomNavigationBarItem(icon: Container(child:
           Image.asset('assets/icons/nav home.png',
-            scale: SizeConfig.blockSizeVertical * 0.4,),
+            scale: SizeConfig.blockSizeVertical * 0.6,),
             decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.rectangle,
@@ -41,7 +41,7 @@ class _Cafe2State extends State<Cafe2> {
               label: "Home"),
           BottomNavigationBarItem(icon: Container(child:
           Image.asset('assets/icons/nav booking.png',
-            scale: SizeConfig.blockSizeVertical * 0.4,),
+            scale: SizeConfig.blockSizeVertical * 0.6,),
             decoration: BoxDecoration(
                 color: Colors.blue,
                 shape: BoxShape.rectangle,
@@ -51,7 +51,7 @@ class _Cafe2State extends State<Cafe2> {
               label: "Booking"),
           BottomNavigationBarItem(icon: Container(child:
           Image.asset('assets/icons/nav explore.png',
-            scale: SizeConfig.blockSizeVertical * 0.4,),
+            scale: SizeConfig.blockSizeVertical * 0.6,),
             decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.rectangle,
@@ -61,7 +61,7 @@ class _Cafe2State extends State<Cafe2> {
               label: "Explore"),
           BottomNavigationBarItem(icon: Container(child:
           Image.asset('assets/icons/nav cafe.png',
-            scale: SizeConfig.blockSizeVertical * 0.4,),
+            scale: SizeConfig.blockSizeVertical * 0.6,),
             decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.rectangle,

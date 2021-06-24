@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/Utils/CommonWidgets.dart';
+import 'package:nb_utils/nb_utils.dart';
+
 
 class Cafe3 extends StatefulWidget {
   const Cafe3({Key key}) : super(key: key);
@@ -11,6 +14,8 @@ class Cafe3 extends StatefulWidget {
 }
 
 class _Cafe3State extends State<Cafe3> {
+  Future<void> _launched;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
@@ -64,7 +69,10 @@ class _Cafe3State extends State<Cafe3> {
             ),
             MaterialButton(
               onPressed: (){
-                Navigator.of(context).pushNamed('/');
+                setState(() {
+                  _launched = makePhoneCall('tel:9814657839');
+                });
+           //     Navigator.of(context).pushNamed('/');
               },
               color: Colors.blue,
               minWidth: SizeConfig.screenWidth * 0.4,
@@ -120,29 +128,41 @@ class _Cafe3State extends State<Cafe3> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: AssetImage('assets/icons/Ellipse 3.png'),
-                              fit: BoxFit.cover
-                          )
+                    GestureDetector(
+                      onTap:(){
+                        setState(() {
+                          _launched = makePhoneCall('tel:9814657839');
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: AssetImage('assets/icons/Ellipse 3.png'),
+                                fit: BoxFit.cover
+                            )
+                        ),
+                        child: Image.asset('assets/icons/call.png',
+                          scale: SizeConfig.blockSizeVertical * 0.5,),
+                        padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 1.5),
                       ),
-                      child: Image.asset('assets/icons/call.png',
-                        scale: SizeConfig.blockSizeVertical * 0.5,),
-                      padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 1.5),
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: AssetImage('assets/icons/Ellipse 3.png'),
-                              fit: BoxFit.cover
-                          )
+                    GestureDetector(
+                      onTap: (){
+                        toast("In Progress");
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: AssetImage('assets/icons/Ellipse 3.png'),
+                                fit: BoxFit.cover
+                            )
+                        ),
+                        child: Image.asset('assets/icons/video call.png',
+                          scale: SizeConfig.blockSizeVertical * 0.5,),
+                        padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 1.8),
                       ),
-                      child: Image.asset('assets/icons/video call.png',
-                        scale: SizeConfig.blockSizeVertical * 0.5,),
-                      padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 1.8),
                     ),
                   ],
                 ),

@@ -5,7 +5,7 @@ import 'package:mental_health/data/api/ApiHitter.dart';
 import 'package:mental_health/models/CreateCounsellorModel.dart';
 
 class CreateCounsellorRepo extends BaseRepository {
-  // BuildContext context;
+
   Future<CreateCousellorModel> createCounsellor(
       {String aadhar,
       BuildContext context,

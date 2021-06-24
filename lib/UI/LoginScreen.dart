@@ -7,6 +7,8 @@ import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/data/repo/sendOtpRepo.dart';
 
+
+TextEditingController mobileController = TextEditingController();
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
   @override
@@ -15,7 +17,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> loginForm = GlobalKey<FormState>();
-  TextEditingController mobileController = TextEditingController();
+
   final GlobalKey<State> loginLoader = new GlobalKey<State>();
   var sendOtp = SendOtptoPhone();
 

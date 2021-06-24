@@ -52,7 +52,7 @@ class _Price2State extends State<Price2> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("1/7",style: GoogleFonts.openSans(
+        title: Text("2/7",style: GoogleFonts.openSans(
           fontWeight: FontWeight.bold,
           color: Color(fontColorSteelGrey),
         ),),
@@ -146,6 +146,11 @@ class _Price2State extends State<Price2> {
                         FocusScope.of(context).requestFocus(lastNameFocusNode);
                         filledFn = true;
                       },
+                      onChanged: (v){
+                        setState(() {
+                          filledFn = true;
+                        });
+                      },
                       validator: (c){
                         if(c.isEmpty)
                           return "Please fill required fields";
@@ -155,6 +160,11 @@ class _Price2State extends State<Price2> {
                       height: SizeConfig.blockSizeVertical * 2,
                     ),
                     TextFormField(
+                      onChanged: (v){
+                       setState(() {
+                         filledLn = true;
+                       });
+                      },
                       controller: lastNameController,
                       focusNode: lastNameFocusNode,
                       textInputAction: TextInputAction.done,

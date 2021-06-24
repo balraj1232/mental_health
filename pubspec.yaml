@@ -35,6 +35,8 @@ dependencies:
   keyboard_actions: ^3.4.0
   image_picker:
   nb_utils: ^4.2.11
+  url_launcher:
+
 
 
 

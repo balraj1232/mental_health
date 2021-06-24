@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mental_health/Utils/ActionSheet.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
-
 
 int radioValue = -1;
 bool selected = false;
@@ -15,6 +19,10 @@ class Info1 extends StatefulWidget {
 }
 
 class _Info1State extends State<Info1> {
+  File certificateImage;
+  File adhaarCardImage;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +60,7 @@ class _Info1State extends State<Info1> {
               SizedBox(
                 height: SizeConfig.screenHeight * 0.15,
               ),
+
               Container(
                 margin: EdgeInsets.only(
                   left: SizeConfig.screenWidth * 0.05,
@@ -68,10 +77,40 @@ class _Info1State extends State<Info1> {
                   left: SizeConfig.screenWidth * 0.05,
                   right: SizeConfig.screenWidth * 0.05,
                 ),
-                child: MaterialButton(onPressed: (){},
-                  child: Text("UPLOAD CERTIFICATE",style: GoogleFonts.openSans(
-                    fontSize: SizeConfig.blockSizeVertical * 2
-                  ),),
+                child: MaterialButton( onPressed: () {
+                  FocusScope.of(context).unfocus();
+                  showCupertinoModalPopup(
+                      context: context,
+                      builder: (BuildContext context) => ActionSheet()
+                          .actionSheet(context, onCamera: () {
+                        FocusScope.of(context).unfocus();
+                        chooseCameraFile().then((File file) {
+                          if (file != null) {
+                            setState(() {
+                              //   loading = true;
+                            });
+                          }
+                        }).catchError((onError) {});
+                      }, onGallery: () {
+                        FocusScope.of(context).unfocus();
+                        androidchooseImageFile().then((value)
+                        {
+                          setState(() {
+                            //  loading = true;
+                          });
+                        }).catchError((onError) {});
+                      },text: "Select profile image"));
+                },
+                  child: Container(
+                      alignment: Alignment.topCenter,
+                      child: certificateImage != null &&  certificateImage.path != null
+                          ? Text(certificateImage.path.split("/").last,style: GoogleFonts.openSans(
+                          fontSize: SizeConfig.blockSizeVertical * 2
+                      ),):Text("UPLOAD CERTIFICATE",style: GoogleFonts.openSans(
+                          fontSize: SizeConfig.blockSizeVertical * 2
+                      ),),
+
+                  ),
                   minWidth: SizeConfig.screenWidth,
                   textColor: Colors.blue,
                 color: Colors.white,
@@ -191,8 +230,34 @@ class _Info1State extends State<Info1> {
                   left: SizeConfig.screenWidth * 0.05,
                   right: SizeConfig.screenWidth * 0.05,
                 ),
-                child: MaterialButton(onPressed: (){},
-                  child: Text("UPLOAD CERTIFICATE",style: GoogleFonts.openSans(
+                child: MaterialButton(onPressed: () {
+                  FocusScope.of(context).unfocus();
+                  showCupertinoModalPopup(
+                      context: context,
+                      builder: (BuildContext context) => ActionSheet()
+                          .actionSheet(context, onCamera: () {
+                        FocusScope.of(context).unfocus();
+                        chooseCameraFile().then((File file) {
+                          if (file != null) {
+                            setState(() {
+                              //   loading = true;
+                            });
+                          }
+                        }).catchError((onError) {});
+                      }, onGallery: () {
+                        FocusScope.of(context).unfocus();
+                        androidchooseImageFile().then((value)
+                        {
+                          setState(() {
+                            //  loading = true;
+                          });
+                        }).catchError((onError) {});
+                      },text: "Select profile image"));
+                },
+                  child: adhaarCardImage != null &&  adhaarCardImage.path != null
+                      ? Text(adhaarCardImage.path.split("/").last,style: GoogleFonts.openSans(
+                      fontSize: SizeConfig.blockSizeVertical * 2
+                  ),):Text("UPLOAD CERTIFICATE",style: GoogleFonts.openSans(
                       fontSize: SizeConfig.blockSizeVertical * 2
                   ),),
                   minWidth: SizeConfig.screenWidth,
@@ -227,22 +292,21 @@ class _Info1State extends State<Info1> {
     ));
   }
 
-
-/*  Future<File> chooseCameraFile() async {
+  Future<File> chooseCameraFile() async {
 
     await ImagePicker.platform.pickImage(
       source: ImageSource.camera,
     ).then((value) async {
       setState(() {
         FocusScope.of(context).unfocus();
-        _image = new File(value.path);
+        certificateImage = new File(value.path);
       });
-      if(_image.path != null){
+      if(certificateImage.path != null){
       }
     }).catchError((error) {
       print(error.toString());
     });
-    return _image;
+    return certificateImage;
   }
 
 
@@ -255,14 +319,54 @@ class _Info1State extends State<Info1> {
     ).then((value) async {
       setState(() {
         FocusScope.of(context).unfocus();
-        _image = new File(value.path);
+        certificateImage = new File(value.path);
       });
-      if(_image.path != null){
+      if(certificateImage.path != null){
 
       }
     }).catchError((error) {
       print(error.toString());
     });
-    return _image;
-  }*/
+    return certificateImage;
+  }
+
+
+  Future<File> adhaarCameraFile() async {
+
+    await ImagePicker.platform.pickImage(
+      source: ImageSource.camera,
+    ).then((value) async {
+      setState(() {
+        FocusScope.of(context).unfocus();
+        adhaarCardImage = new File(value.path);
+      });
+      if(adhaarCardImage.path != null){
+      }
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return adhaarCardImage;
+  }
+
+
+
+
+  Future<File> adhaarchooseImageFile() async {
+    await ImagePicker.platform.pickImage(
+      source: ImageSource.gallery,
+
+    ).then((value) async {
+      setState(() {
+        FocusScope.of(context).unfocus();
+        adhaarCardImage = new File(value.path);
+      });
+      if(adhaarCardImage.path != null){
+
+      }
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return adhaarCardImage;
+  }
+
 }

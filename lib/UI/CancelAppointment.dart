@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class CancelAppointment extends StatefulWidget {
   const CancelAppointment({Key key}) : super(key: key);
@@ -125,6 +126,7 @@ class _CancelAppointmentState extends State<CancelAppointment> {
                   ),
                   MaterialButton(
                     onPressed: (){
+                      toast("Appointment Cancel successfully");
                       Navigator.of(context).pushNamed('/');
                     },
                     color: Colors.blue,

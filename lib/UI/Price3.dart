@@ -43,7 +43,7 @@ class _Price3State extends State<Price3> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("2/7",style: GoogleFonts.openSans(
+        title: Text("3/7",style: GoogleFonts.openSans(
           fontWeight: FontWeight.bold,
           color: Color(fontColorSteelGrey),
         ),),

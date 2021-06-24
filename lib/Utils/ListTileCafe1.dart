@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 Widget listTileCafe1(BuildContext context,
     String contactName,
     String time,
+    Function onTap,
     ){
   SizeConfig().init(context);
   return InkWell(
@@ -42,29 +44,37 @@ Widget listTileCafe1(BuildContext context,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage('assets/icons/Ellipse 3.png'),
-                    fit: BoxFit.cover
-                  )
-                ),
-                child: Image.asset('assets/icons/call.png',
-                scale: SizeConfig.blockSizeVertical * 0.5,),
-                padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 1.5),
-              ),
-                Container(
+              GestureDetector(
+                onTap: onTap,
+                child: Container(
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage('assets/icons/Ellipse 3.png'),
-                          fit: BoxFit.cover
-                      )
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage('assets/icons/Ellipse 3.png'),
+                      fit: BoxFit.cover
+                    )
                   ),
-                  child: Image.asset('assets/icons/video call.png',
-                    scale: SizeConfig.blockSizeVertical * 0.5,),
-                  padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 1.8),
+                  child: Image.asset('assets/icons/call.png',
+                  scale: SizeConfig.blockSizeVertical * 0.5,),
+                  padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 1.5),
+                ),
+              ),
+                GestureDetector(
+                  onTap: (){
+                    toast("In Progress");
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: AssetImage('assets/icons/Ellipse 3.png'),
+                            fit: BoxFit.cover
+                        )
+                    ),
+                    child: Image.asset('assets/icons/video call.png',
+                      scale: SizeConfig.blockSizeVertical * 0.5,),
+                    padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 1.8),
+                  ),
                 ),
               ],
             ),

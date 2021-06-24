@@ -35,7 +35,7 @@ class _ProfessionalInfo1State extends State<ProfessionalInfo1> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("3/7",style: GoogleFonts.openSans(
+        title: Text("4/7",style: GoogleFonts.openSans(
           fontWeight: FontWeight.bold,
           color: Color(fontColorSteelGrey),
         ),),
