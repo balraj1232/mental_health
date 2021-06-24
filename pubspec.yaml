@@ -74,6 +74,10 @@ flutter:
     - assets/bg/my profile bg.png
     - assets/bg/circle.png
     - assets/icons/star.png
+    - assets/bg/gridCard1.png
+    - assets/bg/gridCard2.png
+    - assets/bg/gridCard3.png
+    - assets/bg/gridCard4.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

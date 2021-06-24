@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mental_health/UI/Cafe1.dart';
 import 'package:mental_health/UI/Cafe2.dart';
 import 'package:mental_health/UI/Cafe3.dart';
+import 'package:mental_health/UI/Home2.dart';
 import 'package:mental_health/UI/Info%203.dart';
 import 'package:mental_health/UI/Info1.dart';
 import 'package:mental_health/UI/Info2.dart';
@@ -52,6 +53,7 @@ class MentalHealth extends StatelessWidget {
         '/CancelAppointment' : (context)=> CancelAppointment(),
         '/MyProfile' : (context)=> MyProfile(),
         '/MyContent' : (context)=> MyContent(),
+        '/Home2' : (context)=> Home2(),
 
       },
     );

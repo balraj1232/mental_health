@@ -1,0 +1,388 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/Utils/Colors.dart';
+import 'package:mental_health/Utils/SizeConfig.dart';
+
+class Home2 extends StatefulWidget {
+  const Home2({Key key}) : super(key: key);
+
+  @override
+  _Home2State createState() => _Home2State();
+}
+
+class _Home2State extends State<Home2> {
+
+  List<String> images = ['assets/bg/gridCard1.png',
+  'assets/bg/gridCard2.png',
+  'assets/bg/gridCard1.png',
+  'assets/bg/gridCard4.png','assets/bg/gridCard4.png','assets/bg/gridCard4.png'];
+  
+  List<Color> colors = [Color.fromRGBO(42, 138, 163, 0.75),
+  Color.fromRGBO(48, 37, 33, 0.75),
+  Color.fromRGBO(42, 138, 163, 0.75),
+  Color.fromRGBO(0, 90, 100, 0.75),Color.fromRGBO(0, 90, 100, 0.75),Color.fromRGBO(0, 90, 100, 0.75)];
+
+  List<String> desc = ["How to have a\npeaceful mind",
+  "Worlds of the\nwaterfall",
+  "How to have a\npeaceful mind",
+  "Worlds of the\nwaterfall","Worlds of the\nwaterfall","Worlds of the\nwaterfall"];
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return SafeArea(child: Scaffold(
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  width: SizeConfig.screenWidth,
+                  height: SizeConfig.screenHeight * 0.4,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.fitWidth,
+                      image: AssetImage('assets/bg/Frame.png'),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppBar(
+                        backgroundColor: Colors.transparent,
+                        elevation: 0.0,
+                        actions: [
+                          Container(
+                            margin:EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 5),
+                            child: Icon(Icons.notifications_none_sharp,
+                            color: Colors.white,),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        width: SizeConfig.screenWidth,
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.screenWidth * 0.05,
+                          vertical: SizeConfig.blockSizeVertical
+                        ),
+                        child: Text("Hello,",
+                        style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                          fontSize: SizeConfig.blockSizeVertical * 3
+                        )),
+                      ),
+                      Container(
+                        width: SizeConfig.screenWidth,
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.screenWidth * 0.05,
+                            vertical: SizeConfig.blockSizeVertical
+                        ),
+                        child: Text("Dr. Sushmita,",
+                            style: GoogleFonts.openSans(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: SizeConfig.blockSizeVertical * 3.5
+                            )),
+                      ),
+                      InkWell(
+                        onTap: (){
+                          Navigator.of(context).pushNamed('/KYC');
+                        },
+                        child: Container(
+                          width: SizeConfig.screenWidth,
+                          height: SizeConfig.blockSizeVertical * 5,
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.screenWidth * 0.05,
+                            vertical: SizeConfig.blockSizeVertical,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Color(skyBlue),
+                            borderRadius: BorderRadius.circular(10)
+                          ),
+                          child: Text("Complete your KYC to Start taking bookings",
+                          style: GoogleFonts.openSans(
+                            color: Color(backgroundColorBlue),
+                            fontWeight: FontWeight.w600
+                          ),),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: SizeConfig.screenWidth,
+                  margin: EdgeInsets.only(
+                    top: SizeConfig.screenHeight * 0.3
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(65)
+                    ),
+                    color: Colors.white
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: SizeConfig.blockSizeVertical * 3.5,
+                      ),
+                      Container(
+                        width: SizeConfig.screenWidth,
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.screenWidth * 0.05,
+                          vertical: SizeConfig.blockSizeVertical
+                        ),
+                        child: Text("LEARN",
+                        style: GoogleFonts.openSans(
+                          fontWeight: FontWeight.w600,
+                          color: Color(fontColorGray)
+                        ),),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.screenWidth * 0.02,
+                          vertical: SizeConfig.blockSizeVertical * 2
+                        ),
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            primary: false,
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 8,
+                              mainAxisSpacing: 8
+                            ), itemBuilder: (BuildContext context, int index){
+                              return Container(
+                                width: SizeConfig.screenWidth * 0.4,
+                                alignment: Alignment.bottomCenter,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  image: DecorationImage(
+                                    image: Image.asset(images[index]).image,
+                                    fit: BoxFit.cover
+                                  ),
+                                ),
+                                child: Container(
+                                  width: SizeConfig.screenWidth,
+                                  padding: EdgeInsets.only(
+                                    left: SizeConfig.screenWidth * 0.02,
+                                    right: SizeConfig.screenWidth * 0.02
+                                  ),
+                                  height: SizeConfig.blockSizeVertical * 8,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: colors[index],
+                                    borderRadius: BorderRadius.only(
+                                      bottomRight: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20)
+                                    )
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(desc[index],
+                                      style: GoogleFonts.openSans(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600
+                                      ),),
+                                      Text("3m",
+                                        style: GoogleFonts.openSans(
+                                            color: Colors.white,
+                                        ),),
+                                    ],
+                                  ),
+                                ),
+                              );
+                        },
+                        itemCount: images.length,),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: SizeConfig.screenWidth,
+              height: SizeConfig.screenHeight * 0.28,
+              color: Color(backgroundColorBlue),
+              child: Column(
+                children: [
+                  Container(
+                    width: SizeConfig.screenWidth,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(
+                      top: SizeConfig.blockSizeVertical * 3,
+                    ),
+                    child: CircleAvatar(
+                      radius: SizeConfig.blockSizeVertical * 5,
+                      backgroundImage: AssetImage('assets/bg/profile.png'),
+                    ),
+                  ),
+                  Container(
+                    width: SizeConfig.screenWidth,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(
+                        top: SizeConfig.blockSizeVertical * 2
+                    ),
+                    child: Text("Sushmita Sinha",
+                      style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: SizeConfig.blockSizeVertical * 2
+                      ),),
+                  ),
+                  Container(
+                    width: SizeConfig.screenWidth,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(
+                      top: SizeConfig.blockSizeVertical * 1.5,
+                    ),
+                    child: Text("Complete your profile (60%)",
+                      style: GoogleFonts.openSans(
+                        color: Colors.white,
+                        fontSize: SizeConfig.blockSizeVertical * 1.5,
+                      ),),
+                  ),
+                  Container(
+                    width: SizeConfig.screenWidth,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(
+                      top: SizeConfig.blockSizeVertical * 1.5,
+                      left: SizeConfig.screenWidth * 0.2,
+                      right: SizeConfig.screenWidth * 0.2,
+                    ),
+                    child: LinearProgressIndicator(
+                      backgroundColor: Color(midnightBlue),
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      value: 0.6,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical * 3,
+            ),
+            ListTile(
+              title: Text("My Profile"),
+              leading: ImageIcon(Image.asset('assets/icons/user.png').image),
+              onTap: (){
+                Navigator.of(context).pushNamed('/MyProfile');
+              },
+            ),
+            ListTile(
+              title: Text("My Availability"),
+              leading: ImageIcon(Image.asset('assets/icons/availability.png').image),
+            ),
+            ListTile(
+              title: Text("My Content"),
+              leading: ImageIcon(Image.asset('assets/icons/content.png').image),
+              onTap: (){
+                Navigator.of(context).pushNamed('/MyContent');
+              },
+            ),
+            ListTile(
+              title: Text("Assessments"),
+              leading: ImageIcon(Image.asset('assets/icons/assessments.png').image),
+            ),
+            ListTile(
+              title: Text("Payments"),
+              leading: ImageIcon(Image.asset('assets/icons/payment.png').image),
+            ),
+            ListTile(
+              title: Text("Help"),
+              leading: ImageIcon(Image.asset('assets/icons/help.png').image),
+            ),
+            ListTile(
+              title: Text("About SAL"),
+              leading: ImageIcon(Image.asset('assets/icons/about.png').image),
+            ),
+            ListTile(
+              title: Text("Settings"),
+              leading: ImageIcon(Image.asset('assets/icons/settings.png').image),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        showUnselectedLabels: true,
+        currentIndex: 0,
+        unselectedItemColor: Color(fontColorGray),
+        selectedLabelStyle: GoogleFonts.openSans(
+          color: Color(backgroundColorBlue),
+        ),
+        unselectedLabelStyle: GoogleFonts.openSans(
+            color: Color(fontColorGray)
+        ),
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(icon: Container(child:
+          Image.asset('assets/icons/nav home.png',
+            color: Colors.white,
+            scale: SizeConfig.blockSizeVertical * 0.4,),
+            decoration: BoxDecoration(
+                color: Color(backgroundColorBlue),
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5)
+            ),
+            padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
+              label: "Home"),
+          BottomNavigationBarItem(icon: Container(child:
+          Image.asset('assets/icons/nav booking.png',
+            color: Color(fontColorGray),
+            scale: SizeConfig.blockSizeVertical * 0.4,),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5)
+            ),
+            padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
+              label: "Booking"),
+          BottomNavigationBarItem(icon: Container(child:
+          Image.asset('assets/icons/nav explore.png',
+            scale: SizeConfig.blockSizeVertical * 0.4,),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5)
+            ),
+            padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
+              label: "Explore"),
+          BottomNavigationBarItem(icon: Container(child:
+          Image.asset('assets/icons/nav cafe.png',
+            scale: SizeConfig.blockSizeVertical * 0.4,),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5)
+            ),
+            padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
+              label: "Cafe"),
+
+        ],
+
+      ),
+    ));
+  }
+}

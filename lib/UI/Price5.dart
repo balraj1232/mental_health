@@ -22,7 +22,7 @@ class _Price5State extends State<Price5> {
             Center(
               child: InkWell(
                 onTap: (){
-                  Navigator.of(context).pushNamed('/Cafe1');
+                  Navigator.of(context).pushNamed('/Home2');
                 },
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
