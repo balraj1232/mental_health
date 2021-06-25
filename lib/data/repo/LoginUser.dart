@@ -6,7 +6,7 @@ import 'package:mental_health/models/CreateCounsellorModel.dart';
 
 class CreateCounsellorRepo extends BaseRepository {
 
-  Future<CreateCousellorModel> createCounsellor(
+  Future<CreateCounsellorModel> createCounsellor(
       {String aadhar,
       BuildContext context,
       String about,
@@ -53,10 +53,10 @@ class CreateCounsellorRepo extends BaseRepository {
       try {
         if (apiResponse.status) {
           final passEntity =
-          CreateCousellorModel.fromJson(apiResponse.response.data);
+          CreateCounsellorModel.fromJson(apiResponse.response.data);
           return passEntity;
         } else {
-          return CreateCousellorModel(meta: apiResponse.response.data);
+          return CreateCounsellorModel(meta: apiResponse.response.data);
         }
       } catch (error, stacktrace) {}
     }

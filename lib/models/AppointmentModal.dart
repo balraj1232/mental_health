@@ -1,20 +1,30 @@
-class CreateCounsellorModel {
+class AppointmentModal {
+  List<Appointments> appointments;
+  String mediaUrl;
   Meta meta;
-  String therapistId;
 
-  CreateCounsellorModel({this.meta, this.therapistId});
+  AppointmentModal({this.appointments, this.mediaUrl, this.meta});
 
-  CreateCounsellorModel.fromJson(Map<String, dynamic> json) {
+  AppointmentModal.fromJson(Map<String, dynamic> json) {
+  /*  if (json['appointments'] != null) {
+      appointments = new List<Null>();
+      json['appointments'].forEach((v) {
+        appointments.add(new Appointments.fromJson(v));
+      });
+    }*/
+    mediaUrl = json['media_url'];
     meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
-    therapistId = json['therapist_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+   /* if (this.appointments != null) {
+      data['appointments'] = this.appointments.map((v) => v.toJson()).toList();
+    }*/
+    data['media_url'] = this.mediaUrl;
     if (this.meta != null) {
       data['meta'] = this.meta.toJson();
     }
-    data['therapist_id'] = this.therapistId;
     return data;
   }
 }
@@ -39,4 +49,8 @@ class Meta {
     data['status'] = this.status;
     return data;
   }
+}
+
+class Appointments{
+
 }
