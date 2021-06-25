@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/Price1.dart';
+import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
+import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/data/repo/verifyOtpRepo.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class OTPScreen extends StatefulWidget {
-  const OTPScreen({Key key}) : super(key: key);
+  final String phoneNumber;
+  const OTPScreen({Key key, this.phoneNumber}) : super(key: key);
 
   @override
   _OTPScreenState createState() => _OTPScreenState();
 }
 
 class _OTPScreenState extends State<OTPScreen> {
+  final GlobalKey<State> loginLoader = new GlobalKey<State>();
 
+
+bool selected = false;
   FocusNode firstDigit;
   FocusNode secondDigit;
   FocusNode thirdDigit;
   FocusNode fourthDigit;
   FocusNode fifthDigit;
   FocusNode sixthDigit;
+  var verifyOtp = VerifyOtpRepo();
 
   TextEditingController firstController = TextEditingController();
   TextEditingController secondController = TextEditingController();
   TextEditingController thirdController = TextEditingController();
   TextEditingController fourthController = TextEditingController();
-  TextEditingController fifthController = TextEditingController();
-  TextEditingController sixthController = TextEditingController();
 
 
 
@@ -37,8 +45,7 @@ class _OTPScreenState extends State<OTPScreen> {
     secondDigit = FocusNode();
     thirdDigit = FocusNode();
     fourthDigit = FocusNode();
-    fifthDigit = FocusNode();
-    sixthDigit = FocusNode();
+
   }
   @override
   void dispose() {
@@ -47,8 +54,7 @@ class _OTPScreenState extends State<OTPScreen> {
     secondDigit.dispose();
     thirdDigit.dispose();
     fourthDigit.dispose();
-    fifthDigit.dispose();
-    sixthDigit.dispose();
+
     super.dispose();
   }
 
@@ -58,6 +64,77 @@ class _OTPScreenState extends State<OTPScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
+        floatingActionButton:FloatingActionButton(
+          child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
+          backgroundColor: selected == true? Colors.blue : Colors.grey,
+            onPressed: () {
+              if (firstController.text.isNotEmpty &&
+                  secondController.text.isNotEmpty &&
+                  thirdController.text.isNotEmpty &&
+                  fourthController.text.isNotEmpty) {
+                Navigator.push(context, MaterialPageRoute(builder: (conext){
+                  return Price1(getOtp:  firstController.text +
+                      secondController.text +
+                      thirdController.text +
+                      fourthController.text );
+                }));
+                Dialogs.showLoadingDialog(context, loginLoader);
+                verifyOtp
+                    .verifyOtp(
+                  context: context,
+                  phone: widget.phoneNumber,
+                  otp: firstController.text +
+                      secondController.text+
+                      thirdController.text+
+                      fourthController.text
+                ).then((value) {
+                  if (value != null) {
+                    if (value.meta.status == "200") {
+                      Navigator.of(loginLoader.currentContext,
+                          rootNavigator: true)
+                          .pop();
+                      toast(value.meta.message);
+                      Navigator.push(context, MaterialPageRoute(builder: (conext){
+                        return Price1(getOtp:  firstController.text +
+                            secondController.text +
+                            thirdController.text +
+                            fourthController.text,);
+                      }));
+                    } else {
+                      Navigator.of(loginLoader.currentContext,
+                          rootNavigator: true)
+                          .pop();
+                      showAlertDialog(
+                        context,
+                        value.meta.message,
+                        "",
+                      );
+                    }
+                  } else {
+                    Navigator.of(loginLoader.currentContext,
+                        rootNavigator: true)
+                        .pop();
+                    showAlertDialog(
+                      context,
+                      value.meta.message,
+                      "",
+                    );
+                  }
+                }).catchError((error) {
+                  Navigator.of(loginLoader.currentContext,
+                      rootNavigator: true)
+                      .pop();
+                  showAlertDialog(
+                    context,
+                    error.toString(),
+                    "",
+                  );
+                });
+              }else{
+                toast("Otp is required");
+              }
+            }
+        ),
         body: Container(
           margin: EdgeInsets.only(
             left: SizeConfig.screenWidth * 0.05,
@@ -76,7 +153,7 @@ class _OTPScreenState extends State<OTPScreen> {
               SizedBox(
                 height: SizeConfig.blockSizeVertical,
               ),
-              Text("Sent to +91 7497975353",style:
+              Text("Sent to ${widget.phoneNumber}",style:
               GoogleFonts.openSans(
                 fontWeight: FontWeight.w400,
                 fontSize: SizeConfig.blockSizeVertical * 1.5,
@@ -203,72 +280,16 @@ class _OTPScreenState extends State<OTPScreen> {
                             fontSize: SizeConfig.blockSizeVertical * 3.75,
                             fontWeight: FontWeight.bold
                         ),
+                        onChanged: (v){
+                          setState(() {
+                            selected = true;
+                          });
+                        },
                         onSubmitted: (term){
                           fourthDigit.unfocus();
                           FocusScope.of(context).requestFocus(fifthDigit);
                         },),
                     ),
-                    Container(
-                      width: SizeConfig.screenWidth * 0.1,
-                      margin: EdgeInsets.only(
-                        right: SizeConfig.screenWidth * 0.03,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: TextField(
-                        controller: fifthController,
-                        focusNode: fifthDigit,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        textAlign: TextAlign.center,
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(1)
-                        ],
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: SizeConfig.blockSizeVertical * 3.75,
-                            fontWeight: FontWeight.bold
-                        ),
-                        onSubmitted: (term){
-                          fifthDigit.unfocus();
-                          FocusScope.of(context).requestFocus(sixthDigit);
-                        },
-                      ),
-                    ),
-                    Container(
-                      width: SizeConfig.screenWidth * 0.1,
-                      margin: EdgeInsets.only(
-                        right: SizeConfig.screenWidth * 0.03,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: TextField(
-                        controller: sixthController,
-                        focusNode: sixthDigit,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.done,
-                        textAlign: TextAlign.center,
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(1)
-                        ],
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: SizeConfig.blockSizeVertical * 3.75,
-                            fontWeight: FontWeight.bold
-                        ),
-                        onSubmitted: (term){
-                          sixthDigit.unfocus();
-                          Navigator.of(context).pushNamed('/Price1');
-                        },
-                      ),
-                    ),
-
                   ],
                 ),
               ),

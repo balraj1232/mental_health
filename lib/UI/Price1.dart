@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:nb_utils/nb_utils.dart';
+
+
+
+String radioValue = "";
+bool selected = false;
+
 
 class Price1 extends StatefulWidget {
-  const Price1({Key key}) : super(key: key);
+  final String getOtp;
+  const Price1({Key key, this.getOtp}) : super(key: key);
 
   @override
   _Price1State createState() => _Price1State();
@@ -12,8 +21,12 @@ class Price1 extends StatefulWidget {
 
 class _Price1State extends State<Price1> {
 
-  int radioValue = -1;
-  bool selected = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -60,10 +73,11 @@ class _Price1State extends State<Price1> {
               ),
             ),
             Container(
-              child: RadioListTile(
-                  value: 1, groupValue: radioValue, onChanged: (value){
+              child: RadioListTile<String>(
+                  value: "Counselling Therapist", groupValue: radioValue.toString(), onChanged: (String value){
                     setState(() {
                       radioValue = value;
+                      print("val" + radioValue.toString());
                       selected = true;
                     });
               },
@@ -72,10 +86,11 @@ class _Price1State extends State<Price1> {
               ),),),
             ),
             Container(
-              child: RadioListTile(
-                value: 2, groupValue: radioValue, onChanged: (value){
+              child: RadioListTile<String>(
+                value: "Listener", groupValue: radioValue.toString(), onChanged: (String value){
                 setState(() {
                   radioValue = value;
+                  print("val" + radioValue.toString());
                   selected = true;
                 });
               },
@@ -84,10 +99,11 @@ class _Price1State extends State<Price1> {
                 ),),),
             ),
             Container(
-              child: RadioListTile(
-                value: 3, groupValue: radioValue, onChanged: (value){
+              child: RadioListTile<String>(
+                value: "Alternative Therapist", groupValue: radioValue.toString(), onChanged: (String value){
                 setState(() {
                   radioValue = value;
+                  print("val" + radioValue.toString());
                   selected = true;
                 });
               },

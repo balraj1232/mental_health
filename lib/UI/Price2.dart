@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/Price3.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
+
+
+TextEditingController firstNameController = TextEditingController();
+TextEditingController lastNameController = TextEditingController();
+FocusNode firstNameFocusNode;
+FocusNode lastNameFocusNode;
+
+bool selected = false;
+bool filledFn = false;
+bool filledLn = false;
+String radioValue = "";
+
+
 class Price2 extends StatefulWidget {
+
   const Price2({Key key}) : super(key: key);
 
   @override
@@ -13,17 +28,7 @@ class Price2 extends StatefulWidget {
 class _Price2State extends State<Price2> {
 
   GlobalKey<FormState> nameForm = GlobalKey<FormState>();
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  FocusNode firstNameFocusNode;
-  FocusNode lastNameFocusNode;
 
-  bool selected = false;
-  bool filledFn = false;
-  bool filledLn = false;
-
-
-  int radioValue = -1;
 
   @override void initState() {
     // TODO: implement initState
@@ -47,7 +52,7 @@ class _Price2State extends State<Price2> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("1/7",style: GoogleFonts.openSans(
+        title: Text("2/7",style: GoogleFonts.openSans(
           fontWeight: FontWeight.bold,
           color: Color(fontColorSteelGrey),
         ),),
@@ -141,11 +146,25 @@ class _Price2State extends State<Price2> {
                         FocusScope.of(context).requestFocus(lastNameFocusNode);
                         filledFn = true;
                       },
+                      onChanged: (v){
+                        setState(() {
+                          filledFn = true;
+                        });
+                      },
+                      validator: (c){
+                        if(c.isEmpty)
+                          return "Please fill required fields";
+                      },
                     ),
                     SizedBox(
                       height: SizeConfig.blockSizeVertical * 2,
                     ),
                     TextFormField(
+                      onChanged: (v){
+                       setState(() {
+                         filledLn = true;
+                       });
+                      },
                       controller: lastNameController,
                       focusNode: lastNameFocusNode,
                       textInputAction: TextInputAction.done,
@@ -195,6 +214,10 @@ class _Price2State extends State<Price2> {
                         lastNameFocusNode.unfocus();
                         filledLn = true;
                       },
+                      validator: (c){
+                        if(c.isEmpty)
+                          return "Please fill required fields";
+                      },
                     ),
                   ],
                 ),
@@ -213,8 +236,8 @@ class _Price2State extends State<Price2> {
               ),),
             ),
             Container(
-              child: RadioListTile(
-                value: 1, groupValue: radioValue, onChanged: (value){
+              child: RadioListTile<String>(
+                value: "Male", groupValue: radioValue.toString(), onChanged: (String value){
                 setState(() {
                   radioValue = value;
                   selected = true;
@@ -225,8 +248,8 @@ class _Price2State extends State<Price2> {
                 ),),),
             ),
             Container(
-              child: RadioListTile(
-                value: 2, groupValue: radioValue, onChanged: (value){
+              child: RadioListTile<String>(
+                value: "Female", groupValue: radioValue.toString(), onChanged: (String value){
                 setState(() {
                   radioValue = value;
                   selected = true;
@@ -237,8 +260,8 @@ class _Price2State extends State<Price2> {
                 ),),),
             ),
             Container(
-              child: RadioListTile(
-                value: 3, groupValue: radioValue, onChanged: (value){
+              child: RadioListTile<String>(
+                value: "Other", groupValue: radioValue.toString(), onChanged: (String value){
                 setState(() {
                   radioValue = value;
                   selected = true;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/Home2.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 class Price5 extends StatefulWidget {
@@ -10,6 +11,15 @@ class Price5 extends StatefulWidget {
 }
 
 class _Price5State extends State<Price5> {
+
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 2)).then((value) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return Home2();
+      }));
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
@@ -20,39 +30,32 @@ class _Price5State extends State<Price5> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
-              child: InkWell(
-                onTap: (){
-                  Navigator.of(context).pushNamed('/Home2');
-                },
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                child: Container(
-                      margin: EdgeInsets.only(
-                        top: SizeConfig.screenHeight * 0.3
-                      ),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/icons/circle bg.png'),
-                          fit: BoxFit.cover
-                        ),
-                        shape: BoxShape.circle
-                      ),
-                      width: SizeConfig.screenWidth * 0.5,
-                      height: SizeConfig.screenHeight * 0.3,
-                      padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 3),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage('assets/icons/blue circle bg.png'),
-                                fit: BoxFit.cover
-                            ),
-                            shape: BoxShape.circle
-                        ),
-                        child: Image.asset('assets/icons/done.png',
-                          scale: SizeConfig.blockSizeVertical * 0.5,)
-                      ),
+              child: Container(
+                    margin: EdgeInsets.only(
+                      top: SizeConfig.screenHeight * 0.3
                     ),
-              ),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/icons/circle bg.png'),
+                        fit: BoxFit.cover
+                      ),
+                      shape: BoxShape.circle
+                    ),
+                    width: SizeConfig.screenWidth * 0.5,
+                    height: SizeConfig.screenHeight * 0.3,
+                    padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 3),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/icons/blue circle bg.png'),
+                              fit: BoxFit.cover
+                          ),
+                          shape: BoxShape.circle
+                      ),
+                      child: Image.asset('assets/icons/done.png',
+                        scale: SizeConfig.blockSizeVertical * 0.5,)
+                    ),
+                  ),
             ),
             Container(
               margin: EdgeInsets.only(

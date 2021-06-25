@@ -4,7 +4,7 @@ import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-Widget listTileCafe1(BuildContext context,
+Widget listTileAppointment(BuildContext context,
     String contactName,
     String time,
     Function onTap,
@@ -17,8 +17,8 @@ Widget listTileCafe1(BuildContext context,
     child: Container(
       //color: Colors.blue[900],
       margin: EdgeInsets.only(
-        bottom: SizeConfig.blockSizeVertical * 2,
-        right: SizeConfig.screenWidth * 0.05
+          bottom: SizeConfig.blockSizeVertical * 2,
+          right: SizeConfig.screenWidth * 0.05
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -31,12 +31,25 @@ Widget listTileCafe1(BuildContext context,
                 fontWeight: FontWeight.w400
             ),),
           ),
+          SizedBox(
+            width: SizeConfig.blockSizeHorizontal * 2,
+          ),
           Container(
             width: SizeConfig.screenWidth * 0.45,
-            child: Text(contactName,style: GoogleFonts.openSans(
-              color: Color(fontColorGray),
-              fontWeight: FontWeight.w400
-            ),),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(contactName,style: GoogleFonts.openSans(
+                    color: Color(fontColorGray),
+                    fontWeight: FontWeight.w400
+                ),),
+                Text("Today",style: GoogleFonts.openSans(
+                    color: Color(fontColorGray),
+                  fontSize: SizeConfig.blockSizeVertical * 1.5
+                ),),
+              ],
+            ),
           ),
           Container(
             width: SizeConfig.screenWidth * 0.25,
@@ -44,21 +57,21 @@ Widget listTileCafe1(BuildContext context,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-              GestureDetector(
-                onTap: onTap,
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: AssetImage('assets/icons/Ellipse 3.png'),
-                      fit: BoxFit.cover
-                    )
+                GestureDetector(
+                  onTap: onTap,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: AssetImage('assets/icons/Ellipse 3.png'),
+                            fit: BoxFit.cover
+                        )
+                    ),
+                    child: Image.asset('assets/icons/call.png',
+                      scale: SizeConfig.blockSizeVertical * 0.5,),
+                    padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 1.5),
                   ),
-                  child: Image.asset('assets/icons/call.png',
-                  scale: SizeConfig.blockSizeVertical * 0.5,),
-                  padding: EdgeInsets.all(SizeConfig.blockSizeVertical * 1.5),
                 ),
-              ),
                 GestureDetector(
                   onTap: (){
                     toast("In Progress");

@@ -3,6 +3,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
+
+
+bool anxiety = false;
+bool relationship = false;
+bool depression = false;
+bool grief = false;
+bool lifeCoaching = false;
+bool anger = false;
+bool parenting = false;
+bool stress = false;
+bool motivation = false;
+bool others = false;
+bool selected = false;
+
+
 class ProfessionalInfo1 extends StatefulWidget {
   const ProfessionalInfo1({Key key}) : super(key: key);
 
@@ -12,17 +27,7 @@ class ProfessionalInfo1 extends StatefulWidget {
 
 class _ProfessionalInfo1State extends State<ProfessionalInfo1> {
 
-  bool anxiety = false;
-  bool relationship = false;
-  bool depression = false;
-  bool grief = false;
-  bool lifeCoaching = false;
-  bool anger = false;
-  bool parenting = false;
-  bool stress = false;
-  bool motivation = false;
-  bool others = false;
-  bool selected = false;
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -30,7 +35,7 @@ class _ProfessionalInfo1State extends State<ProfessionalInfo1> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("3/7",style: GoogleFonts.openSans(
+        title: Text("4/7",style: GoogleFonts.openSans(
           fontWeight: FontWeight.bold,
           color: Color(fontColorSteelGrey),
         ),),

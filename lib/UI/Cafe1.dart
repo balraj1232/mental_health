@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
+import 'package:mental_health/Utils/CommonWidgets.dart';
 import 'package:mental_health/Utils/ListTileCafe1.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Cafe1 extends StatefulWidget {
   const Cafe1({Key key}) : super(key: key);
@@ -12,6 +14,7 @@ class Cafe1 extends StatefulWidget {
 }
 
 class _Cafe1State extends State<Cafe1> {
+  Future<void> _launched;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -67,8 +70,16 @@ class _Cafe1State extends State<Cafe1> {
             SizedBox(
               height: SizeConfig.blockSizeVertical * 4,
             ),
-            listTileCafe1(context,"Kriti Singh","17:00"),
-            listTileCafe1(context,"Suman Roy","18:00"),
+            listTileCafe1(context,"Kriti Singh","17:00",(){
+              setState(() {
+                _launched = makePhoneCall('tel:9814657839');
+              });
+            }),
+            listTileCafe1(context,"Suman Roy","18:00",(){
+              setState(() {
+                _launched = makePhoneCall('tel:9814657839',);
+              });
+            }),
             Text("YESTERDAY",style: GoogleFonts.openSans(
               color: Color(fontColorGray),
               fontWeight: FontWeight.w600,
@@ -76,13 +87,41 @@ class _Cafe1State extends State<Cafe1> {
             SizedBox(
               height: SizeConfig.blockSizeVertical * 4,
             ),
-            listTileCafe1(context,"Ananya Rawat","18:00"),
-            listTileCafe1(context,"Suman Roy","18:00"),
-            listTileCafe1(context,"Suman Roy","18:00"),
-            listTileCafe1(context,"Suman Roy","18:00"),
-            listTileCafe1(context,"Suman Roy","18:00"),
-            listTileCafe1(context,"Suman Roy","18:00"),
-            listTileCafe1(context,"Suman Roy","18:00"),
+            listTileCafe1(context,"Ananya Rawat","18:00",(){
+              setState(() {
+                _launched = makePhoneCall('tel:9814657839');
+              });
+            }),
+            listTileCafe1(context,"Suman Roy","18:00",(){
+              setState(() {
+                _launched = makePhoneCall('tel:9814657839');
+              });
+            }),
+            listTileCafe1(context,"Suman Roy","18:00",(){
+              setState(() {
+                _launched = makePhoneCall('tel:9814657839');
+              });
+            }),
+            listTileCafe1(context,"Suman Roy","18:00",(){
+              setState(() {
+                _launched = makePhoneCall('tel:9814657839');
+              });
+            }),
+            listTileCafe1(context,"Suman Roy","18:00",(){
+              setState(() {
+                _launched = makePhoneCall('tel:9814657839');
+              });
+            }),
+            listTileCafe1(context,"Suman Roy","18:00",(){
+              setState(() {
+                _launched = makePhoneCall('tel:9814657839');
+              });
+            }),
+            listTileCafe1(context,"Suman Roy","18:00",(){
+              setState(() {
+                _launched = makePhoneCall('tel:9814657839');
+              });
+            }),
             Text("30 JUL 2020",style: GoogleFonts.openSans(
               color: Color(fontColorGray),
               fontWeight: FontWeight.w600,
@@ -90,8 +129,11 @@ class _Cafe1State extends State<Cafe1> {
             SizedBox(
               height: SizeConfig.blockSizeVertical * 4,
             ),
-            listTileCafe1(context,"Suman Roy","18:00"),
-
+            listTileCafe1(context,"Suman Roy","18:00",(){
+              setState(() {
+                _launched = makePhoneCall('tel:9814657839');
+              });
+            }),
           ],
         ),
       ),
@@ -110,7 +152,7 @@ class _Cafe1State extends State<Cafe1> {
         items: [
           BottomNavigationBarItem(icon: Container(child: 
           Image.asset('assets/icons/nav home.png',
-          scale: SizeConfig.blockSizeVertical * 0.4,),
+          scale: SizeConfig.blockSizeVertical * 0.6,),
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,
@@ -120,7 +162,7 @@ class _Cafe1State extends State<Cafe1> {
           label: "Home"),
           BottomNavigationBarItem(icon: Container(child:
           Image.asset('assets/icons/nav booking.png',
-            scale: SizeConfig.blockSizeVertical * 0.4,),
+            scale: SizeConfig.blockSizeVertical * 0.6,),
             decoration: BoxDecoration(
                 color: Colors.blue,
                 shape: BoxShape.rectangle,
@@ -130,7 +172,7 @@ class _Cafe1State extends State<Cafe1> {
               label: "Booking"),
           BottomNavigationBarItem(icon: Container(child:
           Image.asset('assets/icons/nav explore.png',
-            scale: SizeConfig.blockSizeVertical * 0.4,),
+            scale: SizeConfig.blockSizeVertical * 0.6,),
             decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.rectangle,
@@ -140,7 +182,7 @@ class _Cafe1State extends State<Cafe1> {
               label: "Explore"),
           BottomNavigationBarItem(icon: Container(child:
           Image.asset('assets/icons/nav cafe.png',
-            scale: SizeConfig.blockSizeVertical * 0.4,),
+            scale: SizeConfig.blockSizeVertical * 0.6,),
             decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.rectangle,
@@ -262,4 +304,6 @@ class _Cafe1State extends State<Cafe1> {
       ),
     ));
   }
+
+
 }

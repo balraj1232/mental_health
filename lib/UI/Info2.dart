@@ -3,6 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
+
+bool selected = false;
+var aboutController = TextEditingController();
 class Info2 extends StatefulWidget {
   const Info2({Key key}) : super(key: key);
 
@@ -12,7 +15,7 @@ class Info2 extends StatefulWidget {
 
 class _Info2State extends State<Info2> {
 
-  bool selected = false;
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -76,6 +79,7 @@ class _Info2State extends State<Info2> {
                   )
               ),
               child: TextFormField(
+                controller: aboutController,
                 decoration: InputDecoration(
                     hintText: "Enter here",
                     hintStyle: GoogleFonts.openSans(
@@ -83,8 +87,9 @@ class _Info2State extends State<Info2> {
                     ),
                     border: InputBorder.none,
                   isDense: true,
-                  contentPadding: EdgeInsets.all(SizeConfig.blockSizeVertical * 0.5)
+                  contentPadding: EdgeInsets.all(SizeConfig.blockSizeVertical * 1)
                 ),
+                maxLines: 3,
                 maxLength: 500,
                 onFieldSubmitted: (term){
                   setState(() {
