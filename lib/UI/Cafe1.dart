@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/CommonWidgets.dart';
 import 'package:mental_health/Utils/ListTileCafe1.dart';
+import 'package:mental_health/Utils/NavigationBar.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -137,63 +138,6 @@ class _Cafe1State extends State<Cafe1> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        showUnselectedLabels: true,
-        currentIndex: 1,
-        unselectedItemColor: Color(fontColorGray),
-        selectedLabelStyle: GoogleFonts.openSans(
-          color: Colors.blue,
-        ),
-        unselectedLabelStyle: GoogleFonts.openSans(
-          color: Color(fontColorGray)
-        ),
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(icon: Container(child: 
-          Image.asset('assets/icons/nav home.png',
-          scale: SizeConfig.blockSizeVertical * 0.6,),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(5)
-          ),
-          padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
-          label: "Home"),
-          BottomNavigationBarItem(icon: Container(child:
-          Image.asset('assets/icons/nav booking.png',
-            scale: SizeConfig.blockSizeVertical * 0.6,),
-            decoration: BoxDecoration(
-                color: Colors.blue,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5)
-            ),
-            padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
-              label: "Booking"),
-          BottomNavigationBarItem(icon: Container(child:
-          Image.asset('assets/icons/nav explore.png',
-            scale: SizeConfig.blockSizeVertical * 0.6,),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5)
-            ),
-            padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
-              label: "Explore"),
-          BottomNavigationBarItem(icon: Container(child:
-          Image.asset('assets/icons/nav cafe.png',
-            scale: SizeConfig.blockSizeVertical * 0.6,),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5)
-            ),
-            padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
-              label: "Cafe"),
-
-        ],
-
-      ),
       drawer: Drawer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -302,7 +246,9 @@ class _Cafe1State extends State<Cafe1> {
           ],
         ),
       ),
-    ));
+
+    ),
+    );
   }
 
 
