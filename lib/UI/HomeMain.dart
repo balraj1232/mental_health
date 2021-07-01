@@ -318,6 +318,9 @@ class _HomeMainState extends State<HomeMain> {
             ListTile(
               title: Text("My Availability"),
               leading: ImageIcon(Image.asset('assets/icons/availability.png').image),
+              onTap: (){
+                Navigator.of(context).pushNamed('/Availability1');
+              },
             ),
             ListTile(
               title: Text("My Content"),
@@ -329,6 +332,9 @@ class _HomeMainState extends State<HomeMain> {
             ListTile(
               title: Text("Assessments"),
               leading: ImageIcon(Image.asset('assets/icons/assessments.png').image),
+              onTap: (){
+                Navigator.of(context).pushReplacementNamed('/Assessments');
+              },
             ),
             ListTile(
               title: Text("Payments"),
