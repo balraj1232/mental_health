@@ -296,6 +296,13 @@ class _Home2State extends State<Home2> {
               leading: ImageIcon(Image.asset('assets/icons/availability.png').image),
             ),
             ListTile(
+              title: Text("Bookings"),
+              leading: ImageIcon(Image.asset('assets/icons/nav booking.png').image),
+              onTap: (){
+                Navigator.of(context).pushNamed('/Cafe1');
+              },
+            ),
+            ListTile(
               title: Text("My Content"),
               leading: ImageIcon(Image.asset('assets/icons/content.png').image),
               onTap: (){

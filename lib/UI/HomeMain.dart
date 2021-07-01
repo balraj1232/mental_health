@@ -316,6 +316,13 @@ class _HomeMainState extends State<HomeMain> {
               },
             ),
             ListTile(
+              title: Text("Bookings"),
+              leading: ImageIcon(Image.asset('assets/icons/availability.png').image),
+              onTap: (){
+                Navigator.of(context).pushNamed('/Cafe1');
+              },
+            ),
+            ListTile(
               title: Text("My Availability"),
               leading: ImageIcon(Image.asset('assets/icons/availability.png').image),
               onTap: (){
