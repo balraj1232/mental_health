@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health/UI/Appointments.dart';
+import 'package:mental_health/UI/AboutSAL.dart';
+import 'package:mental_health/UI/Assessments.dart';
+import 'package:mental_health/UI/Availabilty.dart';
 import 'package:mental_health/UI/Cafe2.dart';
 import 'package:mental_health/UI/Cafe3.dart';
 import 'package:mental_health/UI/ExploreAll.dart';
+import 'package:mental_health/UI/Help.dart';
 import 'package:mental_health/UI/Home2.dart';
 import 'package:mental_health/UI/HomeMain.dart';
 import 'package:mental_health/UI/Info%203.dart';
@@ -12,6 +16,7 @@ import 'package:mental_health/UI/KYCScreen.dart';
 import 'package:mental_health/UI/MyContent.dart';
 import 'package:mental_health/UI/MyProfile.dart';
 import 'package:mental_health/UI/OTPScreen.dart';
+import 'package:mental_health/UI/Payment.dart';
 import 'package:mental_health/UI/Price1.dart';
 import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/UI/Price3.dart';
@@ -19,8 +24,8 @@ import 'package:mental_health/UI/Price4.dart';
 import 'package:mental_health/UI/Price5.dart';
 import 'package:mental_health/UI/ProfessionalInfo1.dart';
 import 'package:mental_health/UI/ProfessionalInfo2.dart';
+import 'package:mental_health/UI/Settings.dart';
 import 'package:mental_health/UI/SplashScreen.dart';
-
 import 'UI/CancelAppointment.dart';
 import 'UI/LoginScreen.dart';
 
@@ -36,6 +41,9 @@ class MentalHealth extends StatelessWidget {
     return MaterialApp(
       title: "Mental Health",
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: 'OpenSans',
+      ),
       home: SplashScreen(),
       routes: {
         '/Login': (context) => LoginScreen(),
@@ -60,6 +68,12 @@ class MentalHealth extends StatelessWidget {
         '/KYC' : (context)=> KYCScreen(),
         '/HomeMain' : (context)=> HomeMain(),
         '/ExploreAll' : (context)=> ExploreAll(),
+        '/Availability1' : (context)=> Availability(),
+        '/Assessments' : (context)=> Assessments(),
+        '/Payments' : (context)=> Payment(),
+        '/AboutSAL' : (context)=> AboutSAL(),
+        '/Help' : (context)=> Help(),
+        '/Settings' : (context)=> Settings(),
       },
     );
   }

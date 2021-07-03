@@ -41,7 +41,10 @@ class _MyProfileState extends State<MyProfile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AppBar(
-                        leading: Icon(Icons.arrow_back_ios_rounded,color: Colors.white,),
+                        leading: InkWell(child: Icon(Icons.arrow_back_ios_rounded,color: Colors.white,),
+                        onTap: (){
+                          Navigator.pop(context);
+                        },),
                         elevation: 0.0,
                         centerTitle: true,
                         backgroundColor: Colors.transparent,
