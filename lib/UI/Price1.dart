@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
-import 'package:nb_utils/nb_utils.dart';
-
 
 
 String radioValue = "";
 bool selected = false;
-
 
 class Price1 extends StatefulWidget {
   final String getOtp;
@@ -20,8 +16,6 @@ class Price1 extends StatefulWidget {
 }
 
 class _Price1State extends State<Price1> {
-
-
 
   @override
   void initState() {

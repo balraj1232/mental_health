@@ -7,14 +7,14 @@ import 'package:mental_health/Utils/NavigationBar.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Cafe1 extends StatefulWidget {
-  const Cafe1({Key key}) : super(key: key);
+class AppointmentsScreen extends StatefulWidget {
+  const AppointmentsScreen({Key key}) : super(key: key);
 
   @override
-  _Cafe1State createState() => _Cafe1State();
+  _AppointmentsScreenState createState() => _AppointmentsScreenState();
 }
 
-class _Cafe1State extends State<Cafe1> {
+class _AppointmentsScreenState extends State<AppointmentsScreen> {
   Future<void> _launched;
   @override
   Widget build(BuildContext context) {

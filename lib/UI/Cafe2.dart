@@ -69,9 +69,7 @@ class _Cafe2State extends State<Cafe2> {
             ),
             padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
               label: "Cafe"),
-
         ],
-
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
