@@ -3,7 +3,7 @@ import 'package:mental_health/UI/Appointments.dart';
 import 'package:mental_health/UI/AboutSAL.dart';
 import 'package:mental_health/UI/Assessments.dart';
 import 'package:mental_health/UI/Availabilty.dart';
-import 'package:mental_health/UI/Cafe2.dart';
+import 'package:mental_health/UI/PastAppointments.dart';
 import 'package:mental_health/UI/Cafe3.dart';
 import 'package:mental_health/UI/ExploreAll.dart';
 import 'package:mental_health/UI/Help.dart';
@@ -44,7 +44,7 @@ class MentalHealth extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'OpenSans',
       ),
-      home: SplashScreen(),
+      home: HomeMain(),
       routes: {
         '/Login': (context) => LoginScreen(),
         '/OTP': (context) => OTPScreen(),

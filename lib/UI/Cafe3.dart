@@ -5,10 +5,8 @@ import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/Utils/CommonWidgets.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-
 class Cafe3 extends StatefulWidget {
   const Cafe3({Key key}) : super(key: key);
-
   @override
   _Cafe3State createState() => _Cafe3State();
 }
@@ -70,7 +68,7 @@ class _Cafe3State extends State<Cafe3> {
             MaterialButton(
               onPressed: (){
                 setState(() {
-                  _launched = makePhoneCall('tel:9814657839');
+                  _launched = makePhoneCall();
                 });
            //     Navigator.of(context).pushNamed('/');
               },
@@ -131,7 +129,7 @@ class _Cafe3State extends State<Cafe3> {
                     GestureDetector(
                       onTap:(){
                         setState(() {
-                          _launched = makePhoneCall('tel:9814657839');
+                          _launched = makePhoneCall();
                         });
                       },
                       child: Container(
@@ -302,7 +300,6 @@ class _Cafe3State extends State<Cafe3> {
                     color: Color(fontColorGray),
                     fontWeight: FontWeight.w600,
                   ),),
-
                 ],
               ),
             ),

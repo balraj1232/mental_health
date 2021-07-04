@@ -3,33 +3,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mental_health/UI/Appointments.dart';
-import 'package:mental_health/UI/Info1.dart';
-import 'package:mental_health/UI/Info2.dart';
-import 'package:mental_health/UI/LoginScreen.dart';
-import 'package:mental_health/UI/Price2.dart';
-import 'package:mental_health/UI/Price3.dart';
 import 'package:mental_health/UI/Price4.dart';
 import 'package:mental_health/Utils/ActionSheet.dart';
-import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
-import 'package:mental_health/constant/AppColor.dart';
-import 'package:mental_health/constant/StringConstant.dart';
 import 'package:mental_health/data/repo/LoginUser.dart';
 
-
-File _image;
+File image;
 class Info3 extends StatefulWidget {
   const Info3({Key key}) : super(key: key);
-
   @override
   _Info3State createState() => _Info3State();
 }
 
 class _Info3State extends State<Info3> {
-
   var createUser = CreateTherapistProfileRepo();
   final GlobalKey<State> loginLoader = new GlobalKey<State>();
 
@@ -100,9 +88,9 @@ class _Info3State extends State<Info3> {
                           height: 90,width: 90,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image:  _image != null
+                                  image:  image != null
                                       ? FileImage(
-                                      File(_image.path))
+                                      File(image.path))
                                       : AssetImage(
                                       "assets/icons/user.png"),
                                   fit: BoxFit.fill),
@@ -252,14 +240,14 @@ class _Info3State extends State<Info3> {
     ).then((value) async {
       setState(() {
         FocusScope.of(context).unfocus();
-        _image = new File(value.path);
+        image = new File(value.path);
       });
-      if(_image.path != null){
+      if(image.path != null){
       }
     }).catchError((error) {
       print(error.toString());
     });
-    return _image;
+    return image;
   }
 
 
@@ -272,14 +260,14 @@ class _Info3State extends State<Info3> {
     ).then((value) async {
       setState(() {
         FocusScope.of(context).unfocus();
-        _image = new File(value.path);
+        image = new File(value.path);
       });
-      if(_image.path != null){
+      if(image.path != null){
 
       }
     }).catchError((error) {
       print(error.toString());
     });
-    return _image;
+    return image;
   }
 }

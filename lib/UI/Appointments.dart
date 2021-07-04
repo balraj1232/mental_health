@@ -1,11 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/CommonWidgets.dart';
 import 'package:mental_health/Utils/ListTileCafe1.dart';
-import 'package:mental_health/Utils/NavigationBar.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:mental_health/constant/AppColor.dart';
+import 'package:mental_health/data/repo/UpcomingAppointmentRepo.dart';
+import 'package:mental_health/models/AppointmentModal.dart';
+
 
 class AppointmentsScreen extends StatefulWidget {
   const AppointmentsScreen({Key key}) : super(key: key);
@@ -16,10 +20,65 @@ class AppointmentsScreen extends StatefulWidget {
 
 class _AppointmentsScreenState extends State<AppointmentsScreen> {
   Future<void> _launched;
+  var upcomintAppointments = UpcomingAppointmentRepo();
+  bool isloading = false;
+  List<Appointments> appointments = new List();
+
+
+  @override
+  void initState() {
+    super.initState();
+    isloading = true;
+    upcomintAppointments
+        .upcomingAppointmentRepo(
+      context: context,
+    )
+        .then((value) {
+      if (value != null) {
+        if (value.meta.status == "200") {
+          setState(() {
+            isloading = false;
+          });
+          appointments.addAll(value.appointments);
+          //toast(value.meta.message);
+          /*  SharedPreferencesTest().checkIsLogin("0");
+                                          SharedPreferencesTest()
+                                              .saveToken("set", value: value.token);*/
+
+        /*  Navigator.push(context,
+              MaterialPageRoute(
+                  builder: (conext) {
+                    return OTPScreen(
+                      phoneNumber: mobileController.text,
+                    );
+                  }));*/
+        } else {
+          showAlertDialog(
+            context,
+            value.meta.message,
+            "",
+          );
+        }
+      } else {
+        showAlertDialog(
+          context,
+          "No data found",
+          "",
+        );
+      }
+    }).catchError((error) {
+      showAlertDialog(
+        context,
+        error.toString(),
+        "",
+      );
+    });
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return SafeArea(child: Scaffold(
+    List<Widget> widgetList = new List<Widget>();
+    var child = SafeArea(child: Scaffold(
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal * 4),
@@ -71,70 +130,20 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
             SizedBox(
               height: SizeConfig.blockSizeVertical * 4,
             ),
-            listTileCafe1(context,"Kriti Singh","17:00",(){
-              setState(() {
-                _launched = makePhoneCall('tel:9814657839');
-              });
-            }),
-            listTileCafe1(context,"Suman Roy","18:00",(){
-              setState(() {
-                _launched = makePhoneCall('tel:9814657839',);
-              });
-            }),
-            Text("YESTERDAY",style: GoogleFonts.openSans(
-              color: Color(fontColorGray),
-              fontWeight: FontWeight.w600,
-            ),),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 4,
-            ),
-            listTileCafe1(context,"Ananya Rawat","18:00",(){
-              setState(() {
-                _launched = makePhoneCall('tel:9814657839');
-              });
-            }),
-            listTileCafe1(context,"Suman Roy","18:00",(){
-              setState(() {
-                _launched = makePhoneCall('tel:9814657839');
-              });
-            }),
-            listTileCafe1(context,"Suman Roy","18:00",(){
-              setState(() {
-                _launched = makePhoneCall('tel:9814657839');
-              });
-            }),
-            listTileCafe1(context,"Suman Roy","18:00",(){
-              setState(() {
-                _launched = makePhoneCall('tel:9814657839');
-              });
-            }),
-            listTileCafe1(context,"Suman Roy","18:00",(){
-              setState(() {
-                _launched = makePhoneCall('tel:9814657839');
-              });
-            }),
-            listTileCafe1(context,"Suman Roy","18:00",(){
-              setState(() {
-                _launched = makePhoneCall('tel:9814657839');
-              });
-            }),
-            listTileCafe1(context,"Suman Roy","18:00",(){
-              setState(() {
-                _launched = makePhoneCall('tel:9814657839');
-              });
-            }),
-            Text("30 JUL 2020",style: GoogleFonts.openSans(
-              color: Color(fontColorGray),
-              fontWeight: FontWeight.w600,
-            ),),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 4,
-            ),
-            listTileCafe1(context,"Suman Roy","18:00",(){
-              setState(() {
-                _launched = makePhoneCall('tel:9814657839');
-              });
-            }),
+           Container(
+             height:SizeConfig.blockSizeVertical * 80 ,
+             child: appointments != null && appointments.length > 0  ?  ListView.builder(itemBuilder: (context, index){
+               return appointments != null && appointments.length > 0 ?  listTileCafe1(context,"Kriti Singh","17:00",(){
+                 setState(() {
+                   _launched = makePhoneCall();
+                 });
+               }): Container(
+                 child: Center(child: Text("No Upcoming Appointments", style:  TextStyle(color: Colors.black),)),
+               );
+             }, itemCount: appointments.length,): Container(
+               child: Center(child: Text("No Upcoming Appointments", style:  TextStyle(color: Colors.black),)),
+             ),
+           )
           ],
         ),
       ),
@@ -249,7 +258,24 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
     ),
     );
+    widgetList.add(child);
+    if (isloading) {
+      final modal = new Stack(
+        children: [
+          new Opacity(
+            opacity: 0.5,
+            child: ModalBarrier(dismissible: false, color: Colors.grey),
+          ),
+          new Center(
+            child: new CircularProgressIndicator(
+              valueColor: new AlwaysStoppedAnimation<Color>(colorPrimary),
+            ),
+          ),
+        ],
+      );
+      widgetList.add(modal);
+    }
+    return Stack(children: widgetList);
+
   }
-
-
 }

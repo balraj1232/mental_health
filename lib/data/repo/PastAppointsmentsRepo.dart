@@ -11,15 +11,12 @@ class PastAppointmentsRepo extends BaseRepository {
   Future<AppointmentModal> pastAppointmentRepo({String therapistId,
     BuildContext context,
   }) async {
-    final uri = '${ApiEndpoint.BaseUrl}appointment/past';
+    final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/appointment/upcoming?therapist_id=p68iu';
     var response = await Dio().get(uri,
-        queryParameters:
-        {'therapist_id ': therapistId},
         options: Options(
           headers: {
             'Content-Type': 'application/json',
           },
-          followRedirects: false,
         ));
     try {
       if (response.data != null) {

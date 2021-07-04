@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/UI/Home2.dart';
+import 'package:mental_health/UI/HomeMain.dart';
+import 'package:mental_health/UI/KYCScreen.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+
 class Price5 extends StatefulWidget {
   const Price5({Key key}) : super(key: key);
 
@@ -16,7 +19,7 @@ class _Price5State extends State<Price5> {
     super.initState();
     Future.delayed(Duration(seconds: 2)).then((value) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return Home2();
+        return isKyc ? HomeMain() : Home2();
       }));
     });
   }

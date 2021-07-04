@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
+bool isKyc = false;
 class KYCScreen extends StatefulWidget {
   const KYCScreen({Key key}) : super(key: key);
 
@@ -20,7 +21,6 @@ class _KYCScreenState extends State<KYCScreen> {
   TextEditingController branchAddress = TextEditingController();
   TextEditingController accountNumber = TextEditingController();
   TextEditingController ifscCode = TextEditingController();
-
   FocusNode panCardFn;
   FocusNode beneficiaryNameFn;
   FocusNode bankNameFn;
@@ -622,6 +622,9 @@ class _KYCScreenState extends State<KYCScreen> {
                 ),
                 child: MaterialButton(
                   onPressed: (){
+                    setState(() {
+                      isKyc = true;
+                    });
                     Navigator.of(context).pushNamed('/HomeMain');
                   },
                   child: Text("SUBMIT",style: GoogleFonts.openSans(

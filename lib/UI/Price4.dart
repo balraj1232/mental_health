@@ -1,7 +1,15 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mental_health/UI/Info%203.dart';
+import 'package:mental_health/UI/Price2.dart';
+import 'package:mental_health/UI/Price3.dart';
+import 'package:mental_health/Utils/ActionSheet.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+
 
 class Price4 extends StatefulWidget {
   const Price4({Key key}) : super(key: key);
@@ -84,31 +92,74 @@ class _Price4State extends State<Price4> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(
-                top: SizeConfig.blockSizeVertical * 5,
-                right: SizeConfig.screenWidth * 0.05,
-                left: SizeConfig.screenWidth * 0.05,
-              ),
-              child: CircleAvatar(
-                backgroundColor: Colors.grey[200],
-                backgroundImage: AssetImage('assets/icons/user bg.png'),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: SizeConfig.blockSizeVertical * 4,
+            Stack(
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.topCenter,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    radius: SizeConfig.blockSizeVertical * 7.5,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: SizeConfig.blockSizeVertical * 7.45,
+                      child: Container(
+                        height: 90,width: 90,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image:  image != null
+                                  ? FileImage(
+                                  File(image.path))
+                                  : AssetImage(
+                                  "assets/icons/user.png"),
+                              fit: BoxFit.fill),
+                          shape: BoxShape.circle,
+
+                        ),
+                      ),
                     ),
-                    Image.asset('assets/icons/user.png',color: Colors.grey,
-                      scale: SizeConfig.blockSizeVertical * 0.7,),
-                    Container(child: Icon(Icons.add_circle,color: Colors.blue,
-                      size: SizeConfig.blockSizeVertical * 5,),
-                      alignment: Alignment.centerRight,),
-                  ],
+                  ),
                 ),
-                radius: SizeConfig.blockSizeVertical * 8,
-              ),
+                Container(
+                  margin: EdgeInsets.only(
+                      left: SizeConfig.blockSizeHorizontal * 55,  top: SizeConfig.blockSizeVertical * 10),
+                  child: InkWell(
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
+                      showCupertinoModalPopup(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              ActionSheet().actionSheet(context,
+                                  onCamera: () {
+                                    FocusScope.of(context).unfocus();
+                                    chooseCameraFile().then((File file) {
+                                      if (file != null) {
+                                        setState(() {
+                                          //   loading = true;
+                                        });
+                                      }
+                                    }).catchError((onError) {});
+                                  }, onGallery: () {
+                                    FocusScope.of(context).unfocus();
+                                    androidchooseImageFile().then((value) {
+                                      setState(() {
+                                        //  loading = true;
+                                      });
+                                    }).catchError((onError) {});
+                                  },text: "Select profile image"));
+                    },
+                    child: Container(
+                      width: SizeConfig.blockSizeVertical * 4.5,
+                      height: SizeConfig.blockSizeVertical * 4.5,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      alignment: Alignment.center,
+                      child:  Container(child: Icon(Icons.add_circle,color:Colors.blue,
+                        size: SizeConfig.blockSizeVertical * 5,),
+                        alignment: Alignment.centerRight,),),
+                  ),
+                )
+              ],
             ),
             Container(
               margin: EdgeInsets.only(
@@ -119,7 +170,7 @@ class _Price4State extends State<Price4> {
               alignment: Alignment.center,
               child: Column(
                 children: [
-                  Text("Sushmita Sinha",style: GoogleFonts.openSans(
+                  Text(firstNameController.text + lastNameController.text,style: GoogleFonts.openSans(
                     color: Color(fontColorGray),
                     fontWeight: FontWeight.w600,
                     fontSize: SizeConfig.blockSizeVertical * 2.5
@@ -148,7 +199,7 @@ class _Price4State extends State<Price4> {
                     color: Color(fontColorGray),
                     fontWeight: FontWeight.w600,
                   ),),
-                  Text("Female",style: GoogleFonts.openSans(
+                  Text(radioValue,style: GoogleFonts.openSans(
                       color: Color(fontColorGray),
                       fontWeight: FontWeight.w400,
                       fontSize: SizeConfig.blockSizeVertical * 1.5
@@ -160,7 +211,7 @@ class _Price4State extends State<Price4> {
                     color: Color(fontColorGray),
                     fontWeight: FontWeight.w600,
                   ),),
-                  Text("English, Hindi",style: GoogleFonts.openSans(
+                  Text(selectedVal,style: GoogleFonts.openSans(
                       color: Color(fontColorGray),
                       fontWeight: FontWeight.w400,
                       fontSize: SizeConfig.blockSizeVertical * 1.5
@@ -223,5 +274,45 @@ class _Price4State extends State<Price4> {
         ),
       ),
     ));
+  }
+
+
+
+  Future<File> chooseCameraFile() async {
+
+    await ImagePicker.platform.pickImage(
+      source: ImageSource.camera,
+    ).then((value) async {
+      setState(() {
+        FocusScope.of(context).unfocus();
+        image = new File(value.path);
+      });
+      if(image.path != null){
+      }
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return image;
+  }
+
+
+
+
+  Future<File> androidchooseImageFile() async {
+    await ImagePicker.platform.pickImage(
+      source: ImageSource.gallery,
+
+    ).then((value) async {
+      setState(() {
+        FocusScope.of(context).unfocus();
+        image = new File(value.path);
+      });
+      if(image.path != null){
+
+      }
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return image;
   }
 }

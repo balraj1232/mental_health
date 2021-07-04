@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/Utils/Colors.dart';
+import 'package:mental_health/Utils/CommonWidgets.dart';
 import 'package:mental_health/Utils/DrawerMenu.dart';
 import 'package:mental_health/Utils/ListTileAppointment.dart';
-import 'package:mental_health/Utils/ListTileCafe1.dart';
 import 'package:mental_health/Utils/NavigationBar.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
@@ -15,7 +16,7 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMainState extends State<HomeMain> {
-
+  Future<void> _launched;
   List<String> images = ['assets/bg/gridCard1.png',
     'assets/bg/gridCard2.png',
     'assets/bg/gridCard1.png',
@@ -90,7 +91,7 @@ class _HomeMainState extends State<HomeMain> {
                             horizontal: SizeConfig.screenWidth * 0.05,
                             vertical: SizeConfig.blockSizeVertical
                         ),
-                        child: Text("Dr. Sushmita,",
+                        child: Text("Dr. ${firstNameController.text + lastNameController.text}",
                             style: GoogleFonts.openSans(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -139,8 +140,16 @@ class _HomeMainState extends State<HomeMain> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              listTileAppointment(context, "Kriti Singh", "17:00", (){}),
-                              listTileAppointment(context, "Kriti Singh", "17:00", (){}),
+                              listTileAppointment(context, "Kriti Singh", "17:00", (){
+                                setState(() {
+                                  _launched = makePhoneCall();
+                                });
+                              }),
+                              listTileAppointment(context, "Kriti Singh", "17:00", (){
+                                setState(() {
+                                  _launched = makePhoneCall();
+                                });
+                              }),
                             ],
                           )),
                       Container(
@@ -148,7 +157,9 @@ class _HomeMainState extends State<HomeMain> {
                             horizontal: SizeConfig.screenWidth * 0.05,
                         ),
                         child: MaterialButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            Navigator.of(context).pushNamed('/Cafe1');
+                          },
                           minWidth: SizeConfig.screenWidth,
                           height: SizeConfig.blockSizeVertical * 6,
                           child: Text("See All",
