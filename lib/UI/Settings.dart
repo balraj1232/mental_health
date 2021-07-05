@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health/UI/LoginScreen.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
@@ -97,20 +98,28 @@ class _SettingsState extends State<Settings> {
                     inactiveThumbColor: Color(fontColorGray),
                   )
               ),
-              Container(
-                width: SizeConfig.screenWidth,
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.02,
-                  right: SizeConfig.screenWidth * 0.02,
-                  top: SizeConfig.screenHeight * 0.6,
-                  bottom: SizeConfig.blockSizeVertical * 2,
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                        return LoginScreen();
+                      }));
+                },
+                child: Container(
+                  width: SizeConfig.screenWidth,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(
+                    left: SizeConfig.screenWidth * 0.02,
+                    right: SizeConfig.screenWidth * 0.02,
+                    top: SizeConfig.screenHeight * 0.6,
+                    bottom: SizeConfig.blockSizeVertical * 2,
+                  ),
+                  child: Text("Logout",
+                    style: TextStyle(
+                        color: Color(backgroundColorBlue),
+                        fontWeight: FontWeight.w600
+                    ),),
                 ),
-                child: Text("Logout",
-                  style: TextStyle(
-                      color: Color(backgroundColorBlue),
-                      fontWeight: FontWeight.w600
-                  ),),
               ),
               Container(
                 width: SizeConfig.screenWidth,

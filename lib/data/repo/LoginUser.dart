@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mental_health/base/BaseRepository.dart';
 import 'package:mental_health/data/api/ApiEndPoint.dart';
-import 'package:mental_health/models/CreateCounsellorModel.dart';
+import 'package:mental_health/models/CreateCounsellorModal.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 
