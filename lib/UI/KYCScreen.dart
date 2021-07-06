@@ -5,7 +5,6 @@ import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:nb_utils/nb_utils.dart' as toast;
 
-
 bool isKyc = false;
 class KYCScreen extends StatefulWidget {
   const KYCScreen({Key key}) : super(key: key);
@@ -14,9 +13,7 @@ class KYCScreen extends StatefulWidget {
 }
 
 class _KYCScreenState extends State<KYCScreen> {
-
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   TextEditingController  panCardNumber = TextEditingController();
   TextEditingController beneficiaryName = TextEditingController();
   TextEditingController bankName = TextEditingController();
@@ -32,8 +29,6 @@ class _KYCScreenState extends State<KYCScreen> {
   int _currVal = 1;
   String _currText = 'Savings';
   String radioGroupValue = "";
-
-
 
   List<GroupModel> _group = [
     GroupModel(
