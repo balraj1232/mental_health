@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health/UI/AboutSAL.dart';
 import 'package:mental_health/UI/Assessments.dart';
-import 'package:mental_health/UI/Availabilty.dart';
+import 'package:mental_health/UI/AvailabilityFirst.dart';
+import 'package:mental_health/UI/Availabilty1.dart';
 import 'package:mental_health/UI/Cafe1.dart';
 import 'package:mental_health/UI/Cafe2.dart';
 import 'package:mental_health/UI/Cafe3.dart';
@@ -74,6 +75,7 @@ class MentalHealth extends StatelessWidget {
         '/AboutSAL' : (context)=> AboutSAL(),
         '/Help' : (context)=> Help(),
         '/Settings' : (context)=> Settings(),
+        '/AvailabilityFirst' : (context)=> AvailabilityFirst(),
       },
     );
   }

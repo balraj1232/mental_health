@@ -93,6 +93,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
             ListTile(
               title: Text("My Availability"),
               leading: ImageIcon(Image.asset('assets/icons/availability.png').image),
+              onTap: (){
+                Navigator.of(context).pushNamed('/AvailabilityFirst');
+              },
             ),
             ListTile(
               title: Text("Bookings"),
@@ -111,6 +114,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
             ListTile(
               title: Text("Assessments"),
               leading: ImageIcon(Image.asset('assets/icons/assessments.png').image),
+              onTap: (){
+                Navigator.of(context).pushNamed('/Assessments');
+              },
             ),
             ListTile(
               title: Text("Payments"),

@@ -50,16 +50,21 @@ class _NavigationBarState extends State<NavigationBar> {
             padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
         ),
             label: "Home"),
-        BottomNavigationBarItem(icon: Container(child:
-        Image.asset('assets/icons/nav booking.png',
-          color: widget.index == 1 ?Colors.white:Color(fontColorGray),
-          scale: SizeConfig.blockSizeVertical * 0.4,),
-          decoration: BoxDecoration(
-              color: widget.index == 1 ?Color(backgroundColorBlue): Colors.white,
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(5)
-          ),
-          padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
+        BottomNavigationBarItem(icon: InkWell(
+          onTap: (){
+            Navigator.of(context).pushReplacementNamed('/Cafe1');
+          },
+          child: Container(child:
+          Image.asset('assets/icons/nav booking.png',
+            color: widget.index == 1 ?Colors.white:Color(fontColorGray),
+            scale: SizeConfig.blockSizeVertical * 0.4,),
+            decoration: BoxDecoration(
+                color: widget.index == 1 ?Color(backgroundColorBlue): Colors.white,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5)
+            ),
+            padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
+        ),
             label: "Booking"),
         BottomNavigationBarItem(icon: InkWell(
           onTap: (){
