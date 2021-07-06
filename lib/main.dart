@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mental_health/UI/Appointments.dart';
 import 'package:mental_health/UI/AboutSAL.dart';
 import 'package:mental_health/UI/Assessments.dart';
-import 'package:mental_health/UI/Availabilty.dart';
+import 'package:mental_health/UI/AvailabilityFirst.dart';
+import 'package:mental_health/UI/Availabilty1.dart';
 import 'package:mental_health/UI/PastAppointments.dart';
 import 'package:mental_health/UI/Cafe3.dart';
 import 'package:mental_health/UI/ExploreAll.dart';
@@ -61,8 +62,8 @@ class MentalHealth extends StatelessWidget {
         '/Cafe1' : (context)=> AppointmentsScreen(),
         '/Cafe2' : (context)=> Cafe2(),
         '/Cafe3' : (context)=> Cafe3(),
-        '/CancelAppointment' : (context)=> CancelAppointment(),
         '/MyProfile' : (context)=> MyProfile(),
+        '/CancelAppointment' : (context)=> CancelAppointment(),
         '/MyContent' : (context)=> MyContent(),
         '/Home2' : (context)=> Home2(),
         '/KYC' : (context)=> KYCScreen(),
@@ -74,6 +75,7 @@ class MentalHealth extends StatelessWidget {
         '/AboutSAL' : (context)=> AboutSAL(),
         '/Help' : (context)=> Help(),
         '/Settings' : (context)=> Settings(),
+        '/AvailabilityFirst' : (context)=> AvailabilityFirst(),
       },
     );
   }

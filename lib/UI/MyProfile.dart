@@ -1,8 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mental_health/UI/Info%203.dart';
+import 'package:mental_health/UI/Info 3.dart';
 import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/UI/Price3.dart';
 import 'package:mental_health/Utils/Colors.dart';

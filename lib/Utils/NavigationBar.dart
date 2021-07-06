@@ -50,9 +50,9 @@ class _NavigationBarState extends State<NavigationBar> {
         ),
             label: "Home"),
         BottomNavigationBarItem(icon: InkWell(
-        onTap: (){
-        Navigator.of(context).pushReplacementNamed('/Cafe1');
-        },
+          onTap: (){
+            Navigator.of(context).pushReplacementNamed('/Cafe1');
+          },
           child: Container(child:
           Image.asset('assets/icons/nav booking.png',
             color: widget.index == 1 ?Colors.white:Color(fontColorGray),

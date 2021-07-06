@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/CommonWidgets.dart';
+import 'package:mental_health/Utils/DrawerMenu.dart';
 import 'package:mental_health/Utils/ListTileCafe1.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/constant/AppColor.dart';
@@ -147,114 +148,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
           ],
         ),
       ),
-      drawer: Drawer(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: SizeConfig.screenWidth,
-              height: SizeConfig.screenHeight * 0.28,
-              color: Color(backgroundColorBlue),
-              child: Column(
-                children: [
-                  Container(
-                    width: SizeConfig.screenWidth,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(
-                      top: SizeConfig.blockSizeVertical * 3,
-                    ),
-                    child: CircleAvatar(
-                      radius: SizeConfig.blockSizeVertical * 5,
-                      backgroundImage: AssetImage('assets/bg/profile.png'),
-                    ),
-                  ),
-                  Container(
-                    width: SizeConfig.screenWidth,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(
-                      top: SizeConfig.blockSizeVertical * 2
-                    ),
-                    child: Text("Sushmita Sinha",
-                    style: GoogleFonts.openSans(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: SizeConfig.blockSizeVertical * 2
-                    ),),
-                  ),
-                  Container(
-                    width: SizeConfig.screenWidth,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(
-                      top: SizeConfig.blockSizeVertical * 1.5,
-                    ),
-                    child: Text("Complete your profile (60%)",
-                    style: GoogleFonts.openSans(
-                      color: Colors.white,
-                      fontSize: SizeConfig.blockSizeVertical * 1.5,
-                    ),),
-                  ),
-                  Container(
-                    width: SizeConfig.screenWidth,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(
-                      top: SizeConfig.blockSizeVertical * 1.5,
-                      left: SizeConfig.screenWidth * 0.2,
-                      right: SizeConfig.screenWidth * 0.2,
-                    ),
-                    child: LinearProgressIndicator(
-                      backgroundColor: Color(midnightBlue),
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      value: 0.6,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 3,
-            ),
-            ListTile(
-              title: Text("My Profile"),
-              leading: ImageIcon(Image.asset('assets/icons/user.png').image),
-              onTap: (){
-                Navigator.of(context).pushNamed('/MyProfile');
-              },
-            ),
-            ListTile(
-              title: Text("My Availability"),
-              leading: ImageIcon(Image.asset('assets/icons/availability.png').image),
-            ),
-            ListTile(
-              title: Text("My Content"),
-              leading: ImageIcon(Image.asset('assets/icons/content.png').image),
-              onTap: (){
-                Navigator.of(context).pushNamed('/MyContent');
-              },
-            ),
-            ListTile(
-              title: Text("Assessments"),
-              leading: ImageIcon(Image.asset('assets/icons/assessments.png').image),
-            ),
-            ListTile(
-              title: Text("Payments"),
-              leading: ImageIcon(Image.asset('assets/icons/payment.png').image),
-            ),
-            ListTile(
-              title: Text("Help"),
-              leading: ImageIcon(Image.asset('assets/icons/help.png').image),
-            ),
-            ListTile(
-              title: Text("About SAL"),
-              leading: ImageIcon(Image.asset('assets/icons/about.png').image),
-            ),
-            ListTile(
-              title: Text("Settings"),
-              leading: ImageIcon(Image.asset('assets/icons/settings.png').image),
-            ),
-          ],
-        ),
-      ),
+      drawer: DrawerMenu(),
 
     ),
     );
