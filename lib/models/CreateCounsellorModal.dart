@@ -1,10 +1,10 @@
-class CreateCounsellorModel {
+class CreateTherapistProfileModal {
   Meta meta;
   String therapistId;
 
-  CreateCounsellorModel({this.meta, this.therapistId});
+  CreateTherapistProfileModal({this.meta, this.therapistId});
 
-  CreateCounsellorModel.fromJson(Map<String, dynamic> json) {
+  CreateTherapistProfileModal.fromJson(Map<String, dynamic> json) {
     meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
     therapistId = json['therapist_id'];
   }

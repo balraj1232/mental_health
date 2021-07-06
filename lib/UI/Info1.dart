@@ -7,8 +7,10 @@ import 'package:mental_health/Utils/ActionSheet.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
-int radioValue = -1;
+int selectSocialProfile = -1;
 bool selected = false;
+File certificateImage;
+File adhaarCardImage;
 
 class Info1 extends StatefulWidget {
   const Info1({Key key}) : super(key: key);
@@ -18,10 +20,6 @@ class Info1 extends StatefulWidget {
 }
 
 class _Info1State extends State<Info1> {
-  File certificateImage;
-  File adhaarCardImage;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -149,9 +147,9 @@ class _Info1State extends State<Info1> {
                 ),
                 child: RadioListTile(
                   dense: true,
-                  value: 1, groupValue: radioValue, onChanged: (value){
+                  value: 1, groupValue: selectSocialProfile, onChanged: (value){
                   setState(() {
-                    radioValue = value;
+                    selectSocialProfile = value;
                     selected = true;
                   });
                 },
@@ -175,9 +173,9 @@ class _Info1State extends State<Info1> {
                 ),
                 child: RadioListTile(
                   dense: true,
-                  value: 2, groupValue: radioValue, onChanged: (value){
+                  value: 2, groupValue: selectSocialProfile, onChanged: (value){
                   setState(() {
-                    radioValue = value;
+                    selectSocialProfile = value;
                     selected = true;
                   });
                 },

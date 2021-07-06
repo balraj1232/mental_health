@@ -3,32 +3,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mental_health/UI/Cafe1.dart';
-import 'package:mental_health/UI/Info2.dart';
-import 'package:mental_health/UI/LoginScreen.dart';
-import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/UI/Price4.dart';
 import 'package:mental_health/Utils/ActionSheet.dart';
-import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
-import 'package:mental_health/constant/AppColor.dart';
-import 'package:mental_health/constant/StringConstant.dart';
 import 'package:mental_health/data/repo/LoginUser.dart';
 
-
-File _image;
+File image;
 class Info3 extends StatefulWidget {
   const Info3({Key key}) : super(key: key);
-
   @override
   _Info3State createState() => _Info3State();
 }
 
 class _Info3State extends State<Info3> {
-
-  var createUser = CreateCounsellorRepo();
+  var createUser = CreateTherapistProfileRepo();
   final GlobalKey<State> loginLoader = new GlobalKey<State>();
 
   @override
@@ -98,9 +88,9 @@ class _Info3State extends State<Info3> {
                           height: 90,width: 90,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image:  _image != null
+                                  image:  image != null
                                       ? FileImage(
-                                      File(_image.path))
+                                      File(image.path))
                                       : AssetImage(
                                       "assets/icons/user.png"),
                                   fit: BoxFit.fill),
@@ -173,9 +163,9 @@ class _Info3State extends State<Info3> {
                           return Price4();
                         }));
               });
-               /* createUser
+          /*      createUser
                     .createCounsellor(
-                 aadhar: "", about: aboutController.text, certificate: "", context:context , device_id: "",education: "",email: "",experience: "",first_name: firstNameController.text,gender: radioValue,language_ids: "",last_name: lastNameController.text, linkedin:"" ,phone: mobileController.text,photo: "",price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
+                 aadhar: adhaarCardImage, about: aboutController.text, certificate: certificateImage, context:context , device_id: ,education: ,email: "",experience: "",first_name: firstNameController.text,gender: radioValue,language_ids: selectedVal,last_name: lastNameController.text, linkedin:"" ,phone: mobileController.text,photo: _image,price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
 
                 )
                     .then((value) {
@@ -185,14 +175,14 @@ class _Info3State extends State<Info3> {
                           rootNavigator: true)
                           .pop();
                       //toast(value.meta.message);
-                      *//*  SharedPreferencesTest().checkIsLogin("0");
+                       *//* SharedPreferencesTest().checkIsLogin("0");
                                           SharedPreferencesTest()
                                               .saveToken("set", value: value.token);*//*
 
                       Navigator.push(context,
                           MaterialPageRoute(
                               builder: (conext) {
-                                return Cafe1(
+                                return AppointmentsScreen(
                                 );
                               }));
                     } else {
@@ -250,14 +240,14 @@ class _Info3State extends State<Info3> {
     ).then((value) async {
       setState(() {
         FocusScope.of(context).unfocus();
-        _image = new File(value.path);
+        image = new File(value.path);
       });
-      if(_image.path != null){
+      if(image.path != null){
       }
     }).catchError((error) {
       print(error.toString());
     });
-    return _image;
+    return image;
   }
 
 
@@ -270,14 +260,14 @@ class _Info3State extends State<Info3> {
     ).then((value) async {
       setState(() {
         FocusScope.of(context).unfocus();
-        _image = new File(value.path);
+        image = new File(value.path);
       });
-      if(_image.path != null){
+      if(image.path != null){
 
       }
     }).catchError((error) {
       print(error.toString());
     });
-    return _image;
+    return image;
   }
 }

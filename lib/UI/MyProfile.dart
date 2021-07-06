@@ -1,5 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/Info 3.dart';
+import 'package:mental_health/UI/Price2.dart';
+import 'package:mental_health/UI/Price3.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
@@ -52,13 +56,13 @@ class _MyProfileState extends State<MyProfile> {
                           style: GoogleFonts.openSans(
                             color: Colors.white,
                           ),),
-                        actions: [
+                        /*actions: [
                           Padding(
                             padding:EdgeInsets.only(
                               right: SizeConfig.screenWidth * 0.05,),
                             child: Icon(Icons.edit_outlined,color: Colors.white,),
                           )
-                        ],
+                        ],*/
                       ),
                       Container(
                         width: SizeConfig.screenWidth,
@@ -74,15 +78,17 @@ class _MyProfileState extends State<MyProfile> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: ClipRRect(
-                            child: Image.asset('assets/bg/profile.png'),
+                            child: image.path != null && image.path != "" ? Image.file(
+                                File(image.path)):Image.asset('assets/bg/profile.png'),
                             borderRadius: BorderRadius.circular(15),
                           ),
                         ),
                       ),
                       Container(
+                        margin: EdgeInsets.only(top: 8),
                         width: SizeConfig.screenWidth,
                         alignment: Alignment.center,
-                        child: Text("Dr. Sushmita Sinha",
+                        child: Text(firstNameController.text + " " + lastNameController.text,
                           style: GoogleFonts.openSans(
                               color: Color(backgroundColorBlue),
                               fontSize: SizeConfig.blockSizeVertical * 2.5,
@@ -149,7 +155,7 @@ class _MyProfileState extends State<MyProfile> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text("500",
+                                Text("0",
                                   style: GoogleFonts.openSans(
                                       color: Color(backgroundColorBlue),
                                       fontSize: SizeConfig.blockSizeVertical * 4,
@@ -184,7 +190,7 @@ class _MyProfileState extends State<MyProfile> {
                             left: SizeConfig.screenWidth * 0.05,
                             right: SizeConfig.screenWidth * 0.05
                         ),
-                        child: Text("Sushmita has been a therapist for many years and believes in helping people wholeheartedly. She wants to provide her services to... see more ",
+                        child: Text("${firstNameController.text + " " + lastNameController.text} has been a therapist for many years and believes in helping people wholeheartedly. She wants to provide her services to... see more ",
                           style: GoogleFonts.openSans(
                               color: Color(fontColorGray),
                               fontSize: SizeConfig.blockSizeVertical * 1.75
@@ -293,22 +299,7 @@ class _MyProfileState extends State<MyProfile> {
                               height: SizeConfig.blockSizeVertical * 6,
                               width: SizeConfig.screenWidth * 0.3,
                               alignment: Alignment.center,
-                              child: Text("English",
-                                style: GoogleFonts.openSans(
-                                    color: Color(backgroundColorBlue),
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: SizeConfig.blockSizeVertical * 1.75
-                                ),),
-                              decoration: BoxDecoration(
-                                  color: Color(0XFFE4F0F8),
-                                  borderRadius: BorderRadius.circular(20)
-                              ),
-                            ),
-                            Container(
-                              height: SizeConfig.blockSizeVertical * 6,
-                              width: SizeConfig.screenWidth * 0.3,
-                              alignment: Alignment.center,
-                              child: Text("Hindi",
+                              child: Text(selectedVal,
                                 style: GoogleFonts.openSans(
                                     color: Color(backgroundColorBlue),
                                     fontWeight: FontWeight.w600,

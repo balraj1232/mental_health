@@ -25,20 +25,6 @@ showAlertDialog(BuildContext context, String message, String type,
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Container(
-                alignment: Alignment.bottomRight,
-                child: SvgPicture.
-                asset(
-                  "assets/cancelIcon.svg",
-                  width: 12,
-                  height: 15,
-                ),
-              ),
-            ),
             Container(
               margin: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 1),
               alignment: Alignment.center,

@@ -3,27 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
-
-
-
-bool engCheckBox = false;
-bool hindiCheckBox = false;
-bool tamilCheckBox = false;
-bool gujaratiCheckBox = false;
-bool teluguCheckBox = false;
-bool urduCheckBox = false;
-bool punjabiCheckBox = false;
-bool bengaliCheckBox = false;
-bool marathiCheckBox = false;
-bool kannadaCheckBox = false;
-bool odiaCheckBox = false;
-bool malayalamCheckBox = false;
-bool assamCheckBox = false;
-bool maithiliCheckBox = false;
-bool sanskritCheckBox = false;
-bool selected = false;
-
-
+String selectedVal;
 class Price3 extends StatefulWidget {
   const Price3({Key key}) : super(key: key);
 
@@ -32,8 +12,24 @@ class Price3 extends StatefulWidget {
 }
 
 class _Price3State extends State<Price3> {
-
-
+  bool selected = false;
+  Map<String, bool> values = {
+    'English': false,
+    'Hindi': false,
+    'Tamil': false,
+    'Gujarati': false,
+    'Telugu': false,
+    'Urdu': false,
+    'Punjabi': false,
+    'Bengali': false,
+    'Marathi': false,
+    'Kannada': false,
+    'Odia': false,
+    'Malayalam': false,
+    'Asamese': false,
+    'Maithili':false,
+    'Sanskrit':false
+  };
 
 
   @override
@@ -74,7 +70,23 @@ class _Price3State extends State<Price3> {
                   color: Color(fontColorSteelGrey)
               ),),
             ),
-            ListView(
+        ListView(
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          children: values.keys.map((String key) {
+            return new CheckboxListTile(
+              title: Text(key),
+              value: values[key],
+              onChanged: (bool value) {
+                setState(() {
+                  values[key] = value;
+                  selectedVal = key;
+                });
+              },
+            );
+          }).toList(),
+        ),
+/*            ListView(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               padding: EdgeInsets.all(SizeConfig.blockSizeVertical),
@@ -230,7 +242,7 @@ class _Price3State extends State<Price3> {
                   checkColor: Colors.white,
                 ),
               ],
-            ),
+            )*/
           ],
         ),
       ),
@@ -244,3 +256,4 @@ class _Price3State extends State<Price3> {
     ));
   }
 }
+

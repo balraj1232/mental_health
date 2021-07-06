@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
 import 'Colors.dart';
@@ -44,7 +45,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     margin: EdgeInsets.only(
                         top: SizeConfig.blockSizeVertical * 2
                     ),
-                    child: Text("Sushmita Sinha",
+                    child: Text(firstNameController.text + " " +  lastNameController.text,
                       style: GoogleFonts.openSans(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

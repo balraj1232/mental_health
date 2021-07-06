@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
-
 import 'Colors.dart';
 
 class NavigationBar extends StatefulWidget {
@@ -96,9 +95,7 @@ class _NavigationBarState extends State<NavigationBar> {
           ),
           padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
             label: "Cafe"),
-
       ],
-
     );
   }
 }
