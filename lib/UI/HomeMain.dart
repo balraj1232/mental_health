@@ -1,12 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/UI/Price2.dart';
+import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/CommonWidgets.dart';
 import 'package:mental_health/Utils/DrawerMenu.dart';
 import 'package:mental_health/Utils/ListTileAppointment.dart';
 import 'package:mental_health/Utils/NavigationBar.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/Utils/TimeAgoWidget.dart';
+import 'package:mental_health/data/repo/getHomeContentRepo.dart';
+import 'package:mental_health/models/GetHomeContentModal.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key key}) : super(key: key);
@@ -17,20 +22,73 @@ class HomeMain extends StatefulWidget {
 
 class _HomeMainState extends State<HomeMain> {
   Future<void> _launched;
-  List<String> images = ['assets/bg/gridCard1.png',
-    'assets/bg/gridCard2.png',
-    'assets/bg/gridCard1.png',
-    'assets/bg/gridCard4.png','assets/bg/gridCard4.png','assets/bg/gridCard4.png'];
+  bool isloding = false;
+  var getHomeContent = GetHomePageContentRepo();
+  var getHomeContentModal = GetHomeContentModal();
 
-  List<Color> colors = [Color.fromRGBO(42, 138, 163, 0.75),
+
+  List<Color> colors = [
+    Color.fromRGBO(42, 138, 163, 0.75),
     Color.fromRGBO(48, 37, 33, 0.75),
     Color.fromRGBO(42, 138, 163, 0.75),
-    Color.fromRGBO(0, 90, 100, 0.75),Color.fromRGBO(0, 90, 100, 0.75),Color.fromRGBO(0, 90, 100, 0.75)];
+    Color.fromRGBO(0, 90, 100, 0.75),
+    Color.fromRGBO(0, 90, 100, 0.75),
+    Color.fromRGBO(0, 90, 100, 0.75),
+    Color.fromRGBO(42, 138, 163, 0.75),
+    Color.fromRGBO(48, 37, 33, 0.75),
+    Color.fromRGBO(42, 138, 163, 0.75),
+    Color.fromRGBO(0, 90, 100, 0.75),
+    Color.fromRGBO(0, 90, 100, 0.75),
+    Color.fromRGBO(0, 90, 100, 0.75),
+  ];
 
-  List<String> desc = ["How to have a\npeaceful mind",
-    "Worlds of the\nwaterfall",
-    "How to have a\npeaceful mind",
-    "Worlds of the\nwaterfall","Worlds of the\nwaterfall","Worlds of the\nwaterfall"];
+  @override
+  void initState() {
+    super.initState();
+    isloding = true;
+    getHomeContent
+        .getHomeContent(
+      context: context,
+    )
+        .then((value) {
+      if (value != null) {
+        if (value.meta.status == "200") {
+          setState(() {
+            isloding = false;
+            getHomeContentModal = value;
+          });
+        } else {
+          setState(() {
+            isloding = false;
+          });
+          showAlertDialog(
+            context,
+            value.meta.message,
+            "",
+          );
+        }
+      } else {
+        setState(() {
+          isloding = false;
+        });
+        showAlertDialog(
+          context,
+          value.meta.message,
+          "",
+        );
+      }
+    }).catchError((error) {
+      setState(() {
+        isloding = false;
+      });
+      showAlertDialog(
+        context,
+        error.toString(),
+        "",
+      );
+    });
+  }
+
 
 
   @override
@@ -190,60 +248,105 @@ class _HomeMainState extends State<HomeMain> {
                       Container(
                         margin: EdgeInsets.symmetric(
                             horizontal: SizeConfig.screenWidth * 0.02,
-                            vertical: SizeConfig.blockSizeVertical
-                        ),
-                        child: GridView.builder(
+                            vertical: SizeConfig.blockSizeVertical * 2),
+                        child: getHomeContentModal != null &&
+                            getHomeContentModal.articles != null &&
+                            getHomeContentModal.articles.length > 0
+                            ? GridView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           primary: false,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                          SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               crossAxisSpacing: 8,
-                              mainAxisSpacing: 8
-                          ), itemBuilder: (BuildContext context, int index){
-                          return Container(
-                            width: SizeConfig.screenWidth * 0.4,
-                            alignment: Alignment.bottomCenter,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(
-                                  image: Image.asset(images[index]).image,
-                                  fit: BoxFit.cover
-                              ),
-                            ),
-                            child: Container(
-                              width: SizeConfig.screenWidth,
-                              padding: EdgeInsets.only(
-                                  left: SizeConfig.screenWidth * 0.02,
-                                  right: SizeConfig.screenWidth * 0.02
-                              ),
-                              height: SizeConfig.blockSizeVertical * 8,
-                              alignment: Alignment.center,
+                              mainAxisSpacing: 8),
+                          itemBuilder: (BuildContext context, int index) {
+                            /* if(colors.length < getHomeContentModal.articles.length){
+                                    colors.addAll(colors);
+                                  }*/
+                            return Container(
+                              width: SizeConfig.screenWidth * 0.4,
+                              alignment: Alignment.bottomCenter,
                               decoration: BoxDecoration(
-                                  color: colors[index],
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(20),
-                                      bottomLeft: Radius.circular(20)
-                                  )
+                                borderRadius: BorderRadius.circular(20),
+                                image: DecorationImage(
+                                  image: getHomeContentModal != null &&
+                                      getHomeContentModal
+                                          .articles.length >
+                                          0 &&
+                                      getHomeContentModal.articles
+                                          .elementAt(index)
+                                          .photo !=
+                                          null &&
+                                      getHomeContentModal.articles
+                                          .elementAt(index)
+                                          .photo !=
+                                          ""
+                                      ? CachedNetworkImageProvider(
+                                      "https://sal-prod.s3.ap-south-1.amazonaws.com/" +
+                                          getHomeContentModal.articles
+                                              .elementAt(index)
+                                              .photo)
+                                      : AssetImage(
+                                    "assets/bg/gridCard1.png",
+                                  ),
+                                ),
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(desc[index],
-                                    style: GoogleFonts.openSans(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600
-                                    ),),
-                                  Text("3m",
-                                    style: GoogleFonts.openSans(
-                                      color: Colors.white,
-                                    ),),
-                                ],
+                              child: Container(
+                                width: SizeConfig.screenWidth,
+                                padding: EdgeInsets.only(
+                                    left: SizeConfig.screenWidth * 0.02,
+                                    right: SizeConfig.screenWidth * 0.02),
+                                height: SizeConfig.blockSizeVertical * 8,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: colors[index],
+                                    borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(20),
+                                        bottomLeft: Radius.circular(20))),
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      getHomeContentModal != null &&
+                                          getHomeContentModal
+                                              .articles.length >
+                                              0
+                                          ? getHomeContentModal.articles
+                                          .elementAt(index)
+                                          .title
+                                          : "",
+                                      style: GoogleFonts.openSans(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,fontSize: SizeConfig.blockSizeVertical  * 2),
+                                    ),
+                                    Text(
+                                      timeAgo(DateTime.parse(
+                                          getHomeContentModal.articles
+                                              .elementAt(index)
+                                              .createdAt)),
+                                      style: GoogleFonts.openSans(
+                                          color: Colors.white,
+                                          fontSize: SizeConfig
+                                              .blockSizeVertical *
+                                              1.75),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                          itemCount: images.length,),
+                            );
+                          },
+                          itemCount: getHomeContentModal.articles !=
+                              null &&
+                              getHomeContentModal.articles.length > 0
+                              ? getHomeContentModal.articles.length
+                              : 0,
+                        )
+                            : Container(
+                          child: Center(child: Text("No content found")),
+                        ),
                       )
                     ],
                   ),
@@ -258,4 +361,10 @@ class _HomeMainState extends State<HomeMain> {
 
     ));
   }
+
+
+
+
 }
+
+

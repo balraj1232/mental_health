@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health/base/BaseRepository.dart';
 import 'package:dio/dio.dart';
+import 'package:mental_health/models/GetHomeContentModal.dart';
 import 'package:mental_health/models/GetTherapistContentModal.dart';
 
 
-class GetTherapistContentRepo extends BaseRepository {
+class GetHomePageContentRepo extends BaseRepository {
 
-  Future<GetTherapistContentModal> getContent({String therapistId,
+  Future<GetHomeContentModal> getHomeContent({String therapistId,
     BuildContext context,
   }) async {
-    final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/training?therapist_id=p68iu';
+    final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/home?therapist_id=p68iu';
     var response = await Dio().get(uri,
         options: Options(
           headers: {
@@ -18,10 +19,10 @@ class GetTherapistContentRepo extends BaseRepository {
         ));
     try {
       if (response.data != null) {
-        final passEntity = GetTherapistContentModal.fromJson(response.data);
+        final passEntity = GetHomeContentModal.fromJson(response.data);
         return passEntity;
       } else {
-        return GetTherapistContentModal(meta: response.data);
+        return GetHomeContentModal(meta: response.data);
       }
     } catch (error, stacktrace) {}
   }

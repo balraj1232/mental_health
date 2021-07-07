@@ -226,7 +226,7 @@ class _Cafe2State extends State<Cafe2> {
                   : Container(
                       child: Center(
                           child: Text(
-                        "No Upcoming Appointments",
+                        "No Past Appointments",
                         style: TextStyle(color: Colors.black),
                       )),
                     ),
