@@ -40,10 +40,12 @@ class _KYCScreenState extends State<KYCScreen> {
       index: 2,
     ),
   ];
+
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
     panCardFn = FocusNode();
     beneficiaryNameFn = FocusNode();
     bankNameFn = FocusNode();
@@ -54,7 +56,7 @@ class _KYCScreenState extends State<KYCScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+
     panCardFn.dispose();
     beneficiaryNameFn.dispose();
     bankNameFn.dispose();

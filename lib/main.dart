@@ -30,7 +30,6 @@ import 'package:mental_health/UI/Price5.dart';
 import 'package:mental_health/UI/ProfessionalInfo1.dart';
 import 'package:mental_health/UI/ProfessionalInfo2.dart';
 import 'package:mental_health/UI/Settings.dart';
-import 'package:mental_health/UI/SplashScreen.dart';
 import 'UI/CancelAppointment.dart';
 import 'UI/LoginScreen.dart';
 
@@ -49,7 +48,7 @@ class MentalHealth extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'OpenSans',
       ),
-      home: Home2(),
+      home: HomeMain(),
       routes: {
         '/Login': (context) => LoginScreen(),
         '/OTP': (context) => OTPScreen(),

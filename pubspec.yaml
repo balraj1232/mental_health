@@ -38,6 +38,8 @@ dependencies:
   url_launcher:
   intl: ^0.17.0
   date_format: ^2.0.2
+  cached_network_image: ^3.0.0
+
 
 
 dev_dependencies:
