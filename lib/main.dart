@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health/UI/AddNewEvent.dart';
 import 'package:mental_health/UI/Appointments.dart';
 import 'package:mental_health/UI/AboutSAL.dart';
 import 'package:mental_health/UI/Assessments.dart';
 import 'package:mental_health/UI/AvailabilityFirst.dart';
 import 'package:mental_health/UI/Availabilty1.dart';
+import 'package:mental_health/UI/CafeEvents.dart';
+import 'package:mental_health/UI/CafeEventsDetails.dart';
+import 'package:mental_health/UI/EventSummary.dart';
 import 'package:mental_health/UI/PastAppointments.dart';
 import 'package:mental_health/UI/Cafe3.dart';
 import 'package:mental_health/UI/ExploreAll.dart';
@@ -76,6 +80,10 @@ class MentalHealth extends StatelessWidget {
         '/Help' : (context)=> Help(),
         '/Settings' : (context)=> Settings(),
         '/AvailabilityFirst' : (context)=> AvailabilityFirst(),
+        '/CafeEvents' : (context)=> CafeEvents(),
+        '/CafeEventsDetails' : (context)=> CafeEventsDetails(),
+        '/AddNewEvent' : (context)=> AddNewEvent(),
+        '/EventSummary' : (context)=> EventSummary(),
       },
     );
   }

@@ -83,17 +83,22 @@ class _NavigationBarState extends State<NavigationBar> {
         ),
             label: "Explore",
         ),
-        BottomNavigationBarItem(icon: Container(child:
-        Image.asset('assets/icons/nav cafe.png',
-          scale: SizeConfig.blockSizeVertical * 0.4,
-          color: widget.index == 3 ?Colors.white:Color(fontColorGray),
-        ),
-          decoration: BoxDecoration(
-              color: widget.index == 3?Color(backgroundColorBlue): Colors.white,
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(5)
+        BottomNavigationBarItem(icon: InkWell(
+          onTap: (){
+            Navigator.of(context).pushNamed('/CafeEvents');
+          },
+          child: Container(child:
+          Image.asset('assets/icons/nav cafe.png',
+            scale: SizeConfig.blockSizeVertical * 0.4,
+            color: widget.index == 3 ?Colors.white:Color(fontColorGray),
           ),
-          padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
+            decoration: BoxDecoration(
+                color: widget.index == 3?Color(backgroundColorBlue): Colors.white,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5)
+            ),
+            padding: EdgeInsets.all(SizeConfig.blockSizeVertical),),
+        ),
             label: "Cafe"),
       ],
     );
