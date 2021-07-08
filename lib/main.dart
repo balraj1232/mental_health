@@ -7,6 +7,7 @@ import 'package:mental_health/UI/AvailabilityFirst.dart';
 import 'package:mental_health/UI/Availabilty1.dart';
 import 'package:mental_health/UI/CafeEvents.dart';
 import 'package:mental_health/UI/CafeEventsDetails.dart';
+import 'package:mental_health/UI/EventSuccessful.dart';
 import 'package:mental_health/UI/EventSummary.dart';
 import 'package:mental_health/UI/PastAppointments.dart';
 import 'package:mental_health/UI/Cafe3.dart';
@@ -83,6 +84,7 @@ class MentalHealth extends StatelessWidget {
         '/CafeEventsDetails' : (context)=> CafeEventsDetails(),
         '/AddNewEvent' : (context)=> AddNewEvent(),
         '/EventSummary' : (context)=> EventSummary(),
+        '/EventSuccess' : (context)=> EventSuccessful(),
       },
     );
   }

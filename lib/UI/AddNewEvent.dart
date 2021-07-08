@@ -150,6 +150,7 @@ class _AddNewEventState extends State<AddNewEvent> {
                     child: TextFormField(
                       focusNode: eventNameFn,
                       controller: eventName,
+                      textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -183,6 +184,10 @@ class _AddNewEventState extends State<AddNewEvent> {
                             fontWeight: FontWeight.w400,
                             fontSize: SizeConfig.blockSizeVertical * 1.75),
                       ),
+                      onFieldSubmitted: (value){
+                        eventNameFn.unfocus();
+                        FocusScope.of(context).requestFocus(eventDescFn);
+                      },
                     ),
                   ),
                   Container(
@@ -206,6 +211,7 @@ class _AddNewEventState extends State<AddNewEvent> {
                     child: TextFormField(
                       focusNode: eventDescFn,
                       controller: eventDesc,
+                      textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -239,6 +245,10 @@ class _AddNewEventState extends State<AddNewEvent> {
                             fontWeight: FontWeight.w400,
                             fontSize: SizeConfig.blockSizeVertical * 1.75),
                       ),
+                      onFieldSubmitted: (value){
+                        eventDescFn.unfocus();
+                        FocusScope.of(context).requestFocus(eventTopicFn);
+                      },
                     ),
                   ),
                   Container(
@@ -390,6 +400,10 @@ class _AddNewEventState extends State<AddNewEvent> {
                               ),
                             ),
                           ),
+                          onFieldSubmitted: (value){
+                            eventDateFn.unfocus();
+                            FocusScope.of(context).requestFocus(eventTimeFn);
+                          },
                           onTap: () {
                             selectDate(context);
                           },
@@ -398,6 +412,7 @@ class _AddNewEventState extends State<AddNewEvent> {
                       onTap: () {
                         selectDate(context);
                       },
+
                     ),
                   ),
                   Container(
@@ -472,6 +487,10 @@ class _AddNewEventState extends State<AddNewEvent> {
                               ),
                             ),
                           ),
+                          onFieldSubmitted: (value){
+                            eventTimeFn.unfocus();
+                          },
+                          textInputAction: TextInputAction.done,
                           onTap: () {
                             _selectFromTime(context);
                           },
