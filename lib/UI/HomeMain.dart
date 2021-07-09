@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/NotificationScreen.dart';
 import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
@@ -10,6 +11,7 @@ import 'package:mental_health/Utils/ListTileAppointment.dart';
 import 'package:mental_health/Utils/NavigationBar.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/Utils/TimeAgoWidget.dart';
+import 'package:mental_health/constant/AppColor.dart';
 import 'package:mental_health/data/repo/getHomeContentRepo.dart';
 import 'package:mental_health/models/GetHomeContentModal.dart';
 
@@ -94,7 +96,8 @@ class _HomeMainState extends State<HomeMain> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return SafeArea(child: Scaffold(
+    List<Widget> widgetList = new List<Widget>();
+    var child = SafeArea(child: Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -121,10 +124,17 @@ class _HomeMainState extends State<HomeMain> {
                         backgroundColor: Colors.transparent,
                         elevation: 0.0,
                         actions: [
-                          Container(
-                            margin:EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 5),
-                            child: Icon(Icons.notifications_none_sharp,
-                              color: Colors.white,),
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context){
+                                return NotificationsScreen();
+                              }));
+                            },
+                            child: Container(
+                              margin:EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 5),
+                              child: Icon(Icons.notifications_none_sharp,
+                                color: Colors.white,),
+                            ),
                           ),
                         ],
                       ),
@@ -360,6 +370,25 @@ class _HomeMainState extends State<HomeMain> {
       bottomNavigationBar: NavigationBar(index: 0,),
 
     ));
+
+    widgetList.add(child);
+    if (isloding) {
+      final modal = new Stack(
+        children: [
+          new Opacity(
+            opacity: 0.5,
+            child: ModalBarrier(dismissible: false, color: Colors.grey),
+          ),
+          new Center(
+            child: new CircularProgressIndicator(
+              valueColor: new AlwaysStoppedAnimation<Color>(colorPrimary),
+            ),
+          ),
+        ],
+      );
+      widgetList.add(modal);
+    }
+    return Stack(children: widgetList);
   }
 
 

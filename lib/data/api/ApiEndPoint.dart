@@ -3,7 +3,6 @@ class ApiEndpoint {
   static String sendOtp = "sendotp";
   static String registerCounsellor = "therapist";
   static String verifyOtp = "verifyotp";
+  static String bookAnEvent = "event/order";
 
 }
-
-

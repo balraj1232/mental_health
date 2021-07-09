@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/NotificationScreen.dart';
 import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/DrawerMenu.dart';
@@ -11,6 +12,7 @@ import 'package:mental_health/constant/AppColor.dart';
 import 'package:mental_health/data/repo/getHomeContentRepo.dart';
 import 'package:mental_health/models/GetHomeContentModal.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+
 
 class Home2 extends StatefulWidget {
   const Home2({Key key}) : super(key: key);
@@ -117,12 +119,19 @@ class _Home2State extends State<Home2> {
                         backgroundColor: Colors.transparent,
                         elevation: 0.0,
                         actions: [
-                          Container(
-                            margin: EdgeInsets.only(
-                                right: SizeConfig.blockSizeHorizontal * 5),
-                            child: Icon(
-                              Icons.notifications_none_sharp,
-                              color: Colors.white,
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context){
+                                return NotificationsScreen();
+                              }));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  right: SizeConfig.blockSizeHorizontal * 5),
+                              child: Icon(
+                                Icons.notifications_none_sharp,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ],
