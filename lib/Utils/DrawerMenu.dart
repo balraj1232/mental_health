@@ -99,13 +99,6 @@ class _DrawerMenuState extends State<DrawerMenu> {
               },
             ),
             ListTile(
-              title: Text("Bookings"),
-              leading: ImageIcon(Image.asset('assets/icons/nav booking.png').image),
-              onTap: (){
-                Navigator.of(context).pushNamed('/Cafe1');
-              },
-            ),
-            ListTile(
               title: Text("My Content"),
               leading: ImageIcon(Image.asset('assets/icons/content.png').image),
               onTap: (){

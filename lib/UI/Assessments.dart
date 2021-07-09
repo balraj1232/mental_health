@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/constant/AppColor.dart';
+import 'package:mental_health/data/repo/GetAvailableAssessments.dart';
+import 'package:mental_health/models/GetAvailableAssessmentModal.dart';
 
 import 'Assesmentdetail.dart';
 
@@ -12,6 +16,9 @@ class Assessments extends StatefulWidget {
 }
 
 class _AssessmentsState extends State<Assessments> {
+  var getAssessment  = GetAvailableAssessmentRepo();
+  List<AssessmentsList> assessmentModal = new List();
+  bool isloading = true;
   List<String> imagesAssessments = [
     'https://getthematic.com/insights/content/images/wordpress/2018/04/shutterstock_730381336.jpg',
     'https://media.istockphoto.com/photos/silhouette-of-troubled-person-head-picture-id1064027420?k=6&m=1064027420&s=612x612&w=0&h=vRTOtWXLm89Ez3mxyJOOG7wJ4XqiGN-0eUUWpiIs48M=',
@@ -36,10 +43,60 @@ class _AssessmentsState extends State<Assessments> {
   ];
 
   List<String> time = ['3-5', '10-15', '3-5', '10-15'];
+
+  @override
+  void initState() {
+    super.initState();
+    isloading = true;
+    getAssessment
+        .getAssessment(
+      context: context,
+    )
+        .then((value) {
+      if (value != null) {
+        if (value.meta.status == "200") {
+          setState(() {
+            isloading = false;
+            assessmentModal.addAll(value.assessments);
+          });
+        } else {
+          setState(() {
+            isloading = false;
+          });
+          showAlertDialog(
+            context,
+            value.meta.message,
+            "",
+          );
+        }
+      } else {
+        setState(() {
+          isloading = false;
+
+        });
+        showAlertDialog(
+          context,
+          value.meta.message,
+          "",
+        );
+      }
+    }).catchError((error) {
+      setState(() {
+        isloading = false;
+      });
+      showAlertDialog(
+        context,
+        error.toString(),
+        "",
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return SafeArea(
+    List<Widget> widgetList = new List<Widget>();
+    var child = SafeArea(
         child: Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -135,7 +192,7 @@ class _AssessmentsState extends State<Assessments> {
                 },
                 physics: NeverScrollableScrollPhysics(),
                 primary: false,
-                itemCount: imagesAssessments.length,
+                itemCount:assessmentModal != null && assessmentModal.length > 0 ?  assessmentModal.length : 0,
                 shrinkWrap: true,
               ),
             ),
@@ -143,5 +200,23 @@ class _AssessmentsState extends State<Assessments> {
         ),
       ),
     ));
+    widgetList.add(child);
+    if (isloading) {
+      final modal = new Stack(
+        children: [
+          new Opacity(
+            opacity: 0.5,
+            child: ModalBarrier(dismissible: false, color: Colors.grey),
+          ),
+          new Center(
+            child: new CircularProgressIndicator(
+              valueColor: new AlwaysStoppedAnimation<Color>(colorPrimary),
+            ),
+          ),
+        ],
+      );
+      widgetList.add(modal);
+    }
+    return Stack(children: widgetList);
   }
 }

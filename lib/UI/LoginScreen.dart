@@ -7,8 +7,6 @@ import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/data/repo/sendOtpRepo.dart';
 
-
-
 TextEditingController mobileController = TextEditingController();
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -24,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return SafeArea(
         child: Scaffold(
       body: SingleChildScrollView(

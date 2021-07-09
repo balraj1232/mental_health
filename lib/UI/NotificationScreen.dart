@@ -81,22 +81,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           child: Icon(Icons.arrow_back_ios_rounded,color: Color(midnightBlue),),
         ),
         centerTitle: true,
-        title: Text("Payments",
+        title: Text("Notifications",
           style: TextStyle(
               color: Color(midnightBlue),
               fontWeight: FontWeight.w600
           ),),
-        actions: [
-          Container(
-            margin: EdgeInsets.only(
-                right: SizeConfig.screenWidth * 0.05
-            ),
-            alignment: Alignment.center,
-            child: ImageIcon(AssetImage('assets/icons/paymentIconAppBar.png'),
-              color: Color(midnightBlue),
-              size: SizeConfig.blockSizeVertical * 2.5,),
-          ),
-        ],
+
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -113,29 +103,29 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               child: ListView.builder(itemBuilder: (BuildContext context, int index){
                 return Container(
                   margin: EdgeInsets.only(
-                      bottom: SizeConfig.blockSizeVertical * 1.5, top: SizeConfig.blockSizeVertical*2
+                       top: SizeConfig.blockSizeVertical*2
                   ),
                   child: ListTile(
-                    leading: Column(
+                    tileColor: Color(whiteColor),
+                    title: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(DateFormat("yMMMMd").format(DateTime.parse(getPaymentsModal.elementAt(index).createdAt)),style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            color: Color(fontColorGray),
-                            fontSize: SizeConfig.blockSizeVertical * 1.25
+                            color: Colors.black,
+                            fontSize: SizeConfig.blockSizeVertical * 1.75
                         ),),
-                        Text( "Anamika Singh",style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: Color(fontColorSteelGrey),
-                            fontSize: SizeConfig.blockSizeVertical * 2
-                        ),),
-                        Text(getPaymentsModal.elementAt(index).body,style: TextStyle(
-                            color: Color(fontColorGray),
-                            fontSize: SizeConfig.blockSizeVertical * 1.25
-                        ),),
+                        Container(
+                          margin: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 2),
+                          child:  Text(getPaymentsModal.elementAt(index).body,style: TextStyle(
+                              color: Color(fontColorGray),
+                              fontSize: SizeConfig.blockSizeVertical * 1.85
+                          ),),
+                        )
                       ],
                     ),
+
                   ),
                 );
               },
