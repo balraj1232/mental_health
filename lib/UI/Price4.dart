@@ -3,12 +3,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mental_health/UI/Home2.dart';
 import 'package:mental_health/UI/Info%203.dart';
 import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/UI/Price3.dart';
 import 'package:mental_health/Utils/ActionSheet.dart';
+import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/data/repo/LoginUser.dart';
+import 'Info1.dart';
+import 'Info2.dart';
+import 'LoginScreen.dart';
 
 
 class Price4 extends StatefulWidget {
@@ -19,10 +25,14 @@ class Price4 extends StatefulWidget {
 }
 
 class _Price4State extends State<Price4> {
+  final GlobalKey<State> loginLoader = new GlobalKey<State>();
+  var createUser = CreateTherapistProfileRepo();
+
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return SafeArea(child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text("Summary",style: GoogleFonts.openSans(
@@ -71,6 +81,58 @@ class _Price4State extends State<Price4> {
             MaterialButton(
               onPressed: (){
                 Navigator.of(context).pushNamed('/Price5');
+                createUser
+                    .createCounsellor(
+                    aadhar: adhaarCardImage, about: aboutController.text, certificate: certificateImage, context:context , device_id: "",education: "",email: "",experience: "",first_name: firstNameController.text,gender: radioValue,language_ids: selectedVal,last_name: lastNameController.text, linkedin:"" ,phone: mobileController.text,photo: image,price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
+
+                )
+                    .then((value) {
+                  if (value != null) {
+                    if (value.meta.status == "200") {
+                      Navigator.of(loginLoader.currentContext,
+                          rootNavigator: true)
+                          .pop();
+                      //toast(value.meta.message);
+                      /*  SharedPreferencesTest().checkIsLogin("0");
+                                          SharedPreferencesTest()
+                                              .saveToken("set", value: value.token);*/
+
+                      Navigator.push(context,
+                          MaterialPageRoute(
+                              builder: (conext) {
+                                return Home2(
+                                );
+                              }));
+                    } else {
+                      Navigator.of(loginLoader.currentContext,
+                          rootNavigator: true)
+                          .pop();
+                      showAlertDialog(
+                        context,
+                        value.meta.message,
+                        "",
+                      );
+                    }
+                  } else {
+                    Navigator.of(loginLoader.currentContext,
+                        rootNavigator: true)
+                        .pop();
+                    showAlertDialog(
+                      context,
+                      value.meta.message,
+                      "",
+                    );
+                  }
+                }).catchError((error) {
+                  Navigator.of(loginLoader.currentContext,
+                      rootNavigator: true)
+                      .pop();
+                  showAlertDialog(
+                    context,
+                    error.toString(),
+                    "",
+                  );
+                });
               },
               color: Colors.blue,
               minWidth: SizeConfig.screenWidth * 0.4,
@@ -92,78 +154,34 @@ class _Price4State extends State<Price4> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.topCenter,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.blue,
-                    radius: SizeConfig.blockSizeVertical * 7.5,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: SizeConfig.blockSizeVertical * 7.45,
-                      child: Container(
-                        height: 90,width: 90,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image:  image != null
-                                  ? FileImage(
-                                  File(image.path))
-                                  : AssetImage(
-                                  "assets/icons/user.png"),
-                              fit: BoxFit.fill),
-                          shape: BoxShape.circle,
+            Container(
+              alignment: Alignment.topCenter,
+              child: CircleAvatar(
+                backgroundColor: Colors.blue,
+                radius: SizeConfig.blockSizeVertical * 7.5,
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: SizeConfig.blockSizeVertical * 7.45,
+                  child: Container(
+                    height: 90,width: 90,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image:  image != null
+                              ? FileImage(
+                              File(image.path))
+                              : AssetImage(
+                              "assets/icons/user.png"),
+                          fit: BoxFit.fill),
+                      shape: BoxShape.circle,
 
-                        ),
-                      ),
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(
-                      left: SizeConfig.blockSizeHorizontal * 55,  top: SizeConfig.blockSizeVertical * 10),
-                  child: InkWell(
-                    onTap: () {
-                      FocusScope.of(context).unfocus();
-                      showCupertinoModalPopup(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              ActionSheet().actionSheet(context,
-                                  onCamera: () {
-                                    FocusScope.of(context).unfocus();
-                                    chooseCameraFile().then((File file) {
-                                      if (file != null) {
-                                        setState(() {
-                                          //   loading = true;
-                                        });
-                                      }
-                                    }).catchError((onError) {});
-                                  }, onGallery: () {
-                                    FocusScope.of(context).unfocus();
-                                    androidchooseImageFile().then((value) {
-                                      setState(() {
-                                        //  loading = true;
-                                      });
-                                    }).catchError((onError) {});
-                                  },text: "Select profile image"));
-                    },
-                    child: Container(
-                      width: SizeConfig.blockSizeVertical * 4.5,
-                      height: SizeConfig.blockSizeVertical * 4.5,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      alignment: Alignment.center,
-                      child:  Container(child: Icon(Icons.add_circle,color:Colors.blue,
-                        size: SizeConfig.blockSizeVertical * 5,),
-                        alignment: Alignment.centerRight,),),
-                  ),
-                )
-              ],
+              ),
             ),
             Container(
               margin: EdgeInsets.only(
-                top: SizeConfig.blockSizeVertical * 5,
+                top: SizeConfig.blockSizeVertical * 2,
                 right: SizeConfig.screenWidth * 0.05,
                 left: SizeConfig.screenWidth * 0.05,
               ),
@@ -171,24 +189,24 @@ class _Price4State extends State<Price4> {
               child: Column(
                 children: [
                   Text(firstNameController.text + lastNameController.text,style: GoogleFonts.openSans(
-                    color: Color(fontColorGray),
-                    fontWeight: FontWeight.w600,
-                    fontSize: SizeConfig.blockSizeVertical * 2.5
+                      color: Color(fontColorGray),
+                      fontWeight: FontWeight.w600,
+                      fontSize: SizeConfig.blockSizeVertical * 2.5
                   ),),
                   Text("Counselling Therapist",style: GoogleFonts.openSans(
-                    color: Color(fontColorGray),
-                    fontWeight: FontWeight.w400,
-                    fontSize: SizeConfig.blockSizeVertical * 2
+                      color: Color(fontColorGray),
+                      fontWeight: FontWeight.w400,
+                      fontSize: SizeConfig.blockSizeVertical * 2
                   ),)
                 ],
               ),
             ),
             Container(
               margin: EdgeInsets.only(
-                left: SizeConfig.screenWidth * 0.05,
-                right: SizeConfig.screenWidth * 0.05,
-                top: SizeConfig.blockSizeVertical * 4,
-                bottom: SizeConfig.blockSizeVertical * 4
+                  left: SizeConfig.screenWidth * 0.05,
+                  right: SizeConfig.screenWidth * 0.05,
+                  top: SizeConfig.blockSizeVertical * 4,
+                  bottom: SizeConfig.blockSizeVertical * 4
               ),
               alignment: Alignment.centerLeft,
               child: Column(
@@ -273,9 +291,8 @@ class _Price4State extends State<Price4> {
           ],
         ),
       ),
-    ));
+    );
   }
-
 
 
   Future<File> chooseCameraFile() async {

@@ -8,6 +8,7 @@ TextEditingController lastNameController = TextEditingController();
 FocusNode firstNameFocusNode;
 FocusNode lastNameFocusNode;
 
+
 bool selected = false;
 bool filledFn = false;
 bool filledLn = false;
@@ -273,7 +274,7 @@ class _Price2State extends State<Price2> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
-        backgroundColor: selected == true && filledLn == true && filledFn == true? Colors.blue : Colors.grey,
+        backgroundColor: selected == true &&  filledFn == true? Colors.blue : Colors.grey,
         onPressed: (){
           Navigator.of(context).pushNamed('/Price3');
         },

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/UI/OTPScreen.dart';
 import 'package:mental_health/Utils/AlertDialog.dart';
@@ -6,6 +8,7 @@ import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/data/repo/sendOtpRepo.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 
 TextEditingController mobileController = TextEditingController();
 class LoginScreen extends StatefulWidget {
@@ -16,10 +19,16 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> loginForm = GlobalKey<FormState>();
-
   final GlobalKey<State> loginLoader = new GlobalKey<State>();
   var sendOtp = SendOtptoPhone();
+  String countryCode = "";
 
+
+  @override
+  void initState() {
+    super.initState();
+    countryCode = "+91";
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -80,60 +89,61 @@ class _LoginScreenState extends State<LoginScreen> {
                         key: loginForm,
                         child: Column(
                           children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                isDense: true,
-                                contentPadding: EdgeInsets.all(
-                                    SizeConfig.blockSizeVertical * 1.5),
-                                hintText: "Enter Mobile Number",
-                                hintStyle: GoogleFonts.openSans(
-                                  color: Color(fontColorGray),
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: SizeConfig.blockSizeVertical * 1.5,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(fontColorGray),
-                                    width: 1.0,
+                            Container(
+                              child: Row(
+                                children: [
+                                  Container(
+                                    child: CountryCodePicker(
+                                      onChanged: (v){
+                                        print("value" + v.dialCode.toString());
+                                        setState(() {
+                                          countryCode = v.dialCode;
+                                        });
+                                      },
+                                      // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                                      initialSelection: 'IN',
+                                      showFlagDialog: true,
+                                      comparator: (a, b) => b.name.compareTo(a.name),
+                                      //Get the country information relevant to the initial selection
+                                      onInit: (code) =>
+                                          print("on init ${code.name} ${code.dialCode} ${code.name}"),
+                                    ),
+                                    width: SizeConfig.blockSizeHorizontal * 30,
                                   ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(fontColorGray),
-                                    width: 1.0,
+                                  Container(
+                                    width: SizeConfig.blockSizeHorizontal * 55,
+                                    child: TextFormField(
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(10)
+                                      ],
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        contentPadding: EdgeInsets.all(
+                                            SizeConfig.blockSizeVertical * 1.5),
+                                        hintText: "Enter Mobile Number",
+                                        hintStyle: GoogleFonts.openSans(
+                                          color: Color(fontColorGray),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: SizeConfig.blockSizeVertical * 1.5,
+                                        ),
+                                        border: InputBorder.none,
+                                      ),
+                                      controller: mobileController,
+                                      keyboardType: TextInputType.phone,
+                                      textInputAction: TextInputAction.done,
+                                      validator: (s) {
+                                        return validateMobile(mobileController.text);
+                                      },
+                                    ),
                                   ),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(fontColorGray),
-                                    width: 1.0,
-                                  ),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(fontColorGray),
-                                    width: 1.0,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(fontColorGray),
-                                    width: 1.0,
-                                  ),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(fontColorGray),
-                                    width: 1.0,
-                                  ),
-                                ),
+                                ],
                               ),
-                              controller: mobileController,
-                              keyboardType: TextInputType.phone,
-                              textInputAction: TextInputAction.done,
-                              validator: (s) {
-                                return validateMobile(mobileController.text);
-                              },
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Color(fontColorGray),
+                                    width: 1.0,
+                                  )
+                              ),
                             ),
                             SizedBox(
                               height: SizeConfig.blockSizeVertical * 2,
@@ -147,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   sendOtp
                                       .sendOtp(
                                     context: context,
-                                    phone: mobileController.text,
+                                    phone: countryCode + mobileController.text,
                                   )
                                       .then((value) {
                                     if (value != null) {
@@ -164,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             MaterialPageRoute(
                                                 builder: (conext) {
                                           return OTPScreen(
-                                            phoneNumber: mobileController.text,
+                                            phoneNumber: countryCode + mobileController.text,
                                           );
                                         }));
                                       } else {

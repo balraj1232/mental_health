@@ -96,7 +96,7 @@ class _Info1State extends State<Info1> {
                             //  loading = true;
                           });
                         }).catchError((onError) {});
-                      },text: "Select profile image"));
+                      },text: "Select document"));
                 },
                   child: Container(
                       alignment: Alignment.topCenter,
@@ -249,7 +249,7 @@ class _Info1State extends State<Info1> {
                             //  loading = true;
                           });
                         }).catchError((onError) {});
-                      },text: "Select profile image"));
+                      },text: "Select document"));
                 },
                   child: adhaarCardImage != null &&  adhaarCardImage.path != null
                       ? Text(adhaarCardImage.path.split("/").last,style: GoogleFonts.openSans(

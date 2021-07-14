@@ -49,7 +49,7 @@ class MentalHealth extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'OpenSans',
       ),
-      home: HomeMain(),
+      home: LoginScreen(),
       routes: {
         '/Login': (context) => LoginScreen(),
         '/OTP': (context) => OTPScreen(),

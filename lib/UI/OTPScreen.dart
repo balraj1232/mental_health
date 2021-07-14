@@ -72,12 +72,6 @@ bool selected = false;
                   secondController.text.isNotEmpty &&
                   thirdController.text.isNotEmpty &&
                   fourthController.text.isNotEmpty) {
-                Navigator.push(context, MaterialPageRoute(builder: (conext){
-                  return Price1(getOtp:  firstController.text +
-                      secondController.text +
-                      thirdController.text +
-                      fourthController.text );
-                }));
                 Dialogs.showLoadingDialog(context, loginLoader);
                 verifyOtp
                     .verifyOtp(
@@ -101,6 +95,10 @@ bool selected = false;
                             fourthController.text,);
                       }));
                     } else {
+                      firstController.clear();
+                      secondController.clear();
+                      thirdController.clear();
+                      fourthController.clear();
                       Navigator.of(loginLoader.currentContext,
                           rootNavigator: true)
                           .pop();
