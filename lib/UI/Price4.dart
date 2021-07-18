@@ -3,18 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mental_health/UI/Home2.dart';
 import 'package:mental_health/UI/Info%203.dart';
+import 'package:mental_health/UI/Info1.dart';
+import 'package:mental_health/UI/Info2.dart';
+import 'package:mental_health/UI/LoginScreen.dart';
 import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/UI/Price3.dart';
-import 'package:mental_health/Utils/ActionSheet.dart';
+import 'package:mental_health/UI/ProfessionalInfo2.dart';
 import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
+import 'package:mental_health/Utils/Dialogs.dart';
+import 'package:mental_health/Utils/SharedPref.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/data/repo/LoginUser.dart';
-import 'Info1.dart';
-import 'Info2.dart';
-import 'LoginScreen.dart';
 
 
 class Price4 extends StatefulWidget {
@@ -80,11 +81,14 @@ class _Price4State extends State<Price4> {
             ),
             MaterialButton(
               onPressed: (){
-                Navigator.of(context).pushNamed('/Price5');
-                createUser
+                Dialogs.showLoadingDialog(context, loginLoader);
+             Future.delayed(Duration(seconds: 2)).then((value) {
+               SharedPreferencesTest().checkIsLogin("0");
+               Navigator.of(context).pushNamed('/Price5');
+             });
+               /* createUser
                     .createCounsellor(
-                    aadhar: adhaarCardImage, about: aboutController.text, certificate: certificateImage, context:context , device_id: "",education: "",email: "",experience: "",first_name: firstNameController.text,gender: radioValue,language_ids: selectedVal,last_name: lastNameController.text, linkedin:"" ,phone: mobileController.text,photo: image,price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
-
+                    aadhar: adhaarCardImage, about: aboutController.text, certificate: certificateImage, context:context , device_id: "",education: "",email: "",experience: "",first_name: firstNameController.text,gender: radioValue,language_ids: selectedVal.elementAt(0).toString(),last_name: lastNameController.text, linkedin:"" ,phone: "91"+ mobileController.text,photo: image,price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
                 )
                     .then((value) {
                   if (value != null) {
@@ -93,16 +97,8 @@ class _Price4State extends State<Price4> {
                           rootNavigator: true)
                           .pop();
                       //toast(value.meta.message);
-                      /*  SharedPreferencesTest().checkIsLogin("0");
-                                          SharedPreferencesTest()
-                                              .saveToken("set", value: value.token);*/
-
-                      Navigator.push(context,
-                          MaterialPageRoute(
-                              builder: (conext) {
-                                return Home2(
-                                );
-                              }));
+                        SharedPreferencesTest().checkIsLogin("0");
+                      Navigator.of(context).pushNamed('/Price5');
                     } else {
                       Navigator.of(loginLoader.currentContext,
                           rootNavigator: true)
@@ -132,7 +128,7 @@ class _Price4State extends State<Price4> {
                     error.toString(),
                     "",
                   );
-                });
+                });*/
               },
               color: Colors.blue,
               minWidth: SizeConfig.screenWidth * 0.4,
@@ -155,6 +151,7 @@ class _Price4State extends State<Price4> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              margin: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 3),
               alignment: Alignment.topCenter,
               child: CircleAvatar(
                 backgroundColor: Colors.blue,
@@ -229,7 +226,7 @@ class _Price4State extends State<Price4> {
                     color: Color(fontColorGray),
                     fontWeight: FontWeight.w600,
                   ),),
-                  Text(selectedVal,style: GoogleFonts.openSans(
+                  Text(selectedVal.elementAt(0).toString(),style: GoogleFonts.openSans(
                       color: Color(fontColorGray),
                       fontWeight: FontWeight.w400,
                       fontSize: SizeConfig.blockSizeVertical * 1.5
@@ -265,7 +262,7 @@ class _Price4State extends State<Price4> {
                     color: Color(fontColorGray),
                     fontWeight: FontWeight.w600,
                   ),),
-                  Text("10 Years",style: GoogleFonts.openSans(
+                  Text(experienceYears.toString(),style: GoogleFonts.openSans(
                       color: Color(fontColorGray),
                       fontWeight: FontWeight.w400,
                       fontSize: SizeConfig.blockSizeVertical * 1.5

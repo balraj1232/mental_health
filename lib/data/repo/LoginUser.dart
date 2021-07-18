@@ -74,8 +74,12 @@ class CreateTherapistProfileRepo extends BaseRepository {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         try {
-          final response = await dio.post(ApiEndpoint.registerCounsellor,
+          final response = await dio.post("https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist",
               data: formData,
+              options: Options(
+                headers: {'Content-Type': 'application/json',
+                  'accept': 'application/json'},
+              )
               );
           final passEntity = CreateTherapistProfileModal.fromJson(response.data);
           return passEntity;

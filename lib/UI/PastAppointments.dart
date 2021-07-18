@@ -75,7 +75,7 @@ class _Cafe2State extends State<Cafe2> {
     List<Widget> widgetList = new List<Widget>();
     var child = SafeArea(
         child: Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
+/*      bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         showUnselectedLabels: true,
         currentIndex: 1,
@@ -139,7 +139,7 @@ class _Cafe2State extends State<Cafe2> {
               ),
               label: "Cafe"),
         ],
-      ),
+      )*/
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(SizeConfig.blockSizeHorizontal * 4),

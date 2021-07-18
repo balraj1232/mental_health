@@ -299,7 +299,7 @@ class _MyProfileState extends State<MyProfile> {
                               height: SizeConfig.blockSizeVertical * 6,
                               width: SizeConfig.screenWidth * 0.3,
                               alignment: Alignment.center,
-                              child: Text(selectedVal,
+                              child: Text(selectedVal.elementAt(0).toString(),
                                 style: GoogleFonts.openSans(
                                     color: Color(backgroundColorBlue),
                                     fontWeight: FontWeight.w600,

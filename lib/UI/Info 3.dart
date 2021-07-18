@@ -32,7 +32,7 @@ class _Info3State extends State<Info3> {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
-          "7/7",
+          "8/8",
           style: GoogleFonts.openSans(
             fontWeight: FontWeight.bold,
             color: Color(fontColorSteelGrey),
@@ -171,16 +171,16 @@ class _Info3State extends State<Info3> {
               child: MaterialButton(
                 onPressed: () {
                   Dialogs.showLoadingDialog(context, loginLoader);
-                  Future.delayed(Duration(seconds: 2)).then((value) {
+                  Future.delayed(Duration(seconds: 1)).then((value) {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return Price4();
                     }));
-                  });
-                  Navigator.of(loginLoader.currentContext, rootNavigator: true)
-                      .pop();
 
-                  //  Navigator.of(context).pushNamed('/Price4');
+                  });
+                  Navigator.of(loginLoader.currentContext,
+                      rootNavigator: true)
+                      .pop();
                 },
                 color: Colors.blue,
                 minWidth: SizeConfig.screenWidth,

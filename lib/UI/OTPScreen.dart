@@ -6,8 +6,10 @@ import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/data/repo/sendOtpRepo.dart' as send;
 import 'package:mental_health/data/repo/verifyOtpRepo.dart';
 import 'package:nb_utils/nb_utils.dart';
+
 
 class OTPScreen extends StatefulWidget {
   final String phoneNumber;
@@ -29,13 +31,13 @@ bool selected = false;
   FocusNode fifthDigit;
   FocusNode sixthDigit;
   var verifyOtp = VerifyOtpRepo();
+  var sendOtp = send.SendOtptoPhone();
+
 
   TextEditingController firstController = TextEditingController();
   TextEditingController secondController = TextEditingController();
   TextEditingController thirdController = TextEditingController();
   TextEditingController fourthController = TextEditingController();
-
-
 
   @override
   void initState() {
@@ -294,12 +296,63 @@ bool selected = false;
               SizedBox(
                 height: SizeConfig.blockSizeVertical * 1.5,
               ),
-              Text("RESEND OTP",style:
-              GoogleFonts.openSans(
-                fontWeight: FontWeight.w700,
-                fontSize: SizeConfig.blockSizeVertical * 1.5,
-                color: Color(backgroundColorBlue),
-              ),),
+              GestureDetector(
+                onTap: (){
+                  Dialogs.showLoadingDialog(
+                      context, loginLoader);
+                  sendOtp
+                      .sendOtp(
+                    context: context,
+                    phone: widget.phoneNumber,
+                  )
+                      .then((value) {
+                    if (value != null) {
+                      if (value.meta.status == "200") {
+                        Navigator.of(loginLoader.currentContext,
+                            rootNavigator: true)
+                            .pop();
+                        toast("OTP sent sucessfully");
+                        /*  SharedPreferencesTest().checkIsLogin("0");
+                                          SharedPreferencesTest()
+                                              .saveToken("set", value: value.token);*/
+                      } else {
+                        Navigator.of(loginLoader.currentContext,
+                            rootNavigator: true)
+                            .pop();
+                        showAlertDialog(
+                          context,
+                          value.meta.message,
+                          "",
+                        );
+                      }
+                    } else {
+                      Navigator.of(loginLoader.currentContext,
+                          rootNavigator: true)
+                          .pop();
+                      showAlertDialog(
+                        context,
+                        value.meta.message,
+                        "",
+                      );
+                    }
+                  }).catchError((error) {
+                    Navigator.of(loginLoader.currentContext,
+                        rootNavigator: true)
+                        .pop();
+                    showAlertDialog(
+                      context,
+                      error.toString(),
+                      "",
+                    );
+                  });
+                },
+                child: Text("RESEND OTP",style:
+                GoogleFonts.openSans(
+                  fontWeight: FontWeight.w700,
+                  fontSize: SizeConfig.blockSizeVertical * 1.5,
+                  color: Color(backgroundColorBlue),
+                ),),
+              ),
             ],
           ),
         ),

@@ -4,5 +4,4 @@ class ApiEndpoint {
   static String registerCounsellor = "therapist";
   static String verifyOtp = "verifyotp";
   static String bookAnEvent = "event/order";
-
 }

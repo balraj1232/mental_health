@@ -6,11 +6,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mental_health/Utils/ActionSheet.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 int selectSocialProfile = -1;
 bool selected = false;
 File certificateImage;
 File adhaarCardImage;
+var linkController = TextEditingController();
 
 class Info1 extends StatefulWidget {
   const Info1({Key key}) : super(key: key);
@@ -28,7 +30,7 @@ class _Info1State extends State<Info1> {
     appBar: AppBar(
       backgroundColor: Colors.white,
       centerTitle: true,
-      title: Text("5/7",style: GoogleFonts.openSans(
+      title: Text("6/8",style: GoogleFonts.openSans(
         fontWeight: FontWeight.bold,
         color: Color(fontColorSteelGrey),
       ),),
@@ -81,18 +83,21 @@ class _Info1State extends State<Info1> {
                       builder: (BuildContext context) => ActionSheet()
                           .actionSheet(context, onCamera: () {
                         FocusScope.of(context).unfocus();
-                        chooseCameraFile().then((File file) {
+                        chooseCertificateCamera().then((File file) {
                           if (file != null) {
                             setState(() {
+                              selected = true;
+
                               //   loading = true;
                             });
                           }
                         }).catchError((onError) {});
                       }, onGallery: () {
                         FocusScope.of(context).unfocus();
-                        androidchooseImageFile().then((value)
+                        chooseCertificateGallery().then((value)
                         {
                           setState(() {
+                            selected = true;
                             //  loading = true;
                           });
                         }).catchError((onError) {});
@@ -198,6 +203,7 @@ class _Info1State extends State<Info1> {
                     )
                 ),
                 child: TextFormField(
+                  controller: linkController,
                   decoration: InputDecoration(
                     hintText: "Enter Link",
                     hintStyle: GoogleFonts.openSans(
@@ -205,7 +211,8 @@ class _Info1State extends State<Info1> {
                     ),
                     contentPadding: EdgeInsets.all(SizeConfig.blockSizeVertical * 2),
                     border: InputBorder.none,
-                    suffixIcon: Icon(Icons.link)
+                    suffixIcon: Icon(Icons.link),
+
                   ),
 
                 ),
@@ -234,18 +241,20 @@ class _Info1State extends State<Info1> {
                       builder: (BuildContext context) => ActionSheet()
                           .actionSheet(context, onCamera: () {
                         FocusScope.of(context).unfocus();
-                        chooseCameraFile().then((File file) {
+                        adhaarCameraFile().then((File file) {
                           if (file != null) {
                             setState(() {
+                              selected = true;
                               //   loading = true;
                             });
                           }
                         }).catchError((onError) {});
                       }, onGallery: () {
                         FocusScope.of(context).unfocus();
-                        androidchooseImageFile().then((value)
+                        adhaarchooseImageFile().then((value)
                         {
                           setState(() {
+                            selected = true;
                             //  loading = true;
                           });
                         }).catchError((onError) {});
@@ -275,13 +284,16 @@ class _Info1State extends State<Info1> {
         child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
         backgroundColor: selected == true? Colors.blue : Colors.grey,
         onPressed: (){
-          Navigator.of(context).pushNamed('/Info2');
+          if(certificateImage != null && certificateImage != "" && adhaarCardImage != null && adhaarCardImage != "" && linkController.text.isNotEmpty && selectSocialProfile != null && selectSocialProfile >=1)
+            Navigator.of(context).pushNamed('/Info2');
+          else
+            toast("Please upload required docs");
         },
       ),
     ));
   }
 
-  Future<File> chooseCameraFile() async {
+  Future<File> chooseCertificateCamera() async {
 
     await ImagePicker.platform.pickImage(
       source: ImageSource.camera,
@@ -301,7 +313,7 @@ class _Info1State extends State<Info1> {
 
 
 
-  Future<File> androidchooseImageFile() async {
+  Future<File> chooseCertificateGallery() async {
     await ImagePicker.platform.pickImage(
       source: ImageSource.gallery,
 
@@ -336,8 +348,6 @@ class _Info1State extends State<Info1> {
     });
     return adhaarCardImage;
   }
-
-
 
 
   Future<File> adhaarchooseImageFile() async {

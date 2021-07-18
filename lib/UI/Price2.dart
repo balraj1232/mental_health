@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 TextEditingController firstNameController = TextEditingController();
 TextEditingController lastNameController = TextEditingController();
@@ -50,7 +51,7 @@ class _Price2State extends State<Price2> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("2/7",style: GoogleFonts.openSans(
+        title: Text("2/8",style: GoogleFonts.openSans(
           fontWeight: FontWeight.bold,
           color: Color(fontColorSteelGrey),
         ),),
@@ -276,7 +277,10 @@ class _Price2State extends State<Price2> {
         child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
         backgroundColor: selected == true &&  filledFn == true? Colors.blue : Colors.grey,
         onPressed: (){
+          if(radioValue != null && radioValue != "" && filledFn != "")
           Navigator.of(context).pushNamed('/Price3');
+          else
+            toast("Please select details first");
         },
       ),
     ));

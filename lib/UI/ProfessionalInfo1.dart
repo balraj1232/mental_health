@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
-
-
+import 'package:nb_utils/nb_utils.dart';
 
 bool anxiety = false;
 bool relationship = false;
@@ -35,7 +34,7 @@ class _ProfessionalInfo1State extends State<ProfessionalInfo1> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("4/7",style: GoogleFonts.openSans(
+        title: Text("4/8",style: GoogleFonts.openSans(
           fontWeight: FontWeight.bold,
           color: Color(fontColorSteelGrey),
         ),),
@@ -138,7 +137,6 @@ class _ProfessionalInfo1State extends State<ProfessionalInfo1> {
                   ),
                 ],
               ),
-
             ),
             Container(
               width: SizeConfig.screenWidth,
@@ -429,7 +427,10 @@ class _ProfessionalInfo1State extends State<ProfessionalInfo1> {
         child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
         backgroundColor: selected == true? Colors.blue : Colors.grey,
         onPressed: (){
+          if(selected)
           Navigator.of(context).pushNamed('/ProfessionalInfo2');
+          else
+            toast("Please select your expertise areas");
         },
       ),
     ));

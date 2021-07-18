@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
-
+import 'package:nb_utils/nb_utils.dart';
 
 int experienceYears = 1;
 bool selected = false;
@@ -20,27 +20,33 @@ class ProfessionalInfo2 extends StatefulWidget {
 }
 
 class _ProfessionalInfo2State extends State<ProfessionalInfo2> {
-
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return SafeArea(child: Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("5/7",style: GoogleFonts.openSans(
-          fontWeight: FontWeight.bold,
-          color: Color(fontColorSteelGrey),
-        ),),
-        leading: Icon(Icons.arrow_back_ios,color: Colors.black,),
+        title: Text(
+          "5/8",
+          style: GoogleFonts.openSans(
+            fontWeight: FontWeight.bold,
+            color: Color(fontColorSteelGrey),
+          ),
+        ),
+        leading: Icon(
+          Icons.arrow_back_ios,
+          color: Colors.black,
+        ),
         actions: [
           Container(
             alignment: Alignment.center,
             padding: EdgeInsets.all(SizeConfig.blockSizeVertical),
-            child: Text("Skip",style: GoogleFonts.openSans(
-              color: Colors.blue
-            ),),
+            child: Text(
+              "Skip",
+              style: GoogleFonts.openSans(color: Colors.blue),
+            ),
           )
         ],
       ),
@@ -63,11 +69,13 @@ class _ProfessionalInfo2State extends State<ProfessionalInfo2> {
                 left: SizeConfig.screenWidth * 0.05,
                 right: SizeConfig.screenWidth * 0.05,
               ),
-              child: Text("What's your relevant qualification?",style: GoogleFonts.openSans(
-                  fontSize: SizeConfig.blockSizeVertical * 4,
-                  fontWeight: FontWeight.bold,
-                  color: Color(fontColorSteelGrey)
-              ),),
+              child: Text(
+                "What's your relevant qualification?",
+                style: GoogleFonts.openSans(
+                    fontSize: SizeConfig.blockSizeVertical * 4,
+                    fontWeight: FontWeight.bold,
+                    color: Color(fontColorSteelGrey)),
+              ),
             ),
             Container(
               width: SizeConfig.screenWidth,
@@ -81,26 +89,36 @@ class _ProfessionalInfo2State extends State<ProfessionalInfo2> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
                         selected = true;
                         counselling = true;
+                        psychiatrist = false;
+                        clinicalPsychologist = false;
+                        psychotherapist = false;
+                        others = false;
                       });
                     },
                     child: Container(
-                      child: Text("Counselling Psychologist",style: GoogleFonts.openSans(
-                          color: counselling == true && selected == true ? Colors.white : Color(fontColorGray),
-                          fontSize: SizeConfig.blockSizeVertical * 2
-                      ),),
+                      child: Text(
+                        "Counselling Psychologist",
+                        style: GoogleFonts.openSans(
+                            color: counselling == true && selected == true
+                                ? Colors.white
+                                : Color(fontColorGray),
+                            fontSize: SizeConfig.blockSizeVertical * 2),
+                      ),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: counselling == true && selected == true ? Colors.blue : Colors.white,
+                          color: counselling == true && selected == true
+                              ? Colors.blue
+                              : Colors.white,
                           border: Border.all(
-                              color: counselling == true && selected == true ? Colors.blue : Color(fontColorGray),
-                              width: 1.0
-                          )
-                      ),
+                              color: counselling == true && selected == true
+                                  ? Colors.blue
+                                  : Color(fontColorGray),
+                              width: 1.0)),
                       height: SizeConfig.blockSizeVertical * 5,
                       padding: EdgeInsets.only(
                         left: SizeConfig.blockSizeHorizontal * 3,
@@ -112,26 +130,36 @@ class _ProfessionalInfo2State extends State<ProfessionalInfo2> {
                     width: SizeConfig.blockSizeHorizontal * 5,
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
                         selected = true;
                         psychiatrist = true;
+                        counselling = false;
+                        clinicalPsychologist = false;
+                        psychotherapist = false;
+                        others = false;
                       });
                     },
                     child: Container(
-                      child: Text("Psychiatrist",style: GoogleFonts.openSans(
-                          color: psychiatrist == true && selected == true ? Colors.white : Color(fontColorGray),
-                          fontSize: SizeConfig.blockSizeVertical * 2
-                      ),),
+                      child: Text(
+                        "Psychiatrist",
+                        style: GoogleFonts.openSans(
+                            color: psychiatrist == true && selected == true
+                                ? Colors.white
+                                : Color(fontColorGray),
+                            fontSize: SizeConfig.blockSizeVertical * 2),
+                      ),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: psychiatrist == true && selected == true ? Colors.blue : Colors.white,
+                          color: psychiatrist == true && selected == true
+                              ? Colors.blue
+                              : Colors.white,
                           border: Border.all(
-                              color: psychiatrist == true && selected == true ? Colors.blue : Color(fontColorGray),
-                              width: 1.0
-                          )
-                      ),
+                              color: psychiatrist == true && selected == true
+                                  ? Colors.blue
+                                  : Color(fontColorGray),
+                              width: 1.0)),
                       height: SizeConfig.blockSizeVertical * 5,
                       padding: EdgeInsets.only(
                         left: SizeConfig.blockSizeHorizontal * 3,
@@ -141,7 +169,6 @@ class _ProfessionalInfo2State extends State<ProfessionalInfo2> {
                   ),
                 ],
               ),
-
             ),
             Container(
               width: SizeConfig.screenWidth,
@@ -155,26 +182,39 @@ class _ProfessionalInfo2State extends State<ProfessionalInfo2> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
                         selected = true;
                         clinicalPsychologist = true;
+                        psychiatrist = false;
+                        counselling = false;
+                        psychotherapist = false;
+                        others = false;
                       });
                     },
                     child: Container(
-                      child: Text("Clinical Psychologist",style: GoogleFonts.openSans(
-                          color: clinicalPsychologist == true && selected == true ? Colors.white : Color(fontColorGray),
-                          fontSize: SizeConfig.blockSizeVertical * 2
-                      ),),
+                      child: Text(
+                        "Clinical Psychologist",
+                        style: GoogleFonts.openSans(
+                            color:
+                                clinicalPsychologist == true && selected == true
+                                    ? Colors.white
+                                    : Color(fontColorGray),
+                            fontSize: SizeConfig.blockSizeVertical * 2),
+                      ),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: clinicalPsychologist == true && selected == true ? Colors.blue : Colors.white,
+                          color:
+                              clinicalPsychologist == true && selected == true
+                                  ? Colors.blue
+                                  : Colors.white,
                           border: Border.all(
-                              color: clinicalPsychologist == true && selected == true ? Colors.blue : Color(fontColorGray),
-                              width: 1.0
-                          )
-                      ),
+                              color: clinicalPsychologist == true &&
+                                      selected == true
+                                  ? Colors.blue
+                                  : Color(fontColorGray),
+                              width: 1.0)),
                       height: SizeConfig.blockSizeVertical * 5,
                       padding: EdgeInsets.only(
                         left: SizeConfig.blockSizeHorizontal * 3,
@@ -186,26 +226,36 @@ class _ProfessionalInfo2State extends State<ProfessionalInfo2> {
                     width: SizeConfig.blockSizeHorizontal * 5,
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
                         selected = true;
                         psychotherapist = true;
+                        others = false;
+                        clinicalPsychologist = false;
+                        psychiatrist = false;
+                        counselling = false;
                       });
                     },
                     child: Container(
-                      child: Text("Psychotherapist",style: GoogleFonts.openSans(
-                          color: psychotherapist == true && selected == true ? Colors.white : Color(fontColorGray),
-                          fontSize: SizeConfig.blockSizeVertical * 2
-                      ),),
+                      child: Text(
+                        "Psychotherapist",
+                        style: GoogleFonts.openSans(
+                            color: psychotherapist == true && selected == true
+                                ? Colors.white
+                                : Color(fontColorGray),
+                            fontSize: SizeConfig.blockSizeVertical * 2),
+                      ),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: psychotherapist == true && selected == true ? Colors.blue : Colors.white,
+                          color: psychotherapist == true && selected == true
+                              ? Colors.blue
+                              : Colors.white,
                           border: Border.all(
-                              color:psychotherapist == true && selected == true ? Colors.blue : Color(fontColorGray),
-                              width: 1.0
-                          )
-                      ),
+                              color: psychotherapist == true && selected == true
+                                  ? Colors.blue
+                                  : Color(fontColorGray),
+                              width: 1.0)),
                       height: SizeConfig.blockSizeVertical * 5,
                       padding: EdgeInsets.only(
                         left: SizeConfig.blockSizeHorizontal * 3,
@@ -215,7 +265,6 @@ class _ProfessionalInfo2State extends State<ProfessionalInfo2> {
                   ),
                 ],
               ),
-
             ),
             Container(
               width: SizeConfig.screenWidth,
@@ -229,26 +278,36 @@ class _ProfessionalInfo2State extends State<ProfessionalInfo2> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
                         selected = true;
                         others = true;
+                        psychotherapist = false;
+                        clinicalPsychologist = false;
+                        psychiatrist = false;
+                        counselling = false;
                       });
                     },
                     child: Container(
-                      child: Text("Others",style: GoogleFonts.openSans(
-                          color: others == true && selected == true ? Colors.white : Color(fontColorGray),
-                          fontSize: SizeConfig.blockSizeVertical * 2
-                      ),),
+                      child: Text(
+                        "Others",
+                        style: GoogleFonts.openSans(
+                            color: others == true && selected == true
+                                ? Colors.white
+                                : Color(fontColorGray),
+                            fontSize: SizeConfig.blockSizeVertical * 2),
+                      ),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: others == true && selected == true ? Colors.blue : Colors.white,
+                          color: others == true && selected == true
+                              ? Colors.blue
+                              : Colors.white,
                           border: Border.all(
-                              color:others == true && selected == true ? Colors.blue : Color(fontColorGray),
-                              width: 1.0
-                          )
-                      ),
+                              color: others == true && selected == true
+                                  ? Colors.blue
+                                  : Color(fontColorGray),
+                              width: 1.0)),
                       height: SizeConfig.blockSizeVertical * 5,
                       padding: EdgeInsets.only(
                         left: SizeConfig.blockSizeHorizontal * 3,
@@ -267,11 +326,13 @@ class _ProfessionalInfo2State extends State<ProfessionalInfo2> {
                 left: SizeConfig.screenWidth * 0.05,
                 //right: SizeConfig.screenWidth * 0.05,
               ),
-              child: Text("How much experience do you have?",style: GoogleFonts.openSans(
-                  fontSize: SizeConfig.blockSizeVertical * 4,
-                  fontWeight: FontWeight.bold,
-                  color: Color(fontColorSteelGrey)
-              ),),
+              child: Text(
+                "How much experience do you have?",
+                style: GoogleFonts.openSans(
+                    fontSize: SizeConfig.blockSizeVertical * 4,
+                    fontWeight: FontWeight.bold,
+                    color: Color(fontColorSteelGrey)),
+              ),
             ),
             Slider(
               activeColor: Colors.blue,
@@ -281,7 +342,7 @@ class _ProfessionalInfo2State extends State<ProfessionalInfo2> {
               max: 10,
               min: 0,
               value: experienceYears.toDouble(),
-              onChanged: (double newYear){
+              onChanged: (double newYear) {
                 setState(() {
                   experienceYears = newYear.round();
                 });
@@ -291,10 +352,22 @@ class _ProfessionalInfo2State extends State<ProfessionalInfo2> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
-        backgroundColor: selected == true && experienceYears >= 1 ? Colors.blue : Colors.grey,
-        onPressed: (){
-          Navigator.of(context).pushNamed('/Info1');
+        child: Icon(
+          Icons.arrow_forward_ios,
+          color: Colors.white,
+        ),
+        backgroundColor: selected == true && experienceYears >= 1
+            ? Colors.blue
+            : Colors.grey,
+        onPressed: () {
+          if (counselling == true ||
+              psychiatrist == true ||
+              clinicalPsychologist == true ||
+              psychotherapist == true ||
+              others == true)
+            Navigator.of(context).pushNamed('/Info1');
+          else
+            toast("Please select qualification");
         },
       ),
     ));

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mental_health/base/BaseRepository.dart';
 import 'package:dio/dio.dart';
 import 'package:mental_health/models/GetTherapistModal.dart';
-import 'package:mental_health/models/notificationModal.dart';
 
 
 class GetTherapistEventRepo extends BaseRepository {

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:nb_utils/nb_utils.dart';
 
-String selectedVal;
+List<String> selectedVal = new List();
+
 class Price3 extends StatefulWidget {
   const Price3({Key key}) : super(key: key);
 
@@ -27,23 +29,29 @@ class _Price3State extends State<Price3> {
     'Odia': false,
     'Malayalam': false,
     'Asamese': false,
-    'Maithili':false,
-    'Sanskrit':false
+    'Maithili': false,
+    'Sanskrit': false
   };
-
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return SafeArea(child: Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("3/7",style: GoogleFonts.openSans(
-          fontWeight: FontWeight.bold,
-          color: Color(fontColorSteelGrey),
-        ),),
-        leading: Icon(Icons.arrow_back_ios,color: Colors.black,),
+        title: Text(
+          "3/8",
+          style: GoogleFonts.openSans(
+            fontWeight: FontWeight.bold,
+            color: Color(fontColorSteelGrey),
+          ),
+        ),
+        leading: Icon(
+          Icons.arrow_back_ios,
+          color: Colors.black,
+        ),
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -64,28 +72,32 @@ class _Price3State extends State<Price3> {
                 left: SizeConfig.screenWidth * 0.05,
                 right: SizeConfig.screenWidth * 0.05,
               ),
-              child: Text("What languages do you speak?",style: GoogleFonts.openSans(
-                  fontSize: SizeConfig.blockSizeVertical * 4,
-                  fontWeight: FontWeight.bold,
-                  color: Color(fontColorSteelGrey)
-              ),),
+              child: Text(
+                "What languages do you speak?",
+                style: GoogleFonts.openSans(
+                    fontSize: SizeConfig.blockSizeVertical * 4,
+                    fontWeight: FontWeight.bold,
+                    color: Color(fontColorSteelGrey)),
+              ),
             ),
-        ListView(
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          children: values.keys.map((String key) {
-            return new CheckboxListTile(
-              title: Text(key),
-              value: values[key],
-              onChanged: (bool value) {
-                setState(() {
-                  values[key] = value;
-                  selectedVal = key;
-                });
-              },
-            );
-          }).toList(),
-        ),
+            ListView(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              children: values.keys.map((String key) {
+                return new CheckboxListTile(
+                  title: Text(key),
+                  value: values[key],
+                  onChanged: (bool value) {
+                    setState(() {
+                      values[key] = value;
+                      selectedVal.addAll(values.keys);
+                      print("val" + values[key].toString());
+                      selected = true;
+                    });
+                  },
+                );
+              }).toList(),
+            ),
 /*            ListView(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -247,13 +259,18 @@ class _Price3State extends State<Price3> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
-        backgroundColor: selected == true? Colors.blue : Colors.grey,
-        onPressed: (){
-          Navigator.of(context).pushNamed('/ProfessionalInfo1');
+        child: Icon(
+          Icons.arrow_forward_ios,
+          color: Colors.white,
+        ),
+        backgroundColor: selected == true ? Colors.blue : Colors.grey,
+        onPressed: () {
+          if (selected)
+            Navigator.of(context).pushNamed('/ProfessionalInfo1');
+          else
+            toast("Please select language");
         },
       ),
     ));
   }
 }
-

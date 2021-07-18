@@ -23,7 +23,7 @@ class _Info2State extends State<Info2> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("6/7",style: GoogleFonts.openSans(
+        title: Text("7/8",style: GoogleFonts.openSans(
           fontWeight: FontWeight.bold,
           color: Color(fontColorSteelGrey),
         ),),

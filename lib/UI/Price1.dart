@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 
 String radioValue = "";
@@ -28,7 +29,7 @@ class _Price1State extends State<Price1> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("1/7",style: GoogleFonts.openSans(
+        title: Text("1/8",style: GoogleFonts.openSans(
           fontWeight: FontWeight.bold,
           color: Color(fontColorSteelGrey),
         ),),
@@ -112,7 +113,10 @@ class _Price1State extends State<Price1> {
         child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
         backgroundColor: selected == true? Colors.blue : Colors.grey,
         onPressed: (){
+          if(radioValue != null && radioValue != "")
           Navigator.of(context).pushNamed('/Price2');
+          else
+            toast("Please select your profile");
         },
       ),
     ));

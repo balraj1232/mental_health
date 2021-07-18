@@ -10,28 +10,6 @@ import 'package:dio/dio.dart';
 class SendOtptoPhone extends BaseRepository {
 
 
-  Future<SendOtp> sendOtp({String phone,String otp,
-    BuildContext context,
-  }) async {
-    final uri = '${ApiEndpoint.BaseUrl}verifyOtp';
-    var response = await Dio().get(uri,
-        queryParameters:
-        {'phone': phone, "otp":otp},
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          followRedirects: false,
-        ));
-    try {
-      if (response.data != null) {
-        final passEntity = SendOtp.fromJson(response.data);
-        return passEntity;
-      } else {
-        return SendOtp(meta: response.data);
-      }
-    } catch (error, stacktrace) {}
-  }
 /*  // BuildContext context;
   Future<SendOtp> sendOtp(
       {String phone,

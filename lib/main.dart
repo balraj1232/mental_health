@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health/UI/AddNewEvent.dart';
-import 'package:mental_health/UI/Appointments.dart';
+import 'package:mental_health/UI/upcomingAppointments.dart';
 import 'package:mental_health/UI/AboutSAL.dart';
 import 'package:mental_health/UI/Assessments.dart';
 import 'package:mental_health/UI/AvailabilityFirst.dart';
@@ -33,59 +33,82 @@ import 'package:mental_health/UI/ProfessionalInfo2.dart';
 import 'package:mental_health/UI/Settings.dart';
 import 'UI/CancelAppointment.dart';
 import 'UI/LoginScreen.dart';
+import 'Utils/SharedPref.dart';
 
 void main() {
   runApp(MentalHealth());
 }
 
-class MentalHealth extends StatelessWidget {
-  const MentalHealth({Key key}) : super(key: key);
+class MentalHealth extends StatefulWidget {
+  @override
+  _MentalHealthState createState() => _MentalHealthState();
+}
 
+class _MentalHealthState extends State<MentalHealth> {
+  String _textFromFile = "";
+    @override
+  void initState() {
+    super.initState();
+    getlogintoken().then((val) {
+      setState(() {
+        _textFromFile = val;
+        print("login" +  _textFromFile.toString());
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Mental Health",
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'OpenSans',
-      ),
-      home: LoginScreen(),
-      routes: {
-        '/Login': (context) => LoginScreen(),
-        '/OTP': (context) => OTPScreen(),
-        '/Price1': (context) => Price1(),
-        '/Price2': (context) => Price2(),
-        '/Price3': (context) => Price3(),
-        '/ProfessionalInfo1': (context) => ProfessionalInfo1(),
-        '/ProfessionalInfo2': (context) => ProfessionalInfo2(),
-        '/Info1': (context) => Info1(),
-        '/Info2': (context) => Info2(),
-        '/Info3': (context) => Info3(),
-        '/Price4': (context) => Price4(),
-        '/Price5': (context) => Price5(),
-        '/Cafe1' : (context)=> AppointmentsScreen(),
-        '/Cafe2' : (context)=> Cafe2(),
-        '/Cafe3' : (context)=> Cafe3(),
-        '/MyProfile' : (context)=> MyProfile(),
-        '/CancelAppointment' : (context)=> CancelAppointment(),
-        '/MyContent' : (context)=> MyContent(),
-        '/Home2' : (context)=> Home2(),
-        '/KYC' : (context)=> KYCScreen(),
-        '/HomeMain' : (context)=> HomeMain(),
-        '/ExploreAll' : (context)=> ExploreAll(),
-        '/Availability1' : (context)=> Availability(),
-        '/Assessments' : (context)=> Assessments(),
-        '/Payments' : (context)=> Payment(),
-        '/AboutSAL' : (context)=> AboutSAL(),
-        '/Help' : (context)=> Help(),
-        '/Settings' : (context)=> Settings(),
-        '/AvailabilityFirst' : (context)=> AvailabilityFirst(),
-        '/CafeEvents' : (context)=> CafeEvents(),
-        '/CafeEventsDetails' : (context)=> CafeEventsDetails(),
-        '/AddNewEvent' : (context)=> AddNewEvent(),
-        '/EventSummary' : (context)=> EventSummary(),
-        '/EventSuccess' : (context)=> EventSuccessful(),
-      },
-    );
+      return  MaterialApp(
+          title: "Mental Health",
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            fontFamily: 'OpenSans',
+          ),
+          home: _textFromFile == "true" ? HomeMain(
+          ) : LoginScreen(),
+          routes: {
+            '/Login': (context) => LoginScreen(),
+            '/OTP': (context) => OTPScreen(),
+            '/Price1': (context) => Price1(),
+            '/Price2': (context) => Price2(),
+            '/Price3': (context) => Price3(),
+            '/ProfessionalInfo1': (context) => ProfessionalInfo1(),
+            '/ProfessionalInfo2': (context) => ProfessionalInfo2(),
+            '/Info1': (context) => Info1(),
+            '/Info2': (context) => Info2(),
+            '/Info3': (context) => Info3(),
+            '/Price4': (context) => Price4(),
+            '/Price5': (context) => Price5(),
+            '/Cafe1' : (context)=> AppointmentsScreen(),
+            '/Cafe2' : (context)=> Cafe2(),
+            '/Cafe3' : (context)=> Cafe3(),
+            '/MyProfile' : (context)=> MyProfile(),
+            '/CancelAppointment' : (context)=> CancelAppointment(),
+            '/MyContent' : (context)=> MyContent(),
+            '/Home2' : (context)=> Home2(),
+            '/KYC' : (context)=> KYCScreen(),
+            '/HomeMain' : (context)=> HomeMain(),
+            '/ExploreAll' : (context)=> ExploreAll(),
+            '/Availability1' : (context)=> Availability(),
+            '/Assessments' : (context)=> Assessments(),
+            '/Payments' : (context)=> Payment(),
+            '/AboutSAL' : (context)=> AboutSAL(),
+            '/Help' : (context)=> Help(),
+            '/Settings' : (context)=> Settings(),
+            '/AvailabilityFirst' : (context)=> AvailabilityFirst(),
+            '/CafeEvents' : (context)=> CafeEvents(),
+            '/CafeEventsDetails' : (context)=> CafeEventsDetails(),
+            '/AddNewEvent' : (context)=> AddNewEvent(),
+            '/EventSummary' : (context)=> EventSummary(),
+            '/EventSuccess' : (context)=> EventSuccessful(),
+          }
+        );
+  }
+
+  Future<String> getlogintoken() async {
+    {
+      var login = await SharedPreferencesTest().checkIsLogin("1");
+      return login;
+    }
   }
 }
