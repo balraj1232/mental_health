@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,12 +10,20 @@ import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/CommonWidgets.dart';
 import 'package:mental_health/Utils/DrawerMenu.dart';
 import 'package:mental_health/Utils/ListTileAppointment.dart';
+import 'package:mental_health/Utils/ListTileCafe1.dart';
 import 'package:mental_health/Utils/NavigationBar.dart';
+import 'package:mental_health/Utils/SharedPref.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/Utils/TimeAgoWidget.dart';
 import 'package:mental_health/constant/AppColor.dart';
+import 'package:mental_health/data/repo/UpcomingAppointmentRepo.dart';
 import 'package:mental_health/data/repo/getHomeContentRepo.dart';
+import 'package:mental_health/models/AppointmentModal.dart';
 import 'package:mental_health/models/GetHomeContentModal.dart';
+import 'package:mental_health/models/getTherapistDetailModal.dart';
+
+
+Therapist getTherapistData;
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key key}) : super(key: key);
@@ -24,10 +34,11 @@ class HomeMain extends StatefulWidget {
 
 class _HomeMainState extends State<HomeMain> {
   Future<void> _launched;
-  bool isloding = false;
+  bool isloading = false;
   var getHomeContent = GetHomePageContentRepo();
   var getHomeContentModal = GetHomeContentModal();
-
+  var upcomintAppointments = UpcomingAppointmentRepo();
+  List<Appointments> appointments = new List();
 
   List<Color> colors = [
     Color.fromRGBO(42, 138, 163, 0.75),
@@ -44,10 +55,24 @@ class _HomeMainState extends State<HomeMain> {
     Color.fromRGBO(0, 90, 100, 0.75),
   ];
 
+
+  getUserData() async {
+    SharedPreferencesTest().saveuserdata("get").then((value) async {
+      if (value != null && value != "") {
+        setState(() {
+          Map userupdateddata = json.decode(value);
+          getTherapistData = Therapist.fromJson(userupdateddata);
+        });
+      }
+    });
+  }
+
+
   @override
   void initState() {
     super.initState();
-    isloding = true;
+    isloading = true;
+    getUserData();
     getHomeContent
         .getHomeContent(
       context: context,
@@ -56,12 +81,12 @@ class _HomeMainState extends State<HomeMain> {
       if (value != null) {
         if (value.meta.status == "200") {
           setState(() {
-            isloding = false;
+            isloading = false;
             getHomeContentModal = value;
           });
         } else {
           setState(() {
-            isloding = false;
+            isloading = false;
           });
           showAlertDialog(
             context,
@@ -71,7 +96,7 @@ class _HomeMainState extends State<HomeMain> {
         }
       } else {
         setState(() {
-          isloding = false;
+          isloading = false;
         });
         showAlertDialog(
           context,
@@ -81,8 +106,52 @@ class _HomeMainState extends State<HomeMain> {
       }
     }).catchError((error) {
       setState(() {
-        isloding = false;
+        isloading = false;
       });
+      showAlertDialog(
+        context,
+        error.toString(),
+        "",
+      );
+    });
+    upcomintAppointments
+        .upcomingAppointmentRepo(
+      context: context,
+    )
+        .then((value) {
+      if (value != null) {
+        if (value.meta.status == "200") {
+          setState(() {
+            isloading = false;
+          });
+          appointments.addAll(value.appointments);
+          //toast(value.meta.message);
+          /*  SharedPreferencesTest().checkIsLogin("0");
+                                          SharedPreferencesTest()
+                                              .saveToken("set", value: value.token);*/
+
+          /*  Navigator.push(context,
+              MaterialPageRoute(
+                  builder: (conext) {
+                    return OTPScreen(
+                      phoneNumber: mobileController.text,
+                    );
+                  }));*/
+        } else {
+          showAlertDialog(
+            context,
+            value.meta.message,
+            "",
+          );
+        }
+      } else {
+        showAlertDialog(
+          context,
+          "No data found",
+          "",
+        );
+      }
+    }).catchError((error) {
       showAlertDialog(
         context,
         error.toString(),
@@ -159,7 +228,7 @@ class _HomeMainState extends State<HomeMain> {
                             horizontal: SizeConfig.screenWidth * 0.05,
                             vertical: SizeConfig.blockSizeVertical
                         ),
-                        child: Text("Dr. ${firstNameController.text + lastNameController.text}",
+                        child: Text("Dr. ${getTherapistData != null && getTherapistData != "" ?getTherapistData.firstName +  " " +getTherapistData.lastName : ""}",
                             style: GoogleFonts.openSans(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -187,7 +256,20 @@ class _HomeMainState extends State<HomeMain> {
                       SizedBox(
                         height: SizeConfig.blockSizeVertical * 3.5,
                       ),
-                      Container(
+                      appointments != null && appointments.length > 0  ?  ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index){
+                        return appointments != null && appointments.length > 0 ?  listTileCafe1(context,"Kriti Singh","17:00",(){
+                          setState(() {
+                            _launched = makePhoneCall();
+                          });
+                        }): Container(
+                          child: Center(child: Text("No Upcoming Appointments", style:  TextStyle(color: Colors.black),)),
+                        );
+                      }, itemCount: appointments.length,): Container(
+                        child: Center(child: Text("No Upcoming Appointments", style:  TextStyle(color: Colors.black),)),
+                      ),
+                     /* Container(
                         width: SizeConfig.screenWidth,
                         margin: EdgeInsets.symmetric(
                           horizontal: SizeConfig.screenWidth * 0.05,
@@ -219,10 +301,10 @@ class _HomeMainState extends State<HomeMain> {
                                 });
                               }),
                             ],
-                          )),
-                      Container(
+                          )),*/
+                      appointments != null &&  appointments.length > 0 ?   Container(
                         margin:EdgeInsets.symmetric(
-                            horizontal: SizeConfig.screenWidth * 0.05,
+                            horizontal: SizeConfig.screenWidth * 0.05,vertical: SizeConfig.blockSizeVertical * 2
                         ),
                         child: MaterialButton(
                           onPressed: (){
@@ -241,7 +323,7 @@ class _HomeMainState extends State<HomeMain> {
                             ),
                           ),
                         ),
-                      ),
+                      ):SizedBox(),
                       Container(
                         width: SizeConfig.screenWidth,
                         alignment: Alignment.centerLeft,
@@ -372,7 +454,7 @@ class _HomeMainState extends State<HomeMain> {
     ));
 
     widgetList.add(child);
-    if (isloding) {
+    if (isloading) {
       final modal = new Stack(
         children: [
           new Opacity(

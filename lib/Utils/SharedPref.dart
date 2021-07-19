@@ -1,5 +1,8 @@
 
 
+import 'dart:convert';
+
+import 'package:mental_health/models/getTherapistDetailModal.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,16 +50,18 @@ class SharedPreferencesTest {
     return prefs.getBool('toggleValue') ?? false;
   }
 
-/*  Future<String> saveuserdata(String type, {Data userdata}) async {
+  Future<String> saveuserdata(String type, {Therapist userdata}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (type == "set") {
-      prefs.setString('userdata', json.encode(userdata.toJson()));
+      prefs.setString('therapistData', json.encode(userdata.toJson()));
       return "Set";
     } else {
-      String userentity = prefs.getString('userdata');
+      String userentity = prefs.getString('therapistData');
       return userentity;
     }
-  }*/
+  }
+
+
   Future<String> appversion(String value, String appversion) async {
     String a = "Test";
     SharedPreferences prefs = await SharedPreferences.getInstance();

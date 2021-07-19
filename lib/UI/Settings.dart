@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health/UI/LoginScreen.dart';
 import 'package:mental_health/Utils/Colors.dart';
+import 'package:mental_health/Utils/SharedPref.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+
 
 class Settings extends StatefulWidget {
   const Settings({Key key}) : super(key: key);
@@ -10,10 +12,12 @@ class Settings extends StatefulWidget {
   _SettingsState createState() => _SettingsState();
 }
 
+
 class _SettingsState extends State<Settings> {
 
   bool type1 = false;
   bool type2 = false;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
@@ -104,6 +108,9 @@ class _SettingsState extends State<Settings> {
                       MaterialPageRoute(builder: (context) {
                         return LoginScreen();
                       }));
+                  SharedPreferencesTest()
+                      .checkIsLogin(
+                      "2");
                 },
                 child: Container(
                   width: SizeConfig.screenWidth,

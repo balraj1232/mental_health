@@ -5,9 +5,9 @@ import 'package:mental_health/data/api/ApiHitter.dart';
 import 'package:mental_health/models/BookEventModal.dart';
 
 
-class SignUpRepo extends BaseRepository {
+class BookAnEventRepo extends BaseRepository {
   // BuildContext context;
-  Future<BookEventModal> registerUser({
+  Future<BookEventModal> bookEvent({
     String date,
     String description,
     BuildContext context,

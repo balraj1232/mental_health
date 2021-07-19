@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mental_health/Utils/Colors.dart';
-
 import 'AssesmentResult.dart';
-import 'Assesmentcreate.dart';
 
 class AssesmentQuiz extends StatefulWidget {
   @override
@@ -153,184 +151,185 @@ class _AssesmentQuizState extends State<AssesmentQuiz> {
           ),
         ),
         body: new Container(
-          margin: EdgeInsets.all(15),
-          child: new Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                new Text(
-                  'Question 1',
-                  style: new TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                new Text(
-                  'Sadness',
-                  style: new TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color(fontColorGray),
-                    fontSize: 18.0,
-                  ),
-                ),
-                new Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        new Radio(
-                          value: 0,
-                          groupValue: _radioValue1,
-                          onChanged: _handleRadioValueChange1,
-                        ),
-                        new Text(
-                          'I do not feel Sad',
-                          style: new TextStyle(fontSize: 16.0),
-                        ),
-                      ],
+          child: SingleChildScrollView(
+            child: new Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Text(
+                    'Question 1',
+                    style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
                     ),
-                    Row(
-                      children: [
-                        new Radio(
-                          value: 1,
-                          groupValue: _radioValue1,
-                          onChanged: _handleRadioValueChange1,
-                        ),
-                        new Text(
-                          'I  feel Sad most of the time',
-                          style: new TextStyle(
-                            fontSize: 16.0,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  new Text(
+                    'Sadness',
+                    style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(fontColorGray),
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          new Radio(
+                            value: 0,
+                            groupValue: _radioValue1,
+                            onChanged: _handleRadioValueChange1,
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        new Radio(
-                          value: 2,
-                          groupValue: _radioValue1,
-                          onChanged: _handleRadioValueChange1,
-                        ),
-                        new Text(
-                          'I feel Sad all the time',
-                          style: new TextStyle(fontSize: 16.0),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        new Radio(
-                          value: 3,
-                          groupValue: _radioValue1,
-                          onChanged: _handleRadioValueChange1,
-                        ),
-                        new Text(
-                          'I am extremely sad or unhappy',
-                          style: new TextStyle(fontSize: 16.0),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Question 2',
-                  style: new TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                new Text(
-                  'Persimmium',
-                  style: new TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color(fontColorGray),
-                    fontSize: 18.0,
-                  ),
-                ),
-                new Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        new Radio(
-                          value: 0,
-                          groupValue: _radioValue1,
-                          onChanged: _handleRadioValueChange1,
-                        ),
-                        new Text(
-                          'I do not feel Sad',
-                          style: new TextStyle(fontSize: 16.0),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        new Radio(
-                          value: 1,
-                          groupValue: _radioValue1,
-                          onChanged: _handleRadioValueChange1,
-                        ),
-                        new Text(
-                          'I  feel Sad most of the time',
-                          style: new TextStyle(
-                            fontSize: 16.0,
+                          new Text(
+                            'I do not feel Sad',
+                            style: new TextStyle(fontSize: 16.0),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        new Radio(
-                          value: 2,
-                          groupValue: _radioValue1,
-                          onChanged: _handleRadioValueChange1,
-                        ),
-                        new Text(
-                          'I feel Sad all the time',
-                          style: new TextStyle(fontSize: 16.0),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        new Radio(
-                          value: 3,
-                          groupValue: _radioValue1,
-                          onChanged: _handleRadioValueChange1,
-                        ),
-                        new Text(
-                          'I am extremely sad or unhappy',
-                          style: new TextStyle(fontSize: 16.0),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Expanded(child: SizedBox()),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: RaisedButton(
-                    child: Text("Done"),
-                    textColor: Colors.white,
-                    color: Colors.blue,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AssesmentResult()));
-                    },
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          new Radio(
+                            value: 1,
+                            groupValue: _radioValue1,
+                            onChanged: _handleRadioValueChange1,
+                          ),
+                          new Text(
+                            'I  feel Sad most of the time',
+                            style: new TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          new Radio(
+                            value: 2,
+                            groupValue: _radioValue1,
+                            onChanged: _handleRadioValueChange1,
+                          ),
+                          new Text(
+                            'I feel Sad all the time',
+                            style: new TextStyle(fontSize: 16.0),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          new Radio(
+                            value: 3,
+                            groupValue: _radioValue1,
+                            onChanged: _handleRadioValueChange1,
+                          ),
+                          new Text(
+                            'I am extremely sad or unhappy',
+                            style: new TextStyle(fontSize: 16.0),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                )
-              ]),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Question 2',
+                    style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  new Text(
+                    'Persimmium',
+                    style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(fontColorGray),
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          new Radio(
+                            value: 0,
+                            groupValue: _radioValue1,
+                            onChanged: _handleRadioValueChange1,
+                          ),
+                          new Text(
+                            'I do not feel Sad',
+                            style: new TextStyle(fontSize: 16.0),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          new Radio(
+                            value: 1,
+                            groupValue: _radioValue1,
+                            onChanged: _handleRadioValueChange1,
+                          ),
+                          new Text(
+                            'I  feel Sad most of the time',
+                            style: new TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          new Radio(
+                            value: 2,
+                            groupValue: _radioValue1,
+                            onChanged: _handleRadioValueChange1,
+                          ),
+                          new Text(
+                            'I feel Sad all the time',
+                            style: new TextStyle(fontSize: 16.0),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          new Radio(
+                            value: 3,
+                            groupValue: _radioValue1,
+                            onChanged: _handleRadioValueChange1,
+                          ),
+                          new Text(
+                            'I am extremely sad or unhappy',
+                            style: new TextStyle(fontSize: 16.0),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Expanded(child: SizedBox()),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: RaisedButton(
+                      child: Text("Done"),
+                      textColor: Colors.white,
+                      color: Colors.blue,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AssesmentResult()));
+                      },
+                    ),
+                  )
+                ]),
+          ),
         ));
   }
 }

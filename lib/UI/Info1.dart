@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,10 +9,12 @@ import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-int selectSocialProfile = -1;
+String selectSocialProfile = "";
 bool selected = false;
 File certificateImage;
 File adhaarCardImage;
+File resumeImage;
+var getImage;
 var linkController = TextEditingController();
 
 class Info1 extends StatefulWidget {
@@ -22,350 +25,503 @@ class Info1 extends StatefulWidget {
 }
 
 class _Info1State extends State<Info1> {
-
+  var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return SafeArea(child: Scaffold(
-    appBar: AppBar(
-      backgroundColor: Colors.white,
-      centerTitle: true,
-      title: Text("6/8",style: GoogleFonts.openSans(
-        fontWeight: FontWeight.bold,
-        color: Color(fontColorSteelGrey),
-      ),),
-      leading: Icon(Icons.arrow_back_ios,color: Colors.black,),
-      actions: [
-        Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(SizeConfig.blockSizeVertical),
-          child: Text("Skip",style: GoogleFonts.openSans(
-              color: Colors.blue
-          ),),
-        )
-      ],
-    ),
-        body: SingleChildScrollView(
+    return SafeArea(
+        child: Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          "6/8",
+          style: GoogleFonts.openSans(
+            fontWeight: FontWeight.bold,
+            color: Color(fontColorSteelGrey),
+          ),
+        ),
+        leading: Icon(
+          Icons.arrow_back_ios,
+          color: Colors.black,
+        ),
+        actions: [
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(SizeConfig.blockSizeVertical),
+            child: Text(
+              "Skip",
+              style: GoogleFonts.openSans(color: Colors.blue),
+            ),
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              LinearProgressIndicator(
-                backgroundColor: Colors.grey[300],
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                value: 0.6,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            LinearProgressIndicator(
+              backgroundColor: Colors.grey[300],
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+              value: 0.6,
+            ),
+            SizedBox(
+              height: SizeConfig.screenHeight * 0.15,
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: SizeConfig.screenWidth * 0.05,
+                right: SizeConfig.screenWidth * 0.05,
               ),
-              SizedBox(
-                height: SizeConfig.screenHeight * 0.15,
-              ),
-
-              Container(
-                margin: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.05,
-                  right: SizeConfig.screenWidth * 0.05,
-                ),
-                child: Text("Upload your relevant Qualification Certificate",style: GoogleFonts.openSans(
+              child: Text(
+                "Upload your relevant Qualification Certificate",
+                style: GoogleFonts.openSans(
                     fontSize: SizeConfig.blockSizeVertical * 4,
                     fontWeight: FontWeight.bold,
-                    color: Color(fontColorSteelGrey)
-                ),),
+                    color: Color(fontColorSteelGrey)),
               ),
-              Container(
-                margin: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.05,
-                  right: SizeConfig.screenWidth * 0.05,
-                ),
-                child: MaterialButton( onPressed: () {
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: SizeConfig.screenWidth * 0.05,
+                right: SizeConfig.screenWidth * 0.05,
+              ),
+              child: MaterialButton(
+                onPressed: () {
                   FocusScope.of(context).unfocus();
                   showCupertinoModalPopup(
                       context: context,
-                      builder: (BuildContext context) => ActionSheet()
-                          .actionSheet(context, onCamera: () {
-                        FocusScope.of(context).unfocus();
-                        chooseCertificateCamera().then((File file) {
-                          if (file != null) {
-                            setState(() {
-                              selected = true;
+                      builder: (BuildContext context) =>
+                          ActionSheet().actionSheet(context, onCamera: () {
+                            FocusScope.of(context).unfocus();
+                            chooseCertificateCamera().then((File file) {
+                              if (file != null) {
+                                setState(() {
+                                  selected = true;
 
-                              //   loading = true;
-                            });
-                          }
-                        }).catchError((onError) {});
-                      }, onGallery: () {
-                        FocusScope.of(context).unfocus();
-                        chooseCertificateGallery().then((value)
-                        {
-                          setState(() {
-                            selected = true;
-                            //  loading = true;
-                          });
-                        }).catchError((onError) {});
-                      },text: "Select document"));
+                                  //   loading = true;
+                                });
+                              }
+                            }).catchError((onError) {});
+                          },
+                              onDocument: () async {
+                                await FilePicker.platform.pickFiles(
+                                  type: FileType.custom,
+                                  allowCompression: true,
+                                  withData: true,
+                                  withReadStream: true,
+                                  allowedExtensions: ['pdf', "doc", "docx"],
+                                ).then((value) {
+                                  setState(() {
+                                    certificateImage = File(value.paths.elementAt(0));
+                                  });
+                                }).catchError((onError) {});
+                              },onGallery: () {
+                            FocusScope.of(context).unfocus();
+                            chooseCertificateGallery().then((value) {
+                              setState(() {
+                                selected = true;
+                                //  loading = true;
+                              });
+                            }).catchError((onError) {});
+                          }, text: "Select document"));
                 },
-                  child: Container(
-                      alignment: Alignment.topCenter,
-                      child: certificateImage != null &&  certificateImage.path != null
-                          ? Text(certificateImage.path.split("/").last,style: GoogleFonts.openSans(
-                          fontSize: SizeConfig.blockSizeVertical * 2
-                      ),):Text("UPLOAD CERTIFICATE",style: GoogleFonts.openSans(
-                          fontSize: SizeConfig.blockSizeVertical * 2
-                      ),),
-
-                  ),
-                  minWidth: SizeConfig.screenWidth,
-                  textColor: Colors.blue,
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  child:
+                      certificateImage != null && certificateImage.path != null
+                          ? Text(
+                              certificateImage.path.split("/").last,
+                              style: GoogleFonts.openSans(
+                                  fontSize: SizeConfig.blockSizeVertical * 2),
+                            )
+                          : Text(
+                              "UPLOAD CERTIFICATE",
+                              style: GoogleFonts.openSans(
+                                  fontSize: SizeConfig.blockSizeVertical * 2),
+                            ),
+                ),
+                minWidth: SizeConfig.screenWidth,
+                textColor: Colors.blue,
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(color: Colors.blue)),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: SizeConfig.screenWidth * 0.05,
+                right: SizeConfig.screenWidth * 0.05,
+                top: SizeConfig.blockSizeVertical * 5,
+              ),
+              child: Text(
+                "Share with us your",
+                style: GoogleFonts.openSans(
+                    fontSize: SizeConfig.blockSizeVertical * 4,
+                    fontWeight: FontWeight.bold,
+                    color: Color(fontColorSteelGrey)),
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical * 2,
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: SizeConfig.screenWidth * 0.05,
+                right: SizeConfig.screenWidth * 0.05,
+              ),
+              decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  side: BorderSide(
-                    color: Colors.blue
-                  )
-                ),
+                  border: Border.all(color: Colors.grey)),
+              child: RadioListTile<String>(
+                dense: true,
+                value: "Resume",
+                groupValue: selectSocialProfile,
+                onChanged: (value) {
+                  setState(() {
+                    selectSocialProfile = value;
+                    print(":gdcj" + selectSocialProfile.toString());
+                    selected = true;
+                  });
+                },
+                title: Text(
+                  "RESUME",
+                  style: GoogleFonts.openSans(color: Color(fontColorGray)),
                 ),
               ),
-              Container(
+            ),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical * 2,
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: SizeConfig.screenWidth * 0.05,
+                right: SizeConfig.screenWidth * 0.05,
+              ),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.grey)),
+              child: RadioListTile<String>(
+                dense: true,
+                value: "Linked In",
+                groupValue: selectSocialProfile,
+                onChanged: (value) {
+                  setState(() {
+                    selectSocialProfile = value;
+                    print("cjsjc" + selectSocialProfile.toString());
+                    selected = true;
+                  });
+                },
+                title: Text(
+                  "LINKEDIN",
+                  style: GoogleFonts.openSans(color: Color(fontColorGray)),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical * 2,
+            ),
+            Form(
+              key: formKey,
+              child:             Container(
                 margin: EdgeInsets.only(
                   left: SizeConfig.screenWidth * 0.05,
                   right: SizeConfig.screenWidth * 0.05,
-                  top: SizeConfig.blockSizeVertical * 5,
-                ),
-                child: Text("Share with us your",style: GoogleFonts.openSans(
-                    fontSize: SizeConfig.blockSizeVertical * 4,
-                    fontWeight: FontWeight.bold,
-                    color: Color(fontColorSteelGrey)
-                ),),
-              ),
-              SizedBox(
-                height: SizeConfig.blockSizeVertical * 2,
-              ),
-              Container(
-                margin:EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.05,
-                  right: SizeConfig.screenWidth * 0.05,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: Colors.grey
-                  )
-                ),
-                child: RadioListTile(
-                  dense: true,
-                  value: 1, groupValue: selectSocialProfile, onChanged: (value){
-                  setState(() {
-                    selectSocialProfile = value;
-                    selected = true;
-                  });
-                },
-                  title: Text("RESUME",style: GoogleFonts.openSans(
-                      color: Color(fontColorGray)
-                  ),),),
-              ),
-              SizedBox(
-                height: SizeConfig.blockSizeVertical * 2,
-              ),
-              Container(
-                margin:EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.05,
-                  right: SizeConfig.screenWidth * 0.05,
                 ),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                        color: Colors.grey
-                    )
-                ),
-                child: RadioListTile(
-                  dense: true,
-                  value: 2, groupValue: selectSocialProfile, onChanged: (value){
-                  setState(() {
-                    selectSocialProfile = value;
-                    selected = true;
-                  });
-                },
-                  title: Text("LINKEDIN",style: GoogleFonts.openSans(
-                    color: Color(fontColorGray)
-                  ),),),
-              ),
-              SizedBox(
-                height: SizeConfig.blockSizeVertical * 2,
-              ),
-              Container(
-                margin:EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.05,
-                  right: SizeConfig.screenWidth * 0.05,
-                ),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                        color: Colors.grey
-                    )
-                ),
-                child: TextFormField(
+                    border: Border.all(color: Colors.grey)),
+                child: selectSocialProfile == "Linked In"  ? TextFormField(
                   controller: linkController,
+                  validator: (s) {
+                    return validateLink(linkController.text);
+                  },
                   decoration: InputDecoration(
                     hintText: "Enter Link",
-                    hintStyle: GoogleFonts.openSans(
-                      color: Color(fontColorGray)
-                    ),
-                    contentPadding: EdgeInsets.all(SizeConfig.blockSizeVertical * 2),
+                    hintStyle: GoogleFonts.openSans(color: Color(fontColorGray)),
+                    contentPadding:
+                    EdgeInsets.all(SizeConfig.blockSizeVertical * 2),
                     border: InputBorder.none,
                     suffixIcon: Icon(Icons.link),
 
                   ),
+                ):GestureDetector(
+                  onTap: (){
+                    FocusScope.of(context).unfocus();
+                    showCupertinoModalPopup(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            ActionSheet().actionSheet(context, type: "Document",onCamera: () {
+                              FocusScope.of(context).unfocus();
+                              adhaarCameraFile().then((File file) {
+                                if (file != null) {
+                                  setState(() {
+                                    selected = true;
+                                    //   loading = true;
+                                  });
+                                }
+                              }).catchError((onError) {});
+                            },onDocument: () async {
+                              await FilePicker.platform.pickFiles(
+                                type: FileType.custom,
+                                allowCompression: true,
+                                allowedExtensions: ['pdf', "doc", "docx"],
+                              ).then((value) {
+                                setState(() {
+                                  resumeImage = File(value.paths.elementAt(0));
+                                  getImage = resumeImage.path.split("/");
 
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.05,
-                  right: SizeConfig.screenWidth * 0.05,
-                  top: SizeConfig.blockSizeVertical * 5,
-                ),
-                child: Text("Upload your Adhaar Card",style: GoogleFonts.openSans(
-                    fontSize: SizeConfig.blockSizeVertical * 4,
-                    fontWeight: FontWeight.bold,
-                    color: Color(fontColorSteelGrey)
-                ),),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.05,
-                  right: SizeConfig.screenWidth * 0.05,
-                ),
-                child: MaterialButton(onPressed: () {
-                  FocusScope.of(context).unfocus();
-                  showCupertinoModalPopup(
-                      context: context,
-                      builder: (BuildContext context) => ActionSheet()
-                          .actionSheet(context, onCamera: () {
-                        FocusScope.of(context).unfocus();
-                        adhaarCameraFile().then((File file) {
-                          if (file != null) {
-                            setState(() {
-                              selected = true;
-                              //   loading = true;
-                            });
-                          }
-                        }).catchError((onError) {});
-                      }, onGallery: () {
-                        FocusScope.of(context).unfocus();
-                        adhaarchooseImageFile().then((value)
-                        {
-                          setState(() {
-                            selected = true;
-                            //  loading = true;
-                          });
-                        }).catchError((onError) {});
-                      },text: "Select document"));
-                },
-                  child: adhaarCardImage != null &&  adhaarCardImage.path != null
-                      ? Text(adhaarCardImage.path.split("/").last,style: GoogleFonts.openSans(
-                      fontSize: SizeConfig.blockSizeVertical * 2
-                  ),):Text("UPLOAD CERTIFICATE",style: GoogleFonts.openSans(
-                      fontSize: SizeConfig.blockSizeVertical * 2
-                  ),),
-                  minWidth: SizeConfig.screenWidth,
-                  textColor: Colors.blue,
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: BorderSide(
-                          color: Colors.blue
-                      )
+                                });
+                              }).catchError((onError) {});
+                            },
+                                onGallery: () {
+                              FocusScope.of(context).unfocus();
+                              adhaarchooseImageFile().then((value) {
+                                setState(() {
+                                  selected = true;
+                                  //  loading = true;
+                                });
+                              }).catchError((onError) {});
+                            }, text: "Select document"));
+
+                  },
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      maxLines: 1,
+                      decoration: InputDecoration(
+                        hintText: resumeImage != null && resumeImage != "" ? getImage[7].toString() : "Enter Link",
+                        hintStyle: GoogleFonts.openSans(color: Color(fontColorGray)),
+                        contentPadding:
+                        EdgeInsets.all(SizeConfig.blockSizeVertical * 2),
+                        border: InputBorder.none,
+                        suffixIcon: Icon(Icons.link),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ],
-          ),
-    ),
+            ),
+
+            Container(
+              margin: EdgeInsets.only(
+                left: SizeConfig.screenWidth * 0.05,
+                right: SizeConfig.screenWidth * 0.05,
+                top: SizeConfig.blockSizeVertical * 5,
+              ),
+              child: Text(
+                "Upload your Adhaar Card",
+                style: GoogleFonts.openSans(
+                    fontSize: SizeConfig.blockSizeVertical * 4,
+                    fontWeight: FontWeight.bold,
+                    color: Color(fontColorSteelGrey)),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: SizeConfig.screenWidth * 0.05,
+                right: SizeConfig.screenWidth * 0.05,
+              ),
+              child: MaterialButton(
+                onPressed: () {
+                  FocusScope.of(context).unfocus();
+                  showCupertinoModalPopup(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          ActionSheet().actionSheet(context, onCamera: () {
+                            FocusScope.of(context).unfocus();
+                            adhaarCameraFile().then((File file) {
+                              if (file != null) {
+                                setState(() {
+                                  selected = true;
+                                  //   loading = true;
+                                });
+                              }
+                            }).catchError((onError) {});
+                          },
+                              onDocument: () async {
+                                await FilePicker.platform.pickFiles(
+                                  type: FileType.custom,
+                                  allowCompression: true,
+                                  allowedExtensions: ['pdf', "doc", "docx"],
+                                ).then((value) {
+                                  setState(() {
+                                    adhaarCardImage = File(value.paths.elementAt(0));
+                                  });
+                                }).catchError((onError) {});
+                              },onGallery: () {
+                            FocusScope.of(context).unfocus();
+                            adhaarchooseImageFile().then((value) {
+                              setState(() {
+                                selected = true;
+                                //  loading = true;
+                              });
+                            }).catchError((onError) {});
+                          }, text: "Select document"));
+                },
+                child: adhaarCardImage != null && adhaarCardImage.path != null
+                    ? Text(
+                        adhaarCardImage.path.split("/").last,
+                        style: GoogleFonts.openSans(
+                            fontSize: SizeConfig.blockSizeVertical * 2),
+                      )
+                    : Text(
+                        "UPLOAD ADHAAR CARD",
+                        style: GoogleFonts.openSans(
+                            fontSize: SizeConfig.blockSizeVertical * 2),
+                      ),
+                minWidth: SizeConfig.screenWidth,
+                textColor: Colors.blue,
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(color: Colors.blue)),
+              ),
+            ),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
-        backgroundColor: selected == true? Colors.blue : Colors.grey,
-        onPressed: (){
-          if(certificateImage != null && certificateImage != "" && adhaarCardImage != null && adhaarCardImage != "" && linkController.text.isNotEmpty && selectSocialProfile != null && selectSocialProfile >=1)
-            Navigator.of(context).pushNamed('/Info2');
-          else
-            toast("Please upload required docs");
+        child: Icon(
+          Icons.arrow_forward_ios,
+          color: Colors.white,
+        ),
+        backgroundColor: selected == true ? Colors.blue : Colors.grey,
+        onPressed: () {
+          if(formKey.currentState.validate()){
+            if (certificateImage != null &&
+                certificateImage != "" &&
+                adhaarCardImage != null &&
+                adhaarCardImage != "" &&
+                selectSocialProfile != null &&
+                selectSocialProfile != " ")
+              Navigator.of(context).pushNamed('/Info2');
+            else
+              toast("Please upload required docs");
+          }
+
         },
       ),
     ));
   }
 
   Future<File> chooseCertificateCamera() async {
-
-    await ImagePicker.platform.pickImage(
+    await ImagePicker
+        .pickImage(
       source: ImageSource.camera,
-    ).then((value) async {
+    )
+        .then((value) async {
       setState(() {
         FocusScope.of(context).unfocus();
         certificateImage = new File(value.path);
       });
-      if(certificateImage.path != null){
-      }
+      if (certificateImage.path != null) {}
     }).catchError((error) {
       print(error.toString());
     });
     return certificateImage;
   }
-
-
-
 
   Future<File> chooseCertificateGallery() async {
-    await ImagePicker.platform.pickImage(
+    await ImagePicker
+        .pickImage
+        (
       source: ImageSource.gallery,
-
-    ).then((value) async {
+    )
+        .then((value) async {
       setState(() {
         FocusScope.of(context).unfocus();
         certificateImage = new File(value.path);
       });
-      if(certificateImage.path != null){
-
-      }
+      if (certificateImage.path != null) {}
     }).catchError((error) {
       print(error.toString());
     });
     return certificateImage;
   }
 
-
   Future<File> adhaarCameraFile() async {
-
-    await ImagePicker.platform.pickImage(
+    await ImagePicker
+        .pickImage(
       source: ImageSource.camera,
-    ).then((value) async {
+    )
+        .then((value) async {
       setState(() {
         FocusScope.of(context).unfocus();
         adhaarCardImage = new File(value.path);
       });
-      if(adhaarCardImage.path != null){
-      }
+      if (adhaarCardImage.path != null) {}
     }).catchError((error) {
       print(error.toString());
     });
     return adhaarCardImage;
   }
-
 
   Future<File> adhaarchooseImageFile() async {
-    await ImagePicker.platform.pickImage(
+    await ImagePicker
+        .pickImage(
       source: ImageSource.gallery,
-
-    ).then((value) async {
+    )
+        .then((value) async {
       setState(() {
         FocusScope.of(context).unfocus();
         adhaarCardImage = new File(value.path);
       });
-      if(adhaarCardImage.path != null){
-
-      }
+      if (adhaarCardImage.path != null) {}
     }).catchError((error) {
       print(error.toString());
     });
     return adhaarCardImage;
   }
+
+
+
+  Future<File> uploadResumeCamera() async {
+    await ImagePicker
+        .pickImage(
+      source: ImageSource.camera,
+    )
+        .then((value) async {
+      setState(() {
+        FocusScope.of(context).unfocus();
+        resumeImage = new File(value.path);
+      });
+      if (resumeImage.path != null) {}
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return resumeImage;
+  }
+
+  Future<File> uploadResumeGallery() async {
+    await ImagePicker
+        .pickImage(
+      source: ImageSource.gallery,
+    )
+        .then((value) async {
+      setState(() {
+        FocusScope.of(context).unfocus();
+        resumeImage = new File(value.path);
+      });
+      if (resumeImage.path != null) {}
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return resumeImage;
+  }
+
+  String validateLink(String value) {
+    String pattern = r"(http|ftp|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?";
+    RegExp regExp = new RegExp(pattern);
+    if (value.length == 0) {
+      return 'Please enter Url';
+    } else if (!regExp.hasMatch(value)) {
+      return 'Please enter valid Url';
+    }
+    return null;
+  }
+
 
 }

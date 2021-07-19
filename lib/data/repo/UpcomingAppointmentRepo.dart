@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health/base/BaseRepository.dart';
-import 'package:mental_health/data/api/ApiEndPoint.dart';
 import 'package:mental_health/models/AppointmentModal.dart';
 import 'package:dio/dio.dart';
 
@@ -8,7 +7,7 @@ class UpcomingAppointmentRepo extends BaseRepository {
   Future<AppointmentModal> upcomingAppointmentRepo({String therapistId,
     BuildContext context,
   }) async {
-    final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/appointment/upcoming?therapist_id=p68iu';
+    final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/appointment/upcoming?therapist_id=5sbp4';
     var response = await Dio().get(uri,
         options: Options(
           headers: {

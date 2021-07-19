@@ -12,12 +12,12 @@ class AddNewEvent extends StatefulWidget {
 }
 
 class _AddNewEventState extends State<AddNewEvent> {
+
   GlobalKey<FormState> newEventFormKey = GlobalKey<FormState>();
   String topic;
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTimeFrom = TimeOfDay(hour: 00, minute: 00);
   String _setTime;
-
   String _hourFrom, _minuteFrom, _timeFrom;
   String dateTimeFrom;
   int _value = 1;

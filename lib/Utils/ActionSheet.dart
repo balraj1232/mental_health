@@ -11,6 +11,8 @@ class ActionSheet {
       BuildContext context, {
         Function onCamera,
         Function onGallery,
+        Function onDocument,
+        String type,
         String text
       }) {
     return CupertinoActionSheet(
@@ -35,6 +37,14 @@ class ActionSheet {
           child: Text('Gallery', style: primaryTextStyle(size: 18)),
           isDefaultAction: true,
         ),
+        type != "profile" ?  CupertinoActionSheetAction(
+          onPressed: () {
+            onDocument();
+            finish(context);
+          },
+          child: Text('Documents', style: primaryTextStyle(size: 18)),
+          isDefaultAction: true,
+        ):SizedBox(),
       ],
       cancelButton: CupertinoActionSheetAction(
           onPressed: () {

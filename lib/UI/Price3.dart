@@ -90,9 +90,14 @@ class _Price3State extends State<Price3> {
                   onChanged: (bool value) {
                     setState(() {
                       values[key] = value;
-                      selectedVal.addAll(values.keys);
-                      print("val" + values[key].toString());
-                      selected = true;
+                      selectedVal.clear();
+                      values.forEach((key, value) {
+                        print('${key}: ${value}');
+                        if (value) {
+                          selectedVal.add(key);
+                          selected = true;
+                        }
+                      });
                     });
                   },
                 );

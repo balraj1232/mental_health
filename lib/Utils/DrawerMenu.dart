@@ -58,7 +58,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     margin: EdgeInsets.only(
                       top: SizeConfig.blockSizeVertical * 1.5,
                     ),
-                    child: Text("Complete your profile (60%)",
+                    child: Text("Profile complete",
                       style: GoogleFonts.openSans(
                         color: Colors.white,
                         fontSize: SizeConfig.blockSizeVertical * 1.5,

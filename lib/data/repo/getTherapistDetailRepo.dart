@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health/base/BaseRepository.dart';
 import 'package:dio/dio.dart';
-import 'package:mental_health/models/GetTherapistModal.dart';
+import 'package:mental_health/models/getTherapistDetailModal.dart';
 
 
+class GetTherapistDetailRepo extends BaseRepository {
 
-class GetTherapistEventRepo extends BaseRepository {
-  Future<GetTherapistEventModal> therapistRepo({String therapistId,
+  Future<GetTherapistDetailModal> getTherapistDetail({String therapistId,
     BuildContext context,
   }) async {
-    final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/events?therapist_id=5sbp4';
+    final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist?therapist_id=jssg4';
     var response = await Dio().get(uri,
         options: Options(
           headers: {
@@ -18,10 +18,10 @@ class GetTherapistEventRepo extends BaseRepository {
         ));
     try {
       if (response.data != null) {
-        final passEntity = GetTherapistEventModal.fromJson(response.data);
+        final passEntity = GetTherapistDetailModal.fromJson(response.data);
         return passEntity;
       } else {
-        return GetTherapistEventModal(meta: response.data);
+        return GetTherapistDetailModal(meta: response.data);
       }
     } catch (error, stacktrace) {}
   }

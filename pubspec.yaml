@@ -41,6 +41,9 @@ dependencies:
   cached_network_image: ^3.0.0
   country_code_picker: ^2.0.2
   video_player: ^2.1.10
+  pin_code_fields:
+  file_picker: ^2.1.4
+
 
 
 

@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mental_health/UI/Info%203.dart';
 import 'package:mental_health/UI/Info1.dart';
-import 'package:mental_health/UI/Info2.dart';
 import 'package:mental_health/UI/LoginScreen.dart';
 import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/UI/Price3.dart';
@@ -17,6 +16,7 @@ import 'package:mental_health/Utils/SharedPref.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/data/repo/LoginUser.dart';
 
+import 'Info2.dart';
 
 class Price4 extends StatefulWidget {
   const Price4({Key key}) : super(key: key);
@@ -29,18 +29,21 @@ class _Price4State extends State<Price4> {
   final GlobalKey<State> loginLoader = new GlobalKey<State>();
   var createUser = CreateTherapistProfileRepo();
 
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Summary",style: GoogleFonts.openSans(
+        title: Text(
+          "Summary",
+          style: GoogleFonts.openSans(
+              color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        leading: Icon(
+          Icons.arrow_back_ios,
           color: Colors.black,
-          fontWeight: FontWeight.bold
-        ),),
-        leading: Icon(Icons.arrow_back_ios,color: Colors.black,),
+        ),
         centerTitle: true,
       ),
       bottomSheet: Container(
@@ -50,45 +53,47 @@ class _Price4State extends State<Price4> {
           top: SizeConfig.blockSizeVertical * 3,
         ),
         decoration: BoxDecoration(
-            boxShadow: [BoxShadow(
-              color: Colors.grey,
-              spreadRadius: 0.5,
-              blurRadius: 0.9,
-              offset: Offset.fromDirection(2,1),
-            )],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                spreadRadius: 0.5,
+                blurRadius: 0.9,
+                offset: Offset.fromDirection(2, 1),
+              )
+            ],
             color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),
-            )
-        ),
+            )),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             MaterialButton(
-              onPressed: (){},
+              onPressed: () {},
               color: Colors.white,
               minWidth: SizeConfig.screenWidth * 0.4,
-              child: Text("EDIT",style: GoogleFonts.openSans(
-                color: Color(fontColorGray),
-              ),),
+              child: Text(
+                "EDIT",
+                style: GoogleFonts.openSans(
+                  color: Color(fontColorGray),
+                ),
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
-                side: BorderSide(
-                    color: Color(fontColorGray)
-                ),
+                side: BorderSide(color: Color(fontColorGray)),
               ),
             ),
             MaterialButton(
-              onPressed: (){
+              onPressed: () {
                 Dialogs.showLoadingDialog(context, loginLoader);
-             Future.delayed(Duration(seconds: 2)).then((value) {
-               SharedPreferencesTest().checkIsLogin("0");
-               Navigator.of(context).pushNamed('/Price5');
-             });
-               /* createUser
+                 Future.delayed(Duration(seconds: 2)).then((value) {
+                  SharedPreferencesTest().checkIsLogin("0");
+                  Navigator.of(context).pushNamed('/Price5');
+                });
+                /* createUser
                     .createCounsellor(
-                    aadhar: adhaarCardImage, about: aboutController.text, certificate: certificateImage, context:context , device_id: "",education: "",email: "",experience: "",first_name: firstNameController.text,gender: radioValue,language_ids: selectedVal.elementAt(0).toString(),last_name: lastNameController.text, linkedin:"" ,phone: "91"+ mobileController.text,photo: image,price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
+                    aadhar: adhaarCardImage, about: aboutController.text, certificate: certificateImage, context:context , device_id: "",education: "",email: "",experience: "",first_name: firstNameController.text,gender: radioValue,language_ids: selectedVal.elementAt(0).toString(),last_name: lastNameController.text, linkedin:"" ,phone: "+91"+ mobileController.text,photo: image,price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
                 )
                     .then((value) {
                   if (value != null) {
@@ -132,18 +137,20 @@ class _Price4State extends State<Price4> {
               },
               color: Colors.blue,
               minWidth: SizeConfig.screenWidth * 0.4,
-              child: Text("SUBMIT",style: GoogleFonts.openSans(
-                color: Colors.white,
-              ),),
+              child: Text(
+                "SUBMIT",
+                style: GoogleFonts.openSans(
+                  color: Colors.white,
+                ),
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
-                side: BorderSide(
-                    color: Colors.blue
-                ),
+                side: BorderSide(color: Colors.blue),
               ),
             ),
           ],
-        ),),
+        ),
+      ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
@@ -160,17 +167,15 @@ class _Price4State extends State<Price4> {
                   backgroundColor: Colors.white,
                   radius: SizeConfig.blockSizeVertical * 7.45,
                   child: Container(
-                    height: 90,width: 90,
+                    height: 90,
+                    width: 90,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image:  image != null
-                              ? FileImage(
-                              File(image.path))
-                              : AssetImage(
-                              "assets/icons/user.png"),
+                          image: image != null
+                              ? FileImage(File(image.path))
+                              : AssetImage("assets/icons/user.png"),
                           fit: BoxFit.fill),
                       shape: BoxShape.circle,
-
                     ),
                   ),
                 ),
@@ -185,16 +190,20 @@ class _Price4State extends State<Price4> {
               alignment: Alignment.center,
               child: Column(
                 children: [
-                  Text(firstNameController.text + lastNameController.text,style: GoogleFonts.openSans(
-                      color: Color(fontColorGray),
-                      fontWeight: FontWeight.w600,
-                      fontSize: SizeConfig.blockSizeVertical * 2.5
-                  ),),
-                  Text("Counselling Therapist",style: GoogleFonts.openSans(
-                      color: Color(fontColorGray),
-                      fontWeight: FontWeight.w400,
-                      fontSize: SizeConfig.blockSizeVertical * 2
-                  ),)
+                  Text(
+                    firstNameController.text + lastNameController.text,
+                    style: GoogleFonts.openSans(
+                        color: Color(fontColorGray),
+                        fontWeight: FontWeight.w600,
+                        fontSize: SizeConfig.blockSizeVertical * 2.5),
+                  ),
+                  Text(
+                    "Counselling Therapist",
+                    style: GoogleFonts.openSans(
+                        color: Color(fontColorGray),
+                        fontWeight: FontWeight.w400,
+                        fontSize: SizeConfig.blockSizeVertical * 2),
+                  )
                 ],
               ),
             ),
@@ -203,82 +212,114 @@ class _Price4State extends State<Price4> {
                   left: SizeConfig.screenWidth * 0.05,
                   right: SizeConfig.screenWidth * 0.05,
                   top: SizeConfig.blockSizeVertical * 4,
-                  bottom: SizeConfig.blockSizeVertical * 4
-              ),
+                  bottom: SizeConfig.blockSizeVertical * 4),
               alignment: Alignment.centerLeft,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Gender",style: GoogleFonts.openSans(
-                    color: Color(fontColorGray),
-                    fontWeight: FontWeight.w600,
-                  ),),
-                  Text(radioValue,style: GoogleFonts.openSans(
+                  Text(
+                    "Gender",
+                    style: GoogleFonts.openSans(
                       color: Color(fontColorGray),
-                      fontWeight: FontWeight.w400,
-                      fontSize: SizeConfig.blockSizeVertical * 1.5
-                  ),),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    radioValue,
+                    style: GoogleFonts.openSans(
+                        color: Color(fontColorGray),
+                        fontWeight: FontWeight.w400,
+                        fontSize: SizeConfig.blockSizeVertical * 1.5),
+                  ),
                   SizedBox(
                     height: SizeConfig.blockSizeVertical * 3,
                   ),
-                  Text("Languages",style: GoogleFonts.openSans(
-                    color: Color(fontColorGray),
-                    fontWeight: FontWeight.w600,
-                  ),),
-                  Text(selectedVal.elementAt(0).toString(),style: GoogleFonts.openSans(
+                  Text(
+                    "Languages",
+                    style: GoogleFonts.openSans(
                       color: Color(fontColorGray),
-                      fontWeight: FontWeight.w400,
-                      fontSize: SizeConfig.blockSizeVertical * 1.5
-                  ),),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    selectedVal
+                        .toString()
+                        .replaceAll("[", "")
+                        .replaceAll("]", ""),
+                    style: GoogleFonts.openSans(
+                        color: Color(fontColorGray),
+                        fontWeight: FontWeight.w400,
+                        fontSize: SizeConfig.blockSizeVertical * 1.5),
+                  ),
                   SizedBox(
                     height: SizeConfig.blockSizeVertical * 3,
                   ),
-                  Text("Areas Of Expertise",style: GoogleFonts.openSans(
-                    color: Color(fontColorGray),
-                    fontWeight: FontWeight.w600,
-                  ),),
-                  Text("Anxiety Management, Life Coaching",style: GoogleFonts.openSans(
+                  Text(
+                    "Areas Of Expertise",
+                    style: GoogleFonts.openSans(
                       color: Color(fontColorGray),
-                      fontWeight: FontWeight.w400,
-                      fontSize: SizeConfig.blockSizeVertical * 1.5
-                  ),),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    "Anxiety Management, Life Coaching",
+                    style: GoogleFonts.openSans(
+                        color: Color(fontColorGray),
+                        fontWeight: FontWeight.w400,
+                        fontSize: SizeConfig.blockSizeVertical * 1.5),
+                  ),
                   SizedBox(
                     height: SizeConfig.blockSizeVertical * 3,
                   ),
-                  Text("Qualification",style: GoogleFonts.openSans(
-                    color: Color(fontColorGray),
-                    fontWeight: FontWeight.w600,
-                  ),),
-                  Text("Clinical Psychologist",style: GoogleFonts.openSans(
+                  Text(
+                    "Qualification",
+                    style: GoogleFonts.openSans(
                       color: Color(fontColorGray),
-                      fontWeight: FontWeight.w400,
-                      fontSize: SizeConfig.blockSizeVertical * 1.5
-                  ),),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    "Clinical Psychologist",
+                    style: GoogleFonts.openSans(
+                        color: Color(fontColorGray),
+                        fontWeight: FontWeight.w400,
+                        fontSize: SizeConfig.blockSizeVertical * 1.5),
+                  ),
                   SizedBox(
                     height: SizeConfig.blockSizeVertical * 3,
                   ),
-                  Text("Experience",style: GoogleFonts.openSans(
-                    color: Color(fontColorGray),
-                    fontWeight: FontWeight.w600,
-                  ),),
-                  Text(experienceYears.toString(),style: GoogleFonts.openSans(
+                  Text(
+                    "Experience",
+                    style: GoogleFonts.openSans(
                       color: Color(fontColorGray),
-                      fontWeight: FontWeight.w400,
-                      fontSize: SizeConfig.blockSizeVertical * 1.5
-                  ),),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    experienceYears.toString(),
+                    style: GoogleFonts.openSans(
+                        color: Color(fontColorGray),
+                        fontWeight: FontWeight.w400,
+                        fontSize: SizeConfig.blockSizeVertical * 1.5),
+                  ),
                   SizedBox(
                     height: SizeConfig.blockSizeVertical * 3,
                   ),
-                  Text("Qualification Certificate",style: GoogleFonts.openSans(
-                    color: Color(fontColorGray),
-                    fontWeight: FontWeight.w600,
-                  ),),
-                  Text("File_name.pdf",style: GoogleFonts.openSans(
+                  Text(
+                    "Qualification Certificate",
+                    style: GoogleFonts.openSans(
                       color: Color(fontColorGray),
-                      fontWeight: FontWeight.w400,
-                      fontSize: SizeConfig.blockSizeVertical * 1.5
-                  ),),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    certificateImage != null && certificateImage!= "" ?  certificateImage.path : "",
+                    style: GoogleFonts.openSans(
+                        color: Color(fontColorGray),
+                        fontWeight: FontWeight.w400,
+                        fontSize: SizeConfig.blockSizeVertical * 1.5),
+                  ),
                   SizedBox(
                     height: SizeConfig.blockSizeVertical * 8,
                   ),
@@ -291,39 +332,30 @@ class _Price4State extends State<Price4> {
     );
   }
 
-
   Future<File> chooseCameraFile() async {
-
-    await ImagePicker.platform.pickImage(
+    await ImagePicker.pickImage(
       source: ImageSource.camera,
     ).then((value) async {
       setState(() {
         FocusScope.of(context).unfocus();
         image = new File(value.path);
       });
-      if(image.path != null){
-      }
+      if (image.path != null) {}
     }).catchError((error) {
       print(error.toString());
     });
     return image;
   }
 
-
-
-
   Future<File> androidchooseImageFile() async {
-    await ImagePicker.platform.pickImage(
+    await ImagePicker.pickImage(
       source: ImageSource.gallery,
-
     ).then((value) async {
       setState(() {
         FocusScope.of(context).unfocus();
         image = new File(value.path);
       });
-      if(image.path != null){
-
-      }
+      if (image.path != null) {}
     }).catchError((error) {
       print(error.toString());
     });

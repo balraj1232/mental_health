@@ -147,57 +147,8 @@ class _Cafe2State extends State<Cafe2> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              margin: EdgeInsets.only(
-                top: SizeConfig.blockSizeVertical * 2,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  InkWell(
-                    child: Text(
-                      "UPCOMING",
-                      style: GoogleFonts.openSans(
-                          color: Color(fontColorGray),
-                          fontWeight: FontWeight.w600),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/Cafe1');
-                    },
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/Cafe2');
-                    },
-                    child: Text(
-                      "PAST",
-                      style: GoogleFonts.openSans(
-                          color: Color(0XFF0066B3),
-                          fontWeight: FontWeight.w700),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Row(
-              children: [
-                Container(
-                  width: SizeConfig.screenWidth * 0.45,
-                  height: SizeConfig.blockSizeVertical * 0.3,
-                  color: Color(fontColorGray),
-                ),
-                Container(
-                  width: SizeConfig.screenWidth * 0.45,
-                  height: SizeConfig.blockSizeVertical * 0.3,
-                  color: Color(backgroundColorBlue),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 3,
-            ),
             Text(
-              "28 JULY 2020",
+              "EARLIER",
               style: GoogleFonts.openSans(
                 color: Color(fontColorGray),
                 fontWeight: FontWeight.w600,

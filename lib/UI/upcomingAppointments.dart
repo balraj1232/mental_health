@@ -25,7 +25,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   bool isloading = false;
   List<Appointments> appointments = new List();
 
-
   @override
   void initState() {
     super.initState();
@@ -87,7 +86,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+       /*     Container(
               margin: EdgeInsets.only(
                 top: SizeConfig.blockSizeVertical * 2,
               ),
@@ -123,7 +122,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                   color: Color(fontColorGray),
                 ),
               ],
-            ),
+            ),*/
             Text("TODAY",style: GoogleFonts.openSans(
               color: Color(fontColorGray),
               fontWeight: FontWeight.w600,
@@ -170,6 +169,5 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       widgetList.add(modal);
     }
     return Stack(children: widgetList);
-
   }
 }

@@ -231,6 +231,9 @@ class _AvailabilityState extends State<Availability> {
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.pop(context);
+        },
         child: Icon(
           Icons.add,
           color: Colors.white,

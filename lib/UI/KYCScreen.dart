@@ -747,6 +747,17 @@ class _KYCScreenState extends State<KYCScreen> {
       ),
     );
   }
+
+  String validateMobile(String value) {
+    String pattern = r'[A-Z]{5}[0-9]{4}[A-Z]{1}$)';
+    RegExp regExp = new RegExp(pattern);
+    if (value.length == 0) {
+      return 'Please enter mobile number';
+    } else if (!regExp.hasMatch(value)) {
+      return 'Please enter valid mobile number';
+    }
+    return null;
+  }
 }
 
 class GroupModel {

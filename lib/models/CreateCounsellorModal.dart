@@ -6,7 +6,7 @@ class CreateTherapistProfileModal {
 
   CreateTherapistProfileModal.fromJson(Map<String, dynamic> json) {
     meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
-    therapistId = json['therapist_id'];
+    therapistId = json['therapist_id'] != null ?json['therapist_id'] : null ;
   }
 
   Map<String, dynamic> toJson() {

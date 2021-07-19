@@ -120,7 +120,7 @@ class _Info3State extends State<Info3> {
                         showCupertinoModalPopup(
                             context: context,
                             builder: (BuildContext context) => ActionSheet()
-                                    .actionSheet(context, onCamera: () {
+                                    .actionSheet(context, type: "profile",onCamera: () {
                                   FocusScope.of(context).unfocus();
                                   chooseCameraFile().then((File file) {
                                     if (file != null) {
@@ -136,7 +136,7 @@ class _Info3State extends State<Info3> {
                                       //  loading = true;
                                     });
                                   }).catchError((onError) {});
-                                }, text: "Select document"));
+                                }, text: "Select profile"),);
                       },
                       child: Container(
                         width: SizeConfig.blockSizeVertical * 4.5,
@@ -170,7 +170,7 @@ class _Info3State extends State<Info3> {
               alignment: Alignment.center,
               child: MaterialButton(
                 onPressed: () {
-                  Dialogs.showLoadingDialog(context, loginLoader);
+
                   Future.delayed(Duration(seconds: 1)).then((value) {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
@@ -178,9 +178,6 @@ class _Info3State extends State<Info3> {
                     }));
 
                   });
-                  Navigator.of(loginLoader.currentContext,
-                      rootNavigator: true)
-                      .pop();
                 },
                 color: Colors.blue,
                 minWidth: SizeConfig.screenWidth,
@@ -202,7 +199,7 @@ class _Info3State extends State<Info3> {
   }
 
   Future<File> chooseCameraFile() async {
-    await ImagePicker.platform
+    await ImagePicker
         .pickImage(
       source: ImageSource.camera,
     )
@@ -219,7 +216,7 @@ class _Info3State extends State<Info3> {
   }
 
   Future<File> androidchooseImageFile() async {
-    await ImagePicker.platform
+    await ImagePicker
         .pickImage(
       source: ImageSource.gallery,
     )

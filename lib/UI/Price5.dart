@@ -3,8 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/UI/Home2.dart';
 import 'package:mental_health/UI/HomeMain.dart';
 import 'package:mental_health/UI/KYCScreen.dart';
+import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
+import 'package:mental_health/Utils/SharedPref.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/data/repo/getTherapistDetailRepo.dart';
+import 'package:mental_health/models/getTherapistDetailModal.dart' as therapist;
+
 
 class Price5 extends StatefulWidget {
   const Price5({Key key}) : super(key: key);
@@ -14,15 +19,66 @@ class Price5 extends StatefulWidget {
 }
 
 class _Price5State extends State<Price5> {
+  var getDetails  = GetTherapistDetailRepo();
+  var contentModal = therapist. GetTherapistDetailModal();
+  therapist.Therapist therapistDetails;
+  bool isLoading = false;
 
+  @override
   void initState() {
     super.initState();
+    isLoading = true;
+    getDetails
+        .getTherapistDetail(
+      context: context,
+    ).then((value) {
+      if (value != null) {
+        if (value.meta.status == "200") {
+          setState(() {
+            isLoading = false;
+            contentModal = value;
+            SharedPreferencesTest().saveuserdata("set",
+                userdata : value.therapist);
+          });
+        } else {
+          setState(() {
+            isLoading = false;
+
+          });
+          showAlertDialog(
+            context,
+            value.meta.message,
+            "",
+          );
+        }
+      } else {
+        setState(() {
+          isLoading = false;
+
+        });
+        showAlertDialog(
+          context,
+          value.meta.message,
+          "",
+        );
+      }
+    }).catchError((error) {
+      setState(() {
+        isLoading = false;
+      });
+      showAlertDialog(
+        context,
+        error.toString(),
+        "",
+      );
+    });
     Future.delayed(Duration(seconds: 2)).then((value) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return isKyc ? HomeMain() : Home2();
       }));
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(

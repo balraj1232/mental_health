@@ -10,7 +10,7 @@ class AddedRelationListRepo {
   static Future<AvailabiltiyModel> getAddRelationList() async {
     try {
       final response = await http.get(Uri.parse(
-          'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/availability?therapist_id=ab4tyku62t'));
+          'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/availability?therapist_id=5sbp4'));
      // print(response.statusCode.toString());
 
       if (response.statusCode == 200) {

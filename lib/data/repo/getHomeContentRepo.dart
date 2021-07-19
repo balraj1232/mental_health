@@ -10,7 +10,7 @@ class GetHomePageContentRepo extends BaseRepository {
   Future<GetHomeContentModal> getHomeContent({String therapistId,
     BuildContext context,
   }) async {
-    final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/home?therapist_id=p68iu';
+    final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/home?therapist_id=5sbp4';
     var response = await Dio().get(uri,
         options: Options(
           headers: {

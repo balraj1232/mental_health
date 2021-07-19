@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health/base/BaseRepository.dart';
 import 'package:mental_health/data/api/ApiEndPoint.dart';
-import 'package:mental_health/models/sendOtpModel.dart';
+import 'package:mental_health/models/VerifyOtpModal.dart';
 import 'package:dio/dio.dart';
-
-
 
 
 class SendOtptoPhone extends BaseRepository {
@@ -40,7 +38,7 @@ class SendOtptoPhone extends BaseRepository {
 
 class VerifyOtpRepo extends BaseRepository {
   // BuildContext context;
-  Future<SendOtp> verifyOtp({String phone,String otp,
+  Future<VerifyOtpModal> verifyOtp({String phone,String otp,
     BuildContext context,
   }) async {
     final uri = '${ApiEndpoint.BaseUrl}verifyotp';
@@ -55,10 +53,10 @@ class VerifyOtpRepo extends BaseRepository {
         ));
     try {
       if (response.data != null) {
-        final passEntity = SendOtp.fromJson(response.data);
+        final passEntity = VerifyOtpModal.fromJson(response.data);
         return passEntity;
       } else {
-        return SendOtp(meta: response.data);
+        return VerifyOtpModal(meta: response.data);
       }
     } catch (error, stacktrace) {}
   }

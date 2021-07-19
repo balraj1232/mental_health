@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:async/async.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mental_health/data/api/ApiEndPoint.dart';
+import 'package:async/async.dart';
+import 'package:mental_health/Utils/AlertDialog.dart';
+
+import 'ApiEndPoint.dart';
 
 class ApiHitter {
   static Dio _dio;
@@ -14,29 +17,30 @@ class ApiHitter {
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   static Dio getDio() {
     if (_dio == null) {
-      BaseOptions options = new BaseOptions(
-          baseUrl: ApiEndpoint.BaseUrl,
-          connectTimeout: 300000,
-          receiveTimeout: 300000);
-      return new Dio(options)
-        ..interceptors
-            .add(InterceptorsWrapper(onRequest: (options, handler)
-        {
-          print(options.data);
-          return options;
-        }, onResponse: (response,handler) {
-          return response; // continue
-        }, onError: (DioError e, handler) {
-          return e;
-        }));
-    } else {
-      return _dio;
+      if (_dio == null) {
+        BaseOptions options = new BaseOptions(
+            baseUrl: ApiEndpoint.BaseUrl,
+            connectTimeout: 300000,
+            receiveTimeout: 300000);
+        return new Dio(options)
+          ..interceptors
+              .add(InterceptorsWrapper(onRequest: (options, handler) {
+            print(options.data);
+            return options;
+          }, onResponse: (response, handler) {
+            return response; // continue
+          }, onError: (DioError e, handler) {
+            return e;
+          }));
+      } else {
+        return _dio;
+      }
     }
   }
 
   Future<ApiResponse> getApiResponse(
-    String endPoint,
-  ) async
+      String endPoint,
+      ) async
   {
     try
     {
@@ -50,10 +54,10 @@ class ApiHitter {
 
   Future<ApiResponse> getPostApiResponse(String endPoint,
       {BuildContext context,
-      Map<String, dynamic> headers,
-      Map<String, dynamic> data,
-      FormData formdata,
-      bool isformdata = false}) async {
+        Map<String, dynamic> headers,
+        Map<String, dynamic> data,
+        FormData formdata,
+        bool isformdata = false}) async {
 
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -71,10 +75,9 @@ class ApiHitter {
           String errorMessage = response.data['errors'].toString();
           print("errorMessage" + response.statusMessage.toString());
           if (a == b) {
-            if (message == errorMessage) {
-              this._memoizer.runOnce(() async {
-                await Future.delayed(Duration(milliseconds: 750), () {
-                    //      showAlertDialog(context, "Your Session is expired.Please Login again", "Token");
+            this._memoizer.runOnce(() async {
+              await Future.delayed(Duration(milliseconds: 750), () {
+                showAlertDialog(context, "Your Session is expired.Please Login again", "Token");
 /*              showDialog(
                   context: context,
                   barrierDismissible: false, // user must tap button!
@@ -192,9 +195,8 @@ class ApiHitter {
                       ),
                     );
                   });*/
-                });
               });
-            }
+            });
           }
           return ApiResponse(
               true, response: response, msg: response.data["msg"]);

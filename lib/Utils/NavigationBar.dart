@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/AppointmentsTabBarView.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'Colors.dart';
 
@@ -51,7 +52,7 @@ class _NavigationBarState extends State<NavigationBar> {
             label: "Home"),
         BottomNavigationBarItem(icon: InkWell(
           onTap: (){
-            Navigator.of(context).pushReplacementNamed('/Cafe1');
+            Navigator.push(context, MaterialPageRoute(builder: (context){return AppointmentTabBarView();}));
           },
           child: Container(child:
           Image.asset('assets/icons/nav booking.png',

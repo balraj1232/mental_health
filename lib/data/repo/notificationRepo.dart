@@ -9,7 +9,7 @@ class NotificationRepo extends BaseRepository {
   Future<NotificationModal> notificationRepo({String therapistId,
     BuildContext context,
   }) async {
-    final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/notification?therapist_id=p68iu';
+    final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/notification?therapist_id=5sbp4';
     var response = await Dio().get(uri,
         options: Options(
           headers: {

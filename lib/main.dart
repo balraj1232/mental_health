@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mental_health/UI/AddNewEvent.dart';
 import 'package:mental_health/UI/upcomingAppointments.dart';
@@ -31,10 +33,13 @@ import 'package:mental_health/UI/Price5.dart';
 import 'package:mental_health/UI/ProfessionalInfo1.dart';
 import 'package:mental_health/UI/ProfessionalInfo2.dart';
 import 'package:mental_health/UI/Settings.dart';
+import 'package:mental_health/models/VerifyOtpModal.dart';
 import 'UI/CancelAppointment.dart';
 import 'UI/LoginScreen.dart';
 import 'Utils/SharedPref.dart';
 
+
+Therapist getTherapistData;
 void main() {
   runApp(MentalHealth());
 }
@@ -52,10 +57,10 @@ class _MentalHealthState extends State<MentalHealth> {
     getlogintoken().then((val) {
       setState(() {
         _textFromFile = val;
-        print("login" +  _textFromFile.toString());
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
       return  MaterialApp(

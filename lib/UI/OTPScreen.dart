@@ -5,10 +5,13 @@ import 'package:mental_health/UI/Price1.dart';
 import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/Dialogs.dart';
+import 'package:mental_health/Utils/SharedPref.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/constant/AppColor.dart';
 import 'package:mental_health/data/repo/sendOtpRepo.dart' as send;
 import 'package:mental_health/data/repo/verifyOtpRepo.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 
 class OTPScreen extends StatefulWidget {
@@ -22,7 +25,6 @@ class OTPScreen extends StatefulWidget {
 class _OTPScreenState extends State<OTPScreen> {
   final GlobalKey<State> loginLoader = new GlobalKey<State>();
 
-
 bool selected = false;
   FocusNode firstDigit;
   FocusNode secondDigit;
@@ -33,11 +35,7 @@ bool selected = false;
   var verifyOtp = VerifyOtpRepo();
   var sendOtp = send.SendOtptoPhone();
 
-
   TextEditingController firstController = TextEditingController();
-  TextEditingController secondController = TextEditingController();
-  TextEditingController thirdController = TextEditingController();
-  TextEditingController fourthController = TextEditingController();
 
   @override
   void initState() {
@@ -52,6 +50,7 @@ bool selected = false;
   @override
   void dispose() {
     // TODO: implement dispose
+    firstController.dispose();
     firstDigit.dispose();
     secondDigit.dispose();
     thirdDigit.dispose();
@@ -70,19 +69,15 @@ bool selected = false;
           child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
           backgroundColor: selected == true? Colors.blue : Colors.grey,
             onPressed: () {
-              if (firstController.text.isNotEmpty &&
-                  secondController.text.isNotEmpty &&
-                  thirdController.text.isNotEmpty &&
-                  fourthController.text.isNotEmpty) {
+              if (firstController.text.isNotEmpty
+                ) {
                 Dialogs.showLoadingDialog(context, loginLoader);
                 verifyOtp
                     .verifyOtp(
                   context: context,
                   phone: widget.phoneNumber,
-                  otp: firstController.text +
-                      secondController.text+
-                      thirdController.text+
-                      fourthController.text
+                  otp: firstController.text
+
                 ).then((value) {
                   if (value != null) {
                     if (value.meta.status == "200") {
@@ -90,17 +85,14 @@ bool selected = false;
                           rootNavigator: true)
                           .pop();
                       toast(value.meta.message);
+
                       Navigator.push(context, MaterialPageRoute(builder: (conext){
-                        return Price1(getOtp:  firstController.text +
-                            secondController.text +
-                            thirdController.text +
-                            fourthController.text,);
+                        return Price1(getOtp:  firstController.text
+                           );
                       }));
                     } else {
                       firstController.clear();
-                      secondController.clear();
-                      thirdController.clear();
-                      fourthController.clear();
+
                       Navigator.of(loginLoader.currentContext,
                           rootNavigator: true)
                           .pop();
@@ -159,7 +151,33 @@ bool selected = false;
                 fontSize: SizeConfig.blockSizeVertical * 1.5,
                 color: Color(fontColorGray),
               ),),
-              Container(
+          Container(
+            margin: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2),
+
+            color: Colors.transparent,
+            child: PinCodeTextField(
+              controller: firstController,
+              keyboardType: TextInputType.number,
+              appContext: context,
+              length: 4,
+              onChanged: (value) {
+               setState(() {
+                 firstController.text = value;
+                 selected = true;
+               });
+                /*     controller.otpController.value.text =
+                                  value.toString();*/
+              },
+              backgroundColor: Colors.transparent,
+              pinTheme: PinTheme(
+                  inactiveColor: Color(backgroundColorBlue), borderWidth: 4),
+              textStyle: TextStyle(
+                  color: colorBlack,
+                  fontSize: 34,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+/*              Container(
                 margin: EdgeInsets.only(
                     top: SizeConfig.blockSizeVertical * 2,
                 ),
@@ -292,7 +310,7 @@ bool selected = false;
                     ),
                   ],
                 ),
-              ),
+              )*/
               SizedBox(
                 height: SizeConfig.blockSizeVertical * 1.5,
               ),
@@ -300,6 +318,7 @@ bool selected = false;
                 onTap: (){
                   Dialogs.showLoadingDialog(
                       context, loginLoader);
+                  firstController.clear();
                   sendOtp
                       .sendOtp(
                     context: context,

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,12 +7,16 @@ import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/DrawerMenu.dart';
 import 'package:mental_health/Utils/NavigationBar.dart';
+import 'package:mental_health/Utils/SharedPref.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/Utils/TimeAgoWidget.dart';
 import 'package:mental_health/constant/AppColor.dart';
 import 'package:mental_health/data/repo/getHomeContentRepo.dart';
 import 'package:mental_health/models/GetHomeContentModal.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:mental_health/models/getTherapistDetailModal.dart';
+
+import 'HomeMain.dart';
 
 
 class Home2 extends StatefulWidget {
@@ -41,9 +46,22 @@ class _Home2State extends State<Home2> {
     Color.fromRGBO(0, 90, 100, 0.75),
   ];
 
+
+  getUserData() async {
+    SharedPreferencesTest().saveuserdata("get").then((value) async {
+      if (value != null && value != "") {
+        setState(() {
+          Map userupdateddata = json.decode(value);
+          getTherapistData = Therapist.fromJson(userupdateddata);
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    getUserData();
     isloding = true;
     getHomeContent
         .getHomeContent(
@@ -154,7 +172,7 @@ class _Home2State extends State<Home2> {
                         margin: EdgeInsets.symmetric(
                             horizontal: SizeConfig.screenWidth * 0.05,
                             vertical: SizeConfig.blockSizeVertical),
-                        child: Text("Dr. Sushmita,",
+                        child: Text("Dr. ${getTherapistData != null ?getTherapistData.firstName + " " + getTherapistData.lastName:""}",
                             style: GoogleFonts.openSans(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
