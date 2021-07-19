@@ -25,7 +25,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     isloading = true;
     notification
         .notificationRepo(
-      context: context,
+     context,
     )
         .then((value) {
       if (value != null) {

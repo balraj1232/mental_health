@@ -18,6 +18,7 @@ import 'package:mental_health/models/getTherapistDetailModal.dart';
 
 import 'HomeMain.dart';
 
+String therapistId;
 
 class Home2 extends StatefulWidget {
   const Home2({Key key}) : super(key: key);
@@ -58,52 +59,64 @@ class _Home2State extends State<Home2> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getUserData();
-    isloding = true;
-    getHomeContent
-        .getHomeContent(
-      context: context,
-    )
-        .then((value) {
-      if (value != null) {
-        if (value.meta.status == "200") {
-          setState(() {
-            isloding = false;
-            getHomeContentModal = value;
-          });
-        } else {
+  getTherapistId() async {
+    SharedPreferencesTest().getTherapistId().then((value) async {
+      if (value != null && value != "") {
+        setState(() {
+          therapistId = value;
+        });
+        getHomeContent
+            .getHomeContent(
+          context: context,
+        )
+            .then((value) {
+          if (value != null) {
+            if (value.meta.status == "200") {
+              setState(() {
+                isloding = false;
+                getHomeContentModal = value;
+              });
+            } else {
+              setState(() {
+                isloding = false;
+              });
+              showAlertDialog(
+                context,
+                value.meta.message,
+                "",
+              );
+            }
+          } else {
+            setState(() {
+              isloding = false;
+            });
+            showAlertDialog(
+              context,
+              value.meta.message,
+              "",
+            );
+          }
+        }).catchError((error) {
           setState(() {
             isloding = false;
           });
           showAlertDialog(
             context,
-            value.meta.message,
+            error.toString(),
             "",
           );
-        }
-      } else {
-        setState(() {
-          isloding = false;
         });
-        showAlertDialog(
-          context,
-          value.meta.message,
-          "",
-        );
       }
-    }).catchError((error) {
-      setState(() {
-        isloding = false;
-      });
-      showAlertDialog(
-        context,
-        error.toString(),
-        "",
-      );
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+    getTherapistId();
+    isloding = true;
+
   }
 
   @override

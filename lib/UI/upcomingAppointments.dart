@@ -31,7 +31,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
     isloading = true;
     upcomintAppointments
         .upcomingAppointmentRepo(
-      context: context,
+    context,
     )
         .then((value) {
       if (value != null) {

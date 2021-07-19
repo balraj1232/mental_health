@@ -25,9 +25,8 @@ class _Cafe2State extends State<Cafe2> {
     isloading = true;
     pastAppointmentsRepo
         .pastAppointmentRepo(
-      context: context,
-    )
-        .then((value) {
+       context,
+    ).then((value) {
       if (value != null) {
         if (value.meta.status == "200") {
           setState(() {

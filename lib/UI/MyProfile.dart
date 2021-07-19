@@ -82,7 +82,7 @@ class _MyProfileState extends State<MyProfile> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: ClipRRect(
-                            child: getTherapistData.photo != null &&
+                            child: getTherapistData != null && getTherapistData.photo != null &&
                                     getTherapistData.photo != ""
                                 ? CachedNetworkImage(
                                     imageUrl: getTherapistData.photo)
@@ -130,7 +130,7 @@ class _MyProfileState extends State<MyProfile> {
                               width: SizeConfig.blockSizeHorizontal,
                             ),
                             Text(
-                              getTherapistData.totalRating,
+                              getTherapistData != null  && getTherapistData.totalRating != null ?  getTherapistData.totalRating : "",
                               style: GoogleFonts.openSans(
                                 color: Color(fontColorSteelGrey),
                               ),

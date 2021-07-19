@@ -17,27 +17,25 @@ class ApiHitter {
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   static Dio getDio() {
     if (_dio == null) {
-      if (_dio == null) {
-        BaseOptions options = new BaseOptions(
-            baseUrl: ApiEndpoint.BaseUrl,
-            connectTimeout: 300000,
-            receiveTimeout: 300000);
-        return new Dio(options)
-          ..interceptors
-              .add(InterceptorsWrapper(onRequest: (options, handler) {
-            print(options.data);
-            return options;
-          }, onResponse: (response, handler) {
-            return response; // continue
-          }, onError: (DioError e, handler) {
-            return e;
-          }));
-      } else {
-        return _dio;
-      }
+      BaseOptions options = new BaseOptions(
+          baseUrl: ApiEndpoint.BaseUrl,
+          connectTimeout: 300000,
+          receiveTimeout: 300000);
+      return new Dio(options)
+        ..interceptors
+            .add(InterceptorsWrapper(onRequest: (RequestOptions options)
+        {
+          print(options.data);
+          return options;
+        }, onResponse: (Response response) {
+          return response; // continue
+        }, onError: (DioError e) {
+          return e;
+        }));
+    } else {
+      return _dio;
     }
   }
-
   Future<ApiResponse> getApiResponse(
       String endPoint,
       ) async

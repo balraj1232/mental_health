@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mental_health/Utils/ActionSheet.dart';
+import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
+import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/data/repo/UploadImagesRepo.dart';
+import 'package:mental_health/models/UploadImagesModal.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 String selectSocialProfile = "";
@@ -14,6 +18,11 @@ bool selected = false;
 File certificateImage;
 File adhaarCardImage;
 File resumeImage;
+
+
+String certificateDoc;
+String adhaarDoc;
+String resumeDoc;
 var getImage;
 var linkController = TextEditingController();
 
@@ -26,6 +35,9 @@ class Info1 extends StatefulWidget {
 
 class _Info1State extends State<Info1> {
   var formKey = GlobalKey<FormState>();
+  var uploadImage = UploadImagesRepo();
+  final GlobalKey<State> loginLoader = new GlobalKey<State>();
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -98,9 +110,52 @@ class _Info1State extends State<Info1> {
                             FocusScope.of(context).unfocus();
                             chooseCertificateCamera().then((File file) {
                               if (file != null) {
+                                Dialogs.showLoadingDialog(context, loginLoader);
+                                uploadImage
+                                    .uploadImage(
+                                    context, image: certificateImage
+                                )
+                                    .then((value) {
+                                  if (value != null) {
+                                    if (value.meta.status == "200") {
+                                      setState(() {
+                                        certificateDoc = value.file.toString();
+                                      });
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                    } else {
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                      showAlertDialog(
+                                        context,
+                                        value.meta.message,
+                                        "",
+                                      );
+                                    }
+                                  } else {
+                                    Navigator.of(loginLoader.currentContext,
+                                        rootNavigator: true)
+                                        .pop();
+                                    showAlertDialog(
+                                      context,
+                                      value.meta.message,
+                                      "",
+                                    );
+                                  }
+                                }).catchError((error) {
+                                  Navigator.of(loginLoader.currentContext,
+                                      rootNavigator: true)
+                                      .pop();
+                                  showAlertDialog(
+                                    context,
+                                    error.toString(),
+                                    "",
+                                  );
+                                });
                                 setState(() {
                                   selected = true;
-
                                   //   loading = true;
                                 });
                               }
@@ -114,13 +169,110 @@ class _Info1State extends State<Info1> {
                                   withReadStream: true,
                                   allowedExtensions: ['pdf', "doc", "docx"],
                                 ).then((value) {
+                                  if(value != null){
+                                    Dialogs.showLoadingDialog(context, loginLoader);
+                                    uploadImage
+                                        .uploadImage(
+                                        context, image: certificateImage
+                                    )
+                                        .then((value) {
+                                      if (value != null) {
+                                        if (value.meta.status == "200") {
+                                          setState(() {
+                                            certificateDoc = value.file.toString();
+                                          });
+                                          Navigator.of(loginLoader.currentContext,
+                                              rootNavigator: true)
+                                              .pop();
+                                        } else {
+                                          Navigator.of(loginLoader.currentContext,
+                                              rootNavigator: true)
+                                              .pop();
+                                          showAlertDialog(
+                                            context,
+                                            value.meta.message,
+                                            "",
+                                          );
+                                        }
+                                      } else {
+                                        Navigator.of(loginLoader.currentContext,
+                                            rootNavigator: true)
+                                            .pop();
+                                        showAlertDialog(
+                                          context,
+                                          value.meta.message,
+                                          "",
+                                        );
+                                      }
+                                    }).catchError((error) {
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                      showAlertDialog(
+                                        context,
+                                        error.toString(),
+                                        "",
+                                      );
+                                    });
+                                  }
                                   setState(() {
                                     certificateImage = File(value.paths.elementAt(0));
                                   });
                                 }).catchError((onError) {});
                               },onGallery: () {
                             FocusScope.of(context).unfocus();
-                            chooseCertificateGallery().then((value) {
+                            chooseCertificateGallery().then((File file) {
+                              if (file != null) {
+                                Dialogs.showLoadingDialog(context, loginLoader);
+                                uploadImage
+                                    .uploadImage(
+                                    context, image: certificateImage
+                                )
+                                    .then((value) {
+                                  if (value != null) {
+                                    if (value.meta.status == "200") {
+                                      setState(() {
+                                        certificateDoc = value.file.toString();
+                                      });
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                    } else {
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                      showAlertDialog(
+                                        context,
+                                        value.meta.message,
+                                        "",
+                                      );
+                                    }
+                                  } else {
+                                    Navigator.of(loginLoader.currentContext,
+                                        rootNavigator: true)
+                                        .pop();
+                                    showAlertDialog(
+                                      context,
+                                      value.meta.message,
+                                      "",
+                                    );
+                                  }
+                                }).catchError((error) {
+                                  Navigator.of(loginLoader.currentContext,
+                                      rootNavigator: true)
+                                      .pop();
+                                  showAlertDialog(
+                                    context,
+                                    error.toString(),
+                                    "",
+                                  );
+                                });
+                                setState(() {
+                                  selected = true;
+                                  //   loading = true;
+                                });
+                              }
+
                               setState(() {
                                 selected = true;
                                 //  loading = true;
@@ -258,6 +410,50 @@ class _Info1State extends State<Info1> {
                               FocusScope.of(context).unfocus();
                               adhaarCameraFile().then((File file) {
                                 if (file != null) {
+                                  Dialogs.showLoadingDialog(context, loginLoader);
+                                  uploadImage
+                                      .uploadImage(
+                                      context, image: resumeImage
+                                  )
+                                      .then((value) {
+                                    if (value != null) {
+                                      if (value.meta.status == "200") {
+                                        setState(() {
+                                          resumeDoc = value.file.toString();
+                                        });
+                                        Navigator.of(loginLoader.currentContext,
+                                            rootNavigator: true)
+                                            .pop();
+                                      } else {
+                                        Navigator.of(loginLoader.currentContext,
+                                            rootNavigator: true)
+                                            .pop();
+                                        showAlertDialog(
+                                          context,
+                                          value.meta.message,
+                                          "",
+                                        );
+                                      }
+                                    } else {
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                      showAlertDialog(
+                                        context,
+                                        value.meta.message,
+                                        "",
+                                      );
+                                    }
+                                  }).catchError((error) {
+                                    Navigator.of(loginLoader.currentContext,
+                                        rootNavigator: true)
+                                        .pop();
+                                    showAlertDialog(
+                                      context,
+                                      error.toString(),
+                                      "",
+                                    );
+                                  });
                                   setState(() {
                                     selected = true;
                                     //   loading = true;
@@ -270,16 +466,107 @@ class _Info1State extends State<Info1> {
                                 allowCompression: true,
                                 allowedExtensions: ['pdf', "doc", "docx"],
                               ).then((value) {
+                                if(value != null){
+                                  Dialogs.showLoadingDialog(context, loginLoader);
+                                  uploadImage
+                                      .uploadImage(
+                                      context, image: resumeImage
+                                  )
+                                      .then((value) {
+                                    if (value != null) {
+                                      if (value.meta.status == "200") {
+                                        setState(() {
+                                          resumeDoc = value.file.toString();
+                                        });
+                                        Navigator.of(loginLoader.currentContext,
+                                            rootNavigator: true)
+                                            .pop();
+                                      } else {
+                                        Navigator.of(loginLoader.currentContext,
+                                            rootNavigator: true)
+                                            .pop();
+                                        showAlertDialog(
+                                          context,
+                                          value.meta.message,
+                                          "",
+                                        );
+                                      }
+                                    } else {
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                      showAlertDialog(
+                                        context,
+                                        value.meta.message,
+                                        "",
+                                      );
+                                    }
+                                  }).catchError((error) {
+                                    Navigator.of(loginLoader.currentContext,
+                                        rootNavigator: true)
+                                        .pop();
+                                    showAlertDialog(
+                                      context,
+                                      error.toString(),
+                                      "",
+                                    );
+                                  });
+                                }
                                 setState(() {
                                   resumeImage = File(value.paths.elementAt(0));
                                   getImage = resumeImage.path.split("/");
-
                                 });
                               }).catchError((onError) {});
                             },
                                 onGallery: () {
                               FocusScope.of(context).unfocus();
                               adhaarchooseImageFile().then((value) {
+                                if(value != null){
+                                  Dialogs.showLoadingDialog(context, loginLoader);
+                                  uploadImage
+                                      .uploadImage(
+                                      context, image: resumeImage
+                                  )
+                                      .then((value) {
+                                    if (value != null) {
+                                      if (value.meta.status == "200") {
+                                        setState(() {
+                                          resumeDoc = value.file.toString();
+                                        });
+                                        Navigator.of(loginLoader.currentContext,
+                                            rootNavigator: true)
+                                            .pop();
+                                      } else {
+                                        Navigator.of(loginLoader.currentContext,
+                                            rootNavigator: true)
+                                            .pop();
+                                        showAlertDialog(
+                                          context,
+                                          value.meta.message,
+                                          "",
+                                        );
+                                      }
+                                    } else {
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                      showAlertDialog(
+                                        context,
+                                        value.meta.message,
+                                        "",
+                                      );
+                                    }
+                                  }).catchError((error) {
+                                    Navigator.of(loginLoader.currentContext,
+                                        rootNavigator: true)
+                                        .pop();
+                                    showAlertDialog(
+                                      context,
+                                      error.toString(),
+                                      "",
+                                    );
+                                  });
+                                }
                                 setState(() {
                                   selected = true;
                                   //  loading = true;
@@ -334,6 +621,50 @@ class _Info1State extends State<Info1> {
                             FocusScope.of(context).unfocus();
                             adhaarCameraFile().then((File file) {
                               if (file != null) {
+                                Dialogs.showLoadingDialog(context, loginLoader);
+                                uploadImage
+                                    .uploadImage(
+                                    context, image: adhaarCardImage
+                                )
+                                    .then((value) {
+                                  if (value != null) {
+                                    if (value.meta.status == "200") {
+                                      setState(() {
+                                        adhaarDoc = value.file.toString();
+                                      });
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                    } else {
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                      showAlertDialog(
+                                        context,
+                                        value.meta.message,
+                                        "",
+                                      );
+                                    }
+                                  } else {
+                                    Navigator.of(loginLoader.currentContext,
+                                        rootNavigator: true)
+                                        .pop();
+                                    showAlertDialog(
+                                      context,
+                                      value.meta.message,
+                                      "",
+                                    );
+                                  }
+                                }).catchError((error) {
+                                  Navigator.of(loginLoader.currentContext,
+                                      rootNavigator: true)
+                                      .pop();
+                                  showAlertDialog(
+                                    context,
+                                    error.toString(),
+                                    "",
+                                  );
+                                });
                                 setState(() {
                                   selected = true;
                                   //   loading = true;
@@ -347,6 +678,52 @@ class _Info1State extends State<Info1> {
                                   allowCompression: true,
                                   allowedExtensions: ['pdf', "doc", "docx"],
                                 ).then((value) {
+                                  if(value != null){
+                                    Dialogs.showLoadingDialog(context, loginLoader);
+                                    uploadImage
+                                        .uploadImage(
+                                        context, image: adhaarCardImage
+                                    )
+                                        .then((value) {
+                                      if (value != null) {
+                                        if (value.meta.status == "200") {
+                                          setState(() {
+                                            adhaarDoc = value.file.toString();
+                                          });
+                                          Navigator.of(loginLoader.currentContext,
+                                              rootNavigator: true)
+                                              .pop();
+                                        } else {
+                                          Navigator.of(loginLoader.currentContext,
+                                              rootNavigator: true)
+                                              .pop();
+                                          showAlertDialog(
+                                            context,
+                                            value.meta.message,
+                                            "",
+                                          );
+                                        }
+                                      } else {
+                                        Navigator.of(loginLoader.currentContext,
+                                            rootNavigator: true)
+                                            .pop();
+                                        showAlertDialog(
+                                          context,
+                                          value.meta.message,
+                                          "",
+                                        );
+                                      }
+                                    }).catchError((error) {
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                      showAlertDialog(
+                                        context,
+                                        error.toString(),
+                                        "",
+                                      );
+                                    });
+                                  }
                                   setState(() {
                                     adhaarCardImage = File(value.paths.elementAt(0));
                                   });
@@ -354,6 +731,52 @@ class _Info1State extends State<Info1> {
                               },onGallery: () {
                             FocusScope.of(context).unfocus();
                             adhaarchooseImageFile().then((value) {
+                              if(value != null){
+                                Dialogs.showLoadingDialog(context, loginLoader);
+                                uploadImage
+                                    .uploadImage(
+                                    context, image: adhaarCardImage
+                                )
+                                    .then((value) {
+                                  if (value != null) {
+                                    if (value.meta.status == "200") {
+                                      setState(() {
+                                        adhaarDoc = value.file.toString();
+                                      });
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                    } else {
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                      showAlertDialog(
+                                        context,
+                                        value.meta.message,
+                                        "",
+                                      );
+                                    }
+                                  } else {
+                                    Navigator.of(loginLoader.currentContext,
+                                        rootNavigator: true)
+                                        .pop();
+                                    showAlertDialog(
+                                      context,
+                                      value.meta.message,
+                                      "",
+                                    );
+                                  }
+                                }).catchError((error) {
+                                  Navigator.of(loginLoader.currentContext,
+                                      rootNavigator: true)
+                                      .pop();
+                                  showAlertDialog(
+                                    context,
+                                    error.toString(),
+                                    "",
+                                  );
+                                });
+                              }
                               setState(() {
                                 selected = true;
                                 //  loading = true;

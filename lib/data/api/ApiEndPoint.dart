@@ -4,4 +4,5 @@ class ApiEndpoint {
   static String registerCounsellor = "therapist";
   static String verifyOtp = "verifyotp";
   static String bookAnEvent = "event/order";
+  static String uploadImages = "https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/upload";
 }

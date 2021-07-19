@@ -1,3 +1,4 @@
+import 'package:mental_health/UI/Home2.dart';
 import 'package:mental_health/base/BaseRepository.dart';
 import 'package:dio/dio.dart';
 import 'package:mental_health/models/avalabilitymodel.dart';
@@ -6,7 +7,7 @@ import 'package:mental_health/models/avalabilitymodel.dart';
 class Avalabilityrepo extends BaseRepository {
   static Future<AvailabiltiyModel> avialabilityRepo() async {
     final uri =
-        'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/availability?therapist_id=5sbp4';
+        'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/availability?therapist_id=${therapistId}';
     var response = await Dio().get(uri,
         options: Options(
           headers: {

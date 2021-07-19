@@ -24,54 +24,66 @@ class _Price5State extends State<Price5> {
   therapist.Therapist therapistDetails;
   bool isLoading = false;
 
+  getTherapistId() async {
+    SharedPreferencesTest().getTherapistId().then((value) async {
+      if (value != null && value != "") {
+        setState(() {
+          therapistId = value;
+        });
+        getDetails
+            .getTherapistDetail(
+            context: context,therapistId: therapistId
+        ).then((value) {
+          if (value != null) {
+            if (value.meta.status == "200") {
+              setState(() {
+                isLoading = false;
+                contentModal = value;
+                SharedPreferencesTest().saveuserdata("set",
+                    userdata : value.therapist);
+              });
+            } else {
+              setState(() {
+                isLoading = false;
+              });
+              showAlertDialog(
+                context,
+                value.meta.message,
+                "",
+              );
+            }
+          } else {
+            setState(() {
+              isLoading = false;
+
+            });
+            showAlertDialog(
+              context,
+              value.meta.message,
+              "",
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          showAlertDialog(
+            context,
+            error.toString(),
+            "",
+          );
+        });
+      }
+    });
+  }
+
+
+
   @override
   void initState() {
     super.initState();
     isLoading = true;
-    getDetails
-        .getTherapistDetail(
-      context: context,
-    ).then((value) {
-      if (value != null) {
-        if (value.meta.status == "200") {
-          setState(() {
-            isLoading = false;
-            contentModal = value;
-            SharedPreferencesTest().saveuserdata("set",
-                userdata : value.therapist);
-          });
-        } else {
-          setState(() {
-            isLoading = false;
-
-          });
-          showAlertDialog(
-            context,
-            value.meta.message,
-            "",
-          );
-        }
-      } else {
-        setState(() {
-          isLoading = false;
-
-        });
-        showAlertDialog(
-          context,
-          value.meta.message,
-          "",
-        );
-      }
-    }).catchError((error) {
-      setState(() {
-        isLoading = false;
-      });
-      showAlertDialog(
-        context,
-        error.toString(),
-        "",
-      );
-    });
+    getTherapistId();
     Future.delayed(Duration(seconds: 2)).then((value) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return isKyc ? HomeMain() : Home2();

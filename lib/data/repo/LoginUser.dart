@@ -11,50 +11,52 @@ import 'package:nb_utils/nb_utils.dart';
 class CreateTherapistProfileRepo extends BaseRepository {
 
   Future<CreateTherapistProfileModal> createCounsellor({
-    File aadhar,
+    String aadhar,
     BuildContext context,
     String about,
-    File certificate,
+    String certificate,
     String device_id,String education,
     String email,
     String experience,String first_name,
     String gender,
     String language_ids,String last_name,
     String linkedin,
-    String phone,File photo,
+    String phone,String photo,
     String price,
     String price_3,String price_5,
     String resume,
     String topic_ids
   }) async {
     ApiResponse apiResponse = await apiHitter
-        .getPostApiResponse("https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist", context: context, headers: {
-        'Content-Type': 'application/json',
+        .getPostApiResponse("https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist",
+        context: context, headers: {
+          "Content-Type": "application/json",
+          "accept": "application/json"
        },
      data: {
-      "bank_account_no": "string",
-      "bank_account_type": "string",
-      "bank_name": "string",
-      "branch_name": "string",
-      "device_id": "string",
-      "education": "string",
-      "email": "string",
-      "experience": "string",
-      "first_name": "string",
-      "gender": "string",
-      "ifsc": "string",
-      "language_ids": "string",
-      "last_name": "string",
-      "linkedin": "string",
-      "pan": "string",
-      "payee_name": "string",
-      "payout_percentage": "string",
-      "phone": "919878537937",
-      "price": "string",
-      "price_3": "string",
-      "price_5": "string",
-      "timezone": "string",
-      "topic_ids": "string"
+      "bank_account_no": "String",
+      "bank_account_type": "String",
+      "bank_name": "String",
+      "branch_name": "String",
+      "device_id": "String",
+      "education": education,
+      "email": "manpreet@yopmail.com",
+      "experience": experience,
+      "first_name": first_name,
+      "gender": gender,
+      "ifsc": "String",
+      "language_ids": language_ids,
+      "last_name": last_name,
+      "linkedin": linkedin,
+      "pan": "String",
+      "payee_name": "String",
+      "payout_percentage": "String",
+      "phone": "+$phone",
+      "price": "String",
+      "price_3": "String",
+      "price_5": "String",
+      "timezone": "String",
+      "topic_ids": topic_ids
     });
     {
       try {
@@ -64,7 +66,9 @@ class CreateTherapistProfileRepo extends BaseRepository {
         } else {
           return CreateTherapistProfileModal(meta: apiResponse.response.data);
         }
-      } catch (error, stacktrace) {}
+      } catch (error, stacktrace) {
+        return CreateTherapistProfileModal();
+      }
     }
   }
 

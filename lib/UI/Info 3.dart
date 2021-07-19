@@ -5,13 +5,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mental_health/UI/Price4.dart';
 import 'package:mental_health/Utils/ActionSheet.dart';
+import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/data/repo/LoginUser.dart';
-
+import 'package:mental_health/data/repo/UploadImagesRepo.dart';
 
 File image;
+String profileImage;
 
 class Info3 extends StatefulWidget {
   const Info3({Key key}) : super(key: key);
@@ -22,6 +24,8 @@ class Info3 extends StatefulWidget {
 class _Info3State extends State<Info3> {
   var createUser = CreateTherapistProfileRepo();
   final GlobalKey<State> loginLoader = new GlobalKey<State>();
+  var uploadImage = UploadImagesRepo();
+
 
   @override
   Widget build(BuildContext context) {
@@ -124,8 +128,49 @@ class _Info3State extends State<Info3> {
                                   FocusScope.of(context).unfocus();
                                   chooseCameraFile().then((File file) {
                                     if (file != null) {
-                                      setState(() {
-                                        //   loading = true;
+                                      Dialogs.showLoadingDialog(context, loginLoader);
+                                      uploadImage
+                                          .uploadImage(
+                                          context, image: image
+                                      )
+                                          .then((value) {
+                                        if (value != null) {
+                                          if (value.meta.status == "200") {
+                                            setState(() {
+                                              profileImage = value.file.toString();
+                                            });
+                                            Navigator.of(loginLoader.currentContext,
+                                                rootNavigator: true)
+                                                .pop();
+                                          } else {
+                                            Navigator.of(loginLoader.currentContext,
+                                                rootNavigator: true)
+                                                .pop();
+                                            showAlertDialog(
+                                              context,
+                                              value.meta.message,
+                                              "",
+                                            );
+                                          }
+                                        } else {
+                                          Navigator.of(loginLoader.currentContext,
+                                              rootNavigator: true)
+                                              .pop();
+                                          showAlertDialog(
+                                            context,
+                                            value.meta.message,
+                                            "",
+                                          );
+                                        }
+                                      }).catchError((error) {
+                                        Navigator.of(loginLoader.currentContext,
+                                            rootNavigator: true)
+                                            .pop();
+                                        showAlertDialog(
+                                          context,
+                                          error.toString(),
+                                          "",
+                                        );
                                       });
                                     }
                                   }).catchError((onError) {});

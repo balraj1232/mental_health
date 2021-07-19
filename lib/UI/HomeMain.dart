@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/Home2.dart';
 import 'package:mental_health/UI/NotificationScreen.dart';
 import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/Utils/AlertDialog.dart';
@@ -21,6 +22,8 @@ import 'package:mental_health/data/repo/getHomeContentRepo.dart';
 import 'package:mental_health/models/AppointmentModal.dart';
 import 'package:mental_health/models/GetHomeContentModal.dart';
 import 'package:mental_health/models/getTherapistDetailModal.dart';
+import 'package:video_player/video_player.dart';
+
 
 
 Therapist getTherapistData;
@@ -67,56 +70,69 @@ class _HomeMainState extends State<HomeMain> {
     });
   }
 
+  getTherapistId() async {
+    SharedPreferencesTest().getTherapistId().then((value) async {
+      print("val" + value.toString());
+      if (value != null && value != "") {
+        setState(() {
+          therapistId = value;
+        });
+        getHomeContent
+            .getHomeContent(
+          context: context,
+        )
+            .then((value) {
+          if (value != null) {
+            if (value.meta.status == "200") {
+              setState(() {
+                isloading = false;
+                getHomeContentModal = value;
+              });
+            } else {
+              setState(() {
+                isloading = false;
+              });
+              showAlertDialog(
+                context,
+                value.meta.message,
+                "",
+              );
+            }
+          } else {
+            setState(() {
+              isloading = false;
+            });
+            showAlertDialog(
+              context,
+              value.meta.message,
+              "",
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isloading = false;
+          });
+          showAlertDialog(
+            context,
+            error.toString(),
+            "",
+          );
+        });
+      }
+    });
+  }
+
 
   @override
   void initState() {
     super.initState();
     isloading = true;
     getUserData();
-    getHomeContent
-        .getHomeContent(
-      context: context,
-    )
-        .then((value) {
-      if (value != null) {
-        if (value.meta.status == "200") {
-          setState(() {
-            isloading = false;
-            getHomeContentModal = value;
-          });
-        } else {
-          setState(() {
-            isloading = false;
-          });
-          showAlertDialog(
-            context,
-            value.meta.message,
-            "",
-          );
-        }
-      } else {
-        setState(() {
-          isloading = false;
-        });
-        showAlertDialog(
-          context,
-          value.meta.message,
-          "",
-        );
-      }
-    }).catchError((error) {
-      setState(() {
-        isloading = false;
-      });
-      showAlertDialog(
-        context,
-        error.toString(),
-        "",
-      );
-    });
+    getTherapistId();
+
     upcomintAppointments
         .upcomingAppointmentRepo(
-      context: context,
+     context,
     )
         .then((value) {
       if (value != null) {

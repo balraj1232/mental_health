@@ -80,4 +80,14 @@ class SharedPreferencesTest {
     }
   }
 
+  saveTherapistId(String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('therapist_id', value);
+  }
+
+
+  getTherapistId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('therapist_id') ?? "";
+  }
 }

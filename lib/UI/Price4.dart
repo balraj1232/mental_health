@@ -87,13 +87,13 @@ class _Price4State extends State<Price4> {
             MaterialButton(
               onPressed: () {
                 Dialogs.showLoadingDialog(context, loginLoader);
-                 Future.delayed(Duration(seconds: 2)).then((value) {
+                /* Future.delayed(Duration(seconds: 2)).then((value) {
                   SharedPreferencesTest().checkIsLogin("0");
                   Navigator.of(context).pushNamed('/Price5');
-                });
-                /* createUser
+                });*/
+                 createUser
                     .createCounsellor(
-                    aadhar: adhaarCardImage, about: aboutController.text, certificate: certificateImage, context:context , device_id: "",education: "",email: "",experience: "",first_name: firstNameController.text,gender: radioValue,language_ids: selectedVal.elementAt(0).toString(),last_name: lastNameController.text, linkedin:"" ,phone: "+91"+ mobileController.text,photo: image,price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
+                    aadhar: adhaarDoc, about: aboutController.text, certificate: certificateDoc, context:context , device_id: "",education: "",email: "",experience: "",first_name: firstNameController.text,gender: radioValue,language_ids: selectedVal.toString().replaceAll("[", "",).replaceAll("]", ""),last_name: lastNameController.text, linkedin:linkController.text ,phone: "91"+ mobileController.text,photo: profileImage,price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
                 )
                     .then((value) {
                   if (value != null) {
@@ -103,7 +103,8 @@ class _Price4State extends State<Price4> {
                           .pop();
                       //toast(value.meta.message);
                         SharedPreferencesTest().checkIsLogin("0");
-                      Navigator.of(context).pushNamed('/Price5');
+                        SharedPreferencesTest().saveTherapistId(value.therapistId)
+;                      Navigator.of(context).pushNamed('/Price5');
                     } else {
                       Navigator.of(loginLoader.currentContext,
                           rootNavigator: true)
@@ -133,7 +134,7 @@ class _Price4State extends State<Price4> {
                     error.toString(),
                     "",
                   );
-                });*/
+                });
               },
               color: Colors.blue,
               minWidth: SizeConfig.screenWidth * 0.4,

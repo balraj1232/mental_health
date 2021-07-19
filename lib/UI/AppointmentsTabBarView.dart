@@ -39,7 +39,7 @@ class _AppointmentTabBarViewState extends State<AppointmentTabBarView> with Sing
               Tab(icon: Text("PAST"),),
             ],
           ),
-          title: Text('Tabs Demo'),
+          title: Text('Appointments'),
         ),
         body: TabBarView(
           controller: _controller,
