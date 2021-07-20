@@ -19,7 +19,9 @@ class GetTherapistDetailRepo extends BaseRepository {
     try {
       if (response.data != null) {
         final passEntity = GetTherapistDetailModal.fromJson(response.data);
+        print(therapistId);
         return passEntity;
+
       } else {
         return GetTherapistDetailModal(meta: response.data);
       }

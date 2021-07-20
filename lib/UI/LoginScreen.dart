@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/UI/OTPScreen.dart';
+import 'package:mental_health/UI/webview.dart';
 import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/Dialogs.dart';
@@ -238,16 +239,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: SizeConfig.screenWidth,
                       alignment: Alignment.center,
                     ),
-                    Container(
-                      child: Text(
-                        "Terms of service & Privacy Policy.",
-                        style: GoogleFonts.openSans(
-                            color: Color(backgroundColorBlue),
-                            fontSize: SizeConfig.blockSizeVertical * 1.5,
-                            fontWeight: FontWeight.w400),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>WebViewClass(link:"https://sal-foundation.com/app_pp")));
+                      },
+                      child: Container(
+                        child: Text(
+                          "Terms of service & Privacy Policy.",
+                          style: GoogleFonts.openSans(
+                              color: Color(backgroundColorBlue),
+                              fontSize: SizeConfig.blockSizeVertical * 1.5,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        width: SizeConfig.screenWidth,
+                        alignment: Alignment.center,
                       ),
-                      width: SizeConfig.screenWidth,
-                      alignment: Alignment.center,
                     )
                   ],
                 ),

@@ -24,6 +24,7 @@ String certificateDoc;
 String adhaarDoc;
 String resumeDoc;
 var getImage;
+bool adhar=false;
 var linkController = TextEditingController();
 
 class Info1 extends StatefulWidget {
@@ -791,7 +792,7 @@ class _Info1State extends State<Info1> {
                             fontSize: SizeConfig.blockSizeVertical * 2),
                       )
                     : Text(
-                        "UPLOAD ADHAAR CARD",
+                        "UPLOAD ADHAAR CARD(Only Pdf.,Doc,Docs extensions are allowed)",
                         style: GoogleFonts.openSans(
                             fontSize: SizeConfig.blockSizeVertical * 2),
                       ),
@@ -811,7 +812,7 @@ class _Info1State extends State<Info1> {
           Icons.arrow_forward_ios,
           color: Colors.white,
         ),
-        backgroundColor: selected == true ? Colors.blue : Colors.grey,
+        backgroundColor: selected == true&& adhar==true? Colors.blue : Colors.grey,
         onPressed: () {
           if(formKey.currentState.validate()){
             if (certificateImage != null &&

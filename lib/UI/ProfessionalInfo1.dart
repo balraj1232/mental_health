@@ -110,21 +110,21 @@ class _ProfessionalInfo1State extends State<ProfessionalInfo1> {
                   InkWell(
                     onTap: (){
                       setState(() {
-                        relationship = true;
-                        selected = true;
+                        relationship == true?false:true;
+                       // selected = true?false:true;
                       });
                     },
                     child: Container(
                       child: Text("Relationship",style: GoogleFonts.openSans(
-                          color: relationship == true && selected == true ? Colors.white : Color(fontColorGray),
+                          color: relationship == true  ? Colors.white : Color(fontColorGray),
                           fontSize: SizeConfig.blockSizeVertical * 2
                       ),),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: relationship == true && selected == true ? Colors.blue : Colors.white,
+                          color: relationship == true  ? Colors.blue : Colors.white,
                           border: Border.all(
-                              color:relationship == true && selected == true ? Colors.blue : Color(fontColorGray),
+                              color:relationship == true ? Colors.blue : Color(fontColorGray),
                               width: 1.0
                           )
                       ),

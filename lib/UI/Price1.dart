@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/webview.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -62,8 +63,13 @@ class _Price1State extends State<Price1> {
                     fontWeight: FontWeight.bold,
                     color: Color(fontColorSteelGrey)
                   ),),
-                  Image.asset('assets/icons/info.png',
-                  height: SizeConfig.blockSizeVertical * 4,)
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>WebViewClass(link:"https://sal-foundation.com/about-sal")));
+                    },
+                    child: Image.asset('assets/icons/info.png',
+                    height: SizeConfig.blockSizeVertical * 4,),
+                  )
                 ],
               ),
             ),

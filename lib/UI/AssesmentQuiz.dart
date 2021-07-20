@@ -151,8 +151,8 @@ class _AssesmentQuizState extends State<AssesmentQuiz> {
           ),
         ),
         body: new Container(
-          child: SingleChildScrollView(
-            child: new Column(
+         height: 600,
+          child:  Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -329,7 +329,7 @@ class _AssesmentQuizState extends State<AssesmentQuiz> {
                     ),
                   )
                 ]),
-          ),
+
         ));
   }
 }

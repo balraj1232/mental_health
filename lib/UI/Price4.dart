@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mental_health/UI/Info%203.dart';
 import 'package:mental_health/UI/Info1.dart';
 import 'package:mental_health/UI/LoginScreen.dart';
+import 'package:mental_health/UI/Price1.dart';
 import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/UI/Price3.dart';
 import 'package:mental_health/UI/ProfessionalInfo2.dart';
@@ -70,7 +71,9 @@ class _Price4State extends State<Price4> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Price1()));
+              },
               color: Colors.white,
               minWidth: SizeConfig.screenWidth * 0.4,
               child: Text(
@@ -93,7 +96,7 @@ class _Price4State extends State<Price4> {
                 });*/
                  createUser
                     .createCounsellor(
-                    aadhar: adhaarDoc, about: aboutController.text, certificate: certificateDoc, context:context , device_id: "",education: "",email: "",experience: "",first_name: firstNameController.text,gender: radioValue,language_ids: selectedVal.toString().replaceAll("[", "",).replaceAll("]", ""),last_name: lastNameController.text, linkedin:linkController.text ,phone: "91"+ mobileController.text,photo: profileImage,price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
+                    aadhar: adhaarDoc, about: aboutController.text, certificate: certificateDoc, context:context , device_id: "",education: "",email: "",experience: "",first_name: firstNameController.text,gender: "radioValue",language_ids: selectedVal.toString().replaceAll("[", "",).replaceAll("]", ""),last_name: lastNameController.text, linkedin:linkController.text ,phone: "91"+ mobileController.text,photo: profileImage,price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
                 )
                     .then((value) {
                   if (value != null) {
@@ -227,7 +230,7 @@ class _Price4State extends State<Price4> {
                     ),
                   ),
                   Text(
-                    radioValue,
+                    "radioValue",
                     style: GoogleFonts.openSans(
                         color: Color(fontColorGray),
                         fontWeight: FontWeight.w400,

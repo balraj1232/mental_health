@@ -64,6 +64,7 @@ class _Home2State extends State<Home2> {
       if (value != null && value != "") {
         setState(() {
           therapistId = value;
+          print(therapistId);
         });
         getHomeContent
             .getHomeContent(
@@ -319,7 +320,7 @@ class _Home2State extends State<Home2> {
                                                 : "",
                                             style: GoogleFonts.openSans(
                                                 color: Colors.white,
-                                                fontWeight: FontWeight.w600,fontSize: SizeConfig.blockSizeVertical  * 2),
+                                                fontWeight: FontWeight.w600,fontSize: SizeConfig.blockSizeVertical  * 1.25),
                                           ),
                                           Text(
                                             timeAgo(DateTime.parse(
@@ -330,7 +331,7 @@ class _Home2State extends State<Home2> {
                                                 color: Colors.white,
                                                 fontSize: SizeConfig
                                                         .blockSizeVertical *
-                                                    1.75),
+                                                    1),
                                           ),
                                         ],
                                       ),

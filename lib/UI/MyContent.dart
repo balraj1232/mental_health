@@ -1,3 +1,4 @@
+import 'package:audioplayer/audioplayer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -48,12 +49,15 @@ List<Color> colors = [
   Color.fromRGBO(0, 90, 100, 0.75),
 ];
 
+AudioPlayer audioPlugin = AudioPlayer();
 
 
   @override
   void initState() {
     super.initState();
+    audioPlugin.pause();
     isloading = true;
+
     getContent
         .getContent(
       context: context,
@@ -64,6 +68,7 @@ List<Color> colors = [
           setState(() {
             isloading = false;
             contentModal = value;
+            print(value.mediaUrl);
           });
         } else {
           setState(() {
@@ -187,7 +192,7 @@ List<Color> colors = [
                                 : "",
                             style: GoogleFonts.openSans(
                                 color: Colors.white,
-                                fontWeight: FontWeight.w600, fontSize: SizeConfig.blockSizeVertical  * 2),
+                                fontWeight: FontWeight.w600, fontSize: SizeConfig.blockSizeVertical  * 1.75),
                           ),
                           Text(
                             timeAgo(DateTime.parse(
@@ -198,7 +203,7 @@ List<Color> colors = [
                                 color: Colors.white,
                                 fontSize: SizeConfig
                                     .blockSizeVertical *
-                                    1.75),
+                                    1.50),
                           ),
                         ],
                       ),

@@ -275,7 +275,7 @@ class _Price2State extends State<Price2> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
-        backgroundColor: selected == true &&  filledFn == true? Colors.blue : Colors.grey,
+        backgroundColor: selected == true &&  filledFn == true&&filledLn==true? Colors.blue : Colors.grey,
         onPressed: (){
           if(radioValue != null && radioValue != "" && filledFn != "")
           Navigator.of(context).pushNamed('/Price3');

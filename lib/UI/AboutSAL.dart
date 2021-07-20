@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health/UI/webview.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
@@ -99,20 +100,26 @@ class _AboutSALState extends State<AboutSAL> {
                 ),
               ),
             ),
-            Container(
-              width: SizeConfig.screenWidth,
-              margin: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.screenWidth * 0.02
-              ),
-              alignment: Alignment.centerLeft,
-              child: ExpansionTile(title: Text("SAL Website",
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    color: Color(fontColorSteelGrey),
-                    fontSize: SizeConfig.blockSizeVertical * 1.5
-                ),),
-                tilePadding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.screenWidth * 0.02,
+            GestureDetector(
+              onTap: ()
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>WebViewClass(link:"https://sal-foundation.com/about-sal")));
+              },
+              child: Container(
+                width: SizeConfig.screenWidth,
+                margin: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.screenWidth * 0.02
+                ),
+                alignment: Alignment.centerLeft,
+                child: ExpansionTile(title: Text("SAL Website",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Color(fontColorSteelGrey),
+                      fontSize: SizeConfig.blockSizeVertical * 1.5
+                  ),),
+                  tilePadding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.screenWidth * 0.02,
+                  ),
                 ),
               ),
             ),
@@ -129,43 +136,44 @@ class _AboutSALState extends State<AboutSAL> {
                     color: Color(backgroundColorBlue)
                 ),),
             ),
-            Container(
-              width: SizeConfig.screenWidth,
-              margin: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.screenWidth * 0.02
-              ),
-              alignment: Alignment.center,
-              child: ListTileTheme(
-                dense: true,
-                contentPadding: EdgeInsets.all(0),
-                child: ExpansionTile(title: Text("Terms",
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>WebViewClass(link:"https://sal-foundation.com/about-sal")));
+              },
+              child: Container(
+                width: SizeConfig.screenWidth,
+                margin: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.screenWidth * 0.02
+                ),
+                alignment: Alignment.center,
+                child: ListTile(title: Text("Terms",
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
                       color: Color(fontColorSteelGrey),
                       fontSize: SizeConfig.blockSizeVertical * 1.5
-                  ),),
-                  tilePadding: EdgeInsets.symmetric(
-                      horizontal: SizeConfig.screenWidth * 0.02,
-                      vertical: 0
-                  ),
-                ),
+                  ),),trailing: Icon(Icons.arrow_forward_ios),onTap:(){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>WebViewClass(link:"https://sal-foundation.com/about-sal")));
+                } ,)
               ),
             ),
-            Container(
-              width: SizeConfig.screenWidth,
-              margin: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.screenWidth * 0.02
-              ),
-              alignment: Alignment.centerLeft,
-              child: ExpansionTile(title: Text("Privacy Policy",
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    color: Color(fontColorSteelGrey),
-                    fontSize: SizeConfig.blockSizeVertical * 1.5
-                ),),
-                tilePadding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.screenWidth * 0.02,
-                ),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>WebViewClass(link:"https://sal-foundation.com/app_pp")));
+              },
+              child: Container(
+                  width: SizeConfig.screenWidth,
+                  margin: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.screenWidth * 0.02
+                  ),
+                  alignment: Alignment.center,
+                  child: ListTile(title: Text("Privacy Policy",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Color(fontColorSteelGrey),
+                        fontSize: SizeConfig.blockSizeVertical * 1.5
+                    ),),trailing: Icon(Icons.arrow_forward_ios),onTap:(){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>WebViewClass(link:"https://sal-foundation.com/app_pp")));
+                  } ,)
               ),
             ),
           ],

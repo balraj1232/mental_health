@@ -11,6 +11,9 @@ import 'package:mental_health/constant/AppColor.dart';
 import 'package:mental_health/data/repo/sendOtpRepo.dart' as send;
 import 'package:mental_health/data/repo/verifyOtpRepo.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/otp_text_field.dart';
+import 'package:otp_text_field/style.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 
@@ -32,6 +35,7 @@ bool selected = false;
   FocusNode fourthDigit;
   FocusNode fifthDigit;
   FocusNode sixthDigit;
+  var digit;
   var verifyOtp = VerifyOtpRepo();
   var sendOtp = send.SendOtptoPhone();
 
@@ -69,14 +73,14 @@ bool selected = false;
           child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
           backgroundColor: selected == true? Colors.blue : Colors.grey,
             onPressed: () {
-              if (firstController.text.isNotEmpty
+              if (digit.isNotEmpty
                 ) {
                 Dialogs.showLoadingDialog(context, loginLoader);
                 verifyOtp
                     .verifyOtp(
                   context: context,
                   phone: widget.phoneNumber,
-                  otp: firstController.text
+                  otp: digit
 
                 ).then((value) {
                   if (value != null) {
@@ -151,32 +155,57 @@ bool selected = false;
                 fontSize: SizeConfig.blockSizeVertical * 1.5,
                 color: Color(fontColorGray),
               ),),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2),
+          // Container(
+          //   margin: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical * 2),
+          //
+          //   color: Colors.transparent,
+          //   child: PinCodeTextField(
+          //     controller: firstController,
+          //     keyboardType: TextInputType.number,
+          //     appContext: context,
+          //     length: 4,
+          //     onChanged: (value) {
+          //      setState(() {
+          //        firstController.text = value;
+          //        selected = true;
+          //      });
+          //       /*     controller.otpController.value.text =
+          //                         value.toString();*/
+          //     },
+          //     backgroundColor: Colors.transparent,
+          //     pinTheme: PinTheme(
+          //         inactiveColor: Color(backgroundColorBlue), borderWidth: 4),
+          //     textStyle: TextStyle(
+          //         color: colorBlack,
+          //         fontSize: 34,
+          //         fontWeight: FontWeight.bold),
+          //   ),
+          // ),
+              OTPTextField(
+                length: 4,
+                width: MediaQuery.of(context).size.width,
+                textFieldAlignment: MainAxisAlignment.spaceAround,
 
-            color: Colors.transparent,
-            child: PinCodeTextField(
-              controller: firstController,
-              keyboardType: TextInputType.number,
-              appContext: context,
-              length: 4,
-              onChanged: (value) {
-               setState(() {
-                 firstController.text = value;
-                 selected = true;
-               });
-                /*     controller.otpController.value.text =
-                                  value.toString();*/
-              },
-              backgroundColor: Colors.transparent,
-              pinTheme: PinTheme(
-                  inactiveColor: Color(backgroundColorBlue), borderWidth: 4),
-              textStyle: TextStyle(
-                  color: colorBlack,
-                  fontSize: 34,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
+                fieldWidth: 55,
+                otpFieldStyle: OtpFieldStyle(focusBorderColor:Color(backgroundColorBlue),borderColor:Color(backgroundColorBlue),disabledBorderColor: Color(backgroundColorBlue),enabledBorderColor: Color(backgroundColorBlue)),
+                fieldStyle: FieldStyle.underline,
+                outlineBorderRadius: 20,
+
+                style: TextStyle(fontSize: 17),
+                onChanged: (pin) {
+                  print("Changed: " + pin);
+                },
+                onCompleted: (pin) {
+                  print("Completed: " + pin);
+                  digit=pin;
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => ProfessionalInfo1()));
+                },
+              ),
+
+
 /*              Container(
                 margin: EdgeInsets.only(
                     top: SizeConfig.blockSizeVertical * 2,

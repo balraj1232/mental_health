@@ -244,7 +244,7 @@ class _HomeMainState extends State<HomeMain> {
                             horizontal: SizeConfig.screenWidth * 0.05,
                             vertical: SizeConfig.blockSizeVertical
                         ),
-                        child: Text("Dr. ${getTherapistData != null && getTherapistData != "" ?getTherapistData.firstName +  " " +getTherapistData.lastName : ""}",
+                        child: Text("Dr. ${firstNameController.text}",
                             style: GoogleFonts.openSans(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -428,7 +428,7 @@ class _HomeMainState extends State<HomeMain> {
                                           : "",
                                       style: GoogleFonts.openSans(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.w600,fontSize: SizeConfig.blockSizeVertical  * 2),
+                                          fontWeight: FontWeight.w600,fontSize: SizeConfig.blockSizeVertical  * 1.5),
                                     ),
                                     Text(
                                       timeAgo(DateTime.parse(
@@ -439,7 +439,7 @@ class _HomeMainState extends State<HomeMain> {
                                           color: Colors.white,
                                           fontSize: SizeConfig
                                               .blockSizeVertical *
-                                              1.75),
+                                              1.25),
                                     ),
                                   ],
                                 ),
