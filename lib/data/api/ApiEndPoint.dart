@@ -5,4 +5,5 @@ class ApiEndpoint {
   static String verifyOtp = "verifyotp";
   static String bookAnEvent = "event/order";
   static String uploadImages = "https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/upload";
+  static String uploadeventImages = "https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/documentaion/swagger/#/Miscellaneous/post_upload";
 }

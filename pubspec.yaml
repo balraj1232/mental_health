@@ -32,6 +32,7 @@ dependencies:
   dio: ^3.0.9
   fluttertoast: ^8.0.7
   flutter_svg: ^0.22.0
+  shared_preferences: ^2.0.6
   keyboard_actions: ^3.4.0
   image_picker:
   nb_utils: ^4.2.11

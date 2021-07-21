@@ -10,7 +10,6 @@ import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/data/repo/UploadImagesRepo.dart';
-import 'package:mental_health/models/UploadImagesModal.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 String selectSocialProfile = "";
@@ -54,10 +53,9 @@ class _Info1State extends State<Info1> {
             color: Color(fontColorSteelGrey),
           ),
         ),
-        leading: Icon(
-          Icons.arrow_back_ios,
-          color: Colors.black,
-        ),
+        leading:   GestureDetector(child: Icon(Icons.arrow_back_ios_rounded,color: Colors.black,),onTap: (){
+          Navigator.pop(context);
+        },),
         actions: [
           Container(
             alignment: Alignment.center,

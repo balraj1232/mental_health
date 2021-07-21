@@ -232,7 +232,9 @@ AudioPlayer audioPlugin = AudioPlayer();
           color: Colors.black,
           fontWeight: FontWeight.bold
         ),),
-        leading: Icon(Icons.arrow_back_ios_rounded,color: Colors.black,),
+        leading: GestureDetector(child: Icon(Icons.arrow_back_ios_rounded,color: Colors.black,),onTap: (){
+          Navigator.pop(context);
+        },),
       ),
 
     ));

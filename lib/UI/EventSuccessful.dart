@@ -3,6 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 
+import 'Home2.dart';
+import 'HomeMain.dart';
+import 'KYCScreen.dart';
+
 class EventSuccessful extends StatefulWidget {
   const EventSuccessful({Key key}) : super(key: key);
 
@@ -11,6 +15,17 @@ class EventSuccessful extends StatefulWidget {
 }
 
 class _EventSuccessfulState extends State<EventSuccessful> {
+  @override
+  void initState() {
+
+    Future.delayed(Duration(seconds: 2)).then((value) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return isKyc ? HomeMain() : Home2();
+      }));
+    });
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -54,8 +69,8 @@ class _EventSuccessfulState extends State<EventSuccessful> {
                 right: SizeConfig.screenWidth * 0.05,
               ),
               width: SizeConfig.screenWidth,
-              child: Text("Event Successfully reated",style: GoogleFonts.openSans(
-                  fontSize: SizeConfig.blockSizeVertical * 3.5,
+              child: Text("Event Successfully Created",style: GoogleFonts.openSans(
+                  fontSize: SizeConfig.blockSizeVertical * 3.25,
                   fontWeight: FontWeight.bold,
                   color: Color(fontColorSteelGrey)
               ),),

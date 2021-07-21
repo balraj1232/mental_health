@@ -42,10 +42,9 @@ class _Info3State extends State<Info3> {
             color: Color(fontColorSteelGrey),
           ),
         ),
-        leading: Icon(
-          Icons.arrow_back_ios,
-          color: Colors.black,
-        ),
+        leading: GestureDetector(child: Icon(Icons.arrow_back_ios_rounded,color: Colors.black,),onTap: (){
+          Navigator.pop(context);
+        },),
         actions: [
           Container(
             alignment: Alignment.center,

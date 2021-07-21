@@ -21,22 +21,7 @@ class ActionSheet {
         style: secondaryTextStyle(),
       ),
       actions: [
-        CupertinoActionSheetAction(
-          onPressed: () {
-            onCamera();
-            finish(context);
-          },
-          child: Text('Camera', style: primaryTextStyle(size: 18)),
-          isDefaultAction: true,
-        ),
-        CupertinoActionSheetAction(
-          onPressed: () {
-            onGallery();
-            finish(context);
-          },
-          child: Text('Gallery', style: primaryTextStyle(size: 18)),
-          isDefaultAction: true,
-        ),
+
         type != "profile" ?  CupertinoActionSheetAction(
           onPressed: () {
             onDocument();
@@ -44,8 +29,30 @@ class ActionSheet {
           },
           child: Text('Documents', style: primaryTextStyle(size: 18)),
           isDefaultAction: true,
-        ):SizedBox(),
-      ],
+        ) :  Column(
+          children: [
+            CupertinoActionSheetAction(
+              onPressed: () {
+                onCamera();
+                finish(context);
+              },
+              child: Text('Camera', style: primaryTextStyle(size: 18)),
+
+              isDefaultAction: true,
+
+            ),
+            CupertinoActionSheetAction(
+              onPressed: () {
+                onGallery();
+                finish(context);
+              },
+              child: Text('Gallery', style: primaryTextStyle(size: 18)),
+              isDefaultAction: true,
+            )
+          ],
+        )],
+
+
       cancelButton: CupertinoActionSheetAction(
           onPressed: () {
             finish(context);

@@ -53,7 +53,11 @@ class VerifyOtpRepo extends BaseRepository {
         ));
     try {
       if (response.data != null) {
+        print(uri.toString());
+        print(response);
+
         final passEntity = VerifyOtpModal.fromJson(response.data);
+
         return passEntity;
       } else {
         return VerifyOtpModal(meta: response.data);

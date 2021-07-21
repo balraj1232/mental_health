@@ -15,6 +15,7 @@ import 'package:mental_health/data/repo/getHomeContentRepo.dart';
 import 'package:mental_health/models/GetHomeContentModal.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mental_health/models/getTherapistDetailModal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'HomeMain.dart';
 
@@ -60,6 +61,10 @@ class _Home2State extends State<Home2> {
   }
 
   getTherapistId() async {
+    SharedPreferences prefs= await SharedPreferences.getInstance();
+    prefs.getString("lastname");
+    prefs.getString("firstname");
+    print(prefs.getString("lastname"));
     SharedPreferencesTest().getTherapistId().then((value) async {
       if (value != null && value != "") {
         setState(() {
@@ -71,11 +76,13 @@ class _Home2State extends State<Home2> {
           context: context,
         )
             .then((value) {
+              print(value.meta.status);
           if (value != null) {
             if (value.meta.status == "200") {
-              setState(() {
+              setState(() async {
                 isloding = false;
                 getHomeContentModal = value;
+
               });
             } else {
               setState(() {
@@ -205,7 +212,7 @@ class _Home2State extends State<Home2> {
                             vertical: SizeConfig.blockSizeVertical,
                           ),
                           decoration: BoxDecoration(
-                              color: Color(skyBlue),
+                              color: Colors.blueAccent,
                               borderRadius: BorderRadius.circular(10)),
                           child: Text(
                             "Complete your KYC to Start taking bookings",

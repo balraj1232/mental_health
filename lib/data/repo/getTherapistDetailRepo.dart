@@ -9,6 +9,7 @@ class GetTherapistDetailRepo extends BaseRepository {
   Future<GetTherapistDetailModal> getTherapistDetail({String therapistId,
     BuildContext context,
   }) async {
+    print("kmfd"+therapistId);
     final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist?therapist_id=${therapistId}';
     var response = await Dio().get(uri,
         options: Options(

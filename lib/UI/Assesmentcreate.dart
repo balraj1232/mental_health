@@ -9,6 +9,8 @@ class Assesmentcreate extends StatefulWidget {
 }
 
 class _AssesmentcreateState extends State<Assesmentcreate> {
+
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -36,8 +38,8 @@ class _AssesmentcreateState extends State<Assesmentcreate> {
       ),
       body: Container(
         margin: EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
+          shrinkWrap: true,
           children: [
             Text(
               "Name",
@@ -100,7 +102,7 @@ class _AssesmentcreateState extends State<Assesmentcreate> {
                   hintStyle: TextStyle(
                     color: Color(midnightBlue),
                   ),
-                  hintText: "Enter Event Name",
+                  hintText: "Enter Age",
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 42, vertical: 10),
@@ -143,7 +145,7 @@ class _AssesmentcreateState extends State<Assesmentcreate> {
                   hintStyle: TextStyle(
                     color: Color(midnightBlue),
                   ),
-                  hintText: "Enter Event Name",
+                  hintText: "Enter Gender",
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 42, vertical: 10),
@@ -165,7 +167,7 @@ class _AssesmentcreateState extends State<Assesmentcreate> {
                 ),
               ),
             ),
-            Expanded(child: SizedBox()),
+            Expanded(child: SizedBox(height: 40,)),
             Container(
               width: MediaQuery.of(context).size.width,
               child: RaisedButton(

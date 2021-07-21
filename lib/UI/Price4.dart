@@ -16,6 +16,7 @@ import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SharedPref.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/data/repo/LoginUser.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import 'Info2.dart';
 
@@ -41,10 +42,9 @@ class _Price4State extends State<Price4> {
           style: GoogleFonts.openSans(
               color: Colors.black, fontWeight: FontWeight.bold),
         ),
-        leading: Icon(
-          Icons.arrow_back_ios,
-          color: Colors.black,
-        ),
+        leading: GestureDetector(child: Icon(Icons.arrow_back_ios_rounded,color: Colors.black,),onTap: (){
+          Navigator.pop(context);
+        },),
         centerTitle: true,
       ),
       bottomSheet: Container(
@@ -94,19 +94,24 @@ class _Price4State extends State<Price4> {
                   SharedPreferencesTest().checkIsLogin("0");
                   Navigator.of(context).pushNamed('/Price5');
                 });*/
+                print(mobileController.text);
                  createUser
                     .createCounsellor(
                     aadhar: adhaarDoc, about: aboutController.text, certificate: certificateDoc, context:context , device_id: "",education: "",email: "",experience: "",first_name: firstNameController.text,gender: "radioValue",language_ids: selectedVal.toString().replaceAll("[", "",).replaceAll("]", ""),last_name: lastNameController.text, linkedin:linkController.text ,phone: "91"+ mobileController.text,photo: profileImage,price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
                 )
-                    .then((value) {
+                    .then((value) async {
                   if (value != null) {
+                    print(value.meta.status);
                     if (value.meta.status == "200") {
                       Navigator.of(loginLoader.currentContext,
                           rootNavigator: true)
                           .pop();
                       //toast(value.meta.message);
                         SharedPreferencesTest().checkIsLogin("0");
-                        SharedPreferencesTest().saveTherapistId(value.therapistId)
+                        SharedPreferencesTest().saveTherapistId(value.therapistId);
+                      SharedPreferences prefs= await SharedPreferences.getInstance();
+                        prefs.setString("firstname", firstNameController.text);
+                        prefs.setString("lastname", lastNameController.text);
 ;                      Navigator.of(context).pushNamed('/Price5');
                     } else {
                       Navigator.of(loginLoader.currentContext,
@@ -230,7 +235,7 @@ class _Price4State extends State<Price4> {
                     ),
                   ),
                   Text(
-                    "radioValue",
+                    genderVal,
                     style: GoogleFonts.openSans(
                         color: Color(fontColorGray),
                         fontWeight: FontWeight.w400,

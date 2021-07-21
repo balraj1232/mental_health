@@ -51,7 +51,7 @@ class CreateTherapistProfileRepo extends BaseRepository {
       "pan": "String",
       "payee_name": "String",
       "payout_percentage": "String",
-      "phone": "+$phone",
+      "phone": "$phone",
       "price": "String",
       "price_3": "String",
       "price_5": "String",

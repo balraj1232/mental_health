@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/UI/AddNewEvent.dart';
 
 class EventSummary extends StatefulWidget {
   const EventSummary({Key key}) : super(key: key);
@@ -137,7 +138,7 @@ class _EventSummaryState extends State<EventSummary> {
                   Container(
                     width: SizeConfig.screenWidth,
                     child: Text(
-                      "Work and stress Workshop",
+                      eventName.text,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         color: Color(fontColorGray),
@@ -169,7 +170,7 @@ class _EventSummaryState extends State<EventSummary> {
                             ),
                             Container(
                               child: Text(
-                                "23 June 2021",
+                               eventDate.text,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w400,
                                   color: Color(fontColorGray),
@@ -193,7 +194,7 @@ class _EventSummaryState extends State<EventSummary> {
                             ),
                             Container(
                               child: Text(
-                                "2:00 - 4:00 PM",
+                               eventTime.text,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w400,
                                   color: Color(fontColorGray),
@@ -220,7 +221,7 @@ class _EventSummaryState extends State<EventSummary> {
                   Container(
                     width: SizeConfig.screenWidth,
                     child: Text(
-                      "Mollit quis magna pariatur nulla do elit ullamco ut dolore enim nisi laboris. Pariatur et mollit Lorem qui commodo. Reprehenderit enim ullamco deserunt dolor aliquip id nulla sunt ut veniam magna mollit enim nostrud. ",
+                     eventDesc.text,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         color: Color(fontColorGray),
@@ -243,7 +244,7 @@ class _EventSummaryState extends State<EventSummary> {
                   Container(
                     width: SizeConfig.screenWidth,
                     child: Text(
-                      "Topic Name, Topic Name",
+                     eventTopic.text,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         color: Color(fontColorGray),
@@ -265,7 +266,7 @@ class _EventSummaryState extends State<EventSummary> {
                   Container(
                     width: SizeConfig.screenWidth,
                     child: Text(
-                      "Rs. 250",
+                      priceValue.toString(),
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         color: Color(fontColorGray),

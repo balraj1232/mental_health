@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/HomeMain.dart';
 import 'package:mental_health/UI/Price1.dart';
 import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
@@ -82,18 +83,37 @@ bool selected = false;
                   phone: widget.phoneNumber,
                   otp: digit
 
-                ).then((value) {
+                ).then((value) async {
                   if (value != null) {
+
                     if (value.meta.status == "200") {
                       Navigator.of(loginLoader.currentContext,
                           rootNavigator: true)
                           .pop();
+
+                      if(value.therapist!=null){
+                        SharedPreferences prefs=await SharedPreferences.getInstance();
+                        prefs.setString("therapistid",value.therapist.therapistId );
+                        prefs.remove("firstname");
+                        prefs.remove("lastname");
+                        prefs.setString("firstname",value.therapist.firstName );
+                        prefs.setString("lastname",value.therapist.lastName );
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeMain()));
+
+                      }
+                      else{
+
+                        Navigator.push(context, MaterialPageRoute(builder: (conext){
+                          return Price1(getOtp:  firstController.text
+                          );
+                        }));
+
+                      }
+                      print(value.mediaUrl);
                       toast(value.meta.message);
 
-                      Navigator.push(context, MaterialPageRoute(builder: (conext){
-                        return Price1(getOtp:  firstController.text
-                           );
-                      }));
+
+
                     } else {
                       firstController.clear();
 
@@ -187,9 +207,9 @@ bool selected = false;
                 textFieldAlignment: MainAxisAlignment.spaceAround,
 
                 fieldWidth: 55,
-                otpFieldStyle: OtpFieldStyle(focusBorderColor:Color(backgroundColorBlue),borderColor:Color(backgroundColorBlue),disabledBorderColor: Color(backgroundColorBlue),enabledBorderColor: Color(backgroundColorBlue)),
+              //  otpFieldStyle: OtpFieldStyle(focusBorderColor:Color(backgroundColorBlue),borderColor:Color(backgroundColorBlue),disabledBorderColor: Color(backgroundColorBlue),enabledBorderColor: Color(backgroundColorBlue)),
                 fieldStyle: FieldStyle.underline,
-                outlineBorderRadius: 20,
+           //     outlineBorderRadius: 20,
 
                 style: TextStyle(fontSize: 17),
                 onChanged: (pin) {
@@ -197,6 +217,9 @@ bool selected = false;
                 },
                 onCompleted: (pin) {
                   print("Completed: " + pin);
+                  setState(() {
+                    selected=true;
+                  });
                   digit=pin;
                   // Navigator.push(
                   //     context,

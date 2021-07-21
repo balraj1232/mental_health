@@ -34,6 +34,7 @@ import 'package:mental_health/UI/ProfessionalInfo1.dart';
 import 'package:mental_health/UI/ProfessionalInfo2.dart';
 import 'package:mental_health/UI/Settings.dart';
 import 'package:mental_health/models/VerifyOtpModal.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'UI/CancelAppointment.dart';
 import 'UI/LoginScreen.dart';
 import 'Utils/SharedPref.dart';
@@ -50,13 +51,15 @@ class MentalHealth extends StatefulWidget {
 }
 
 class _MentalHealthState extends State<MentalHealth> {
-  String _textFromFile = "";
+  String _textFromFile ;
     @override
   void initState() {
     super.initState();
+    getdetail();
     getlogintoken().then((val) {
       setState(() {
-        _textFromFile = val;
+
+       // _textFromFile = val;
       });
     });
   }
@@ -69,7 +72,7 @@ class _MentalHealthState extends State<MentalHealth> {
           theme: ThemeData(
             fontFamily: 'OpenSans',
           ),
-          home: _textFromFile == "true" ? HomeMain(
+          home: _textFromFile != null ? HomeMain(
           ) : LoginScreen(),
           routes: {
             '/Login': (context) => LoginScreen(),
@@ -115,5 +118,10 @@ class _MentalHealthState extends State<MentalHealth> {
       var login = await SharedPreferencesTest().checkIsLogin("1");
       return login;
     }
+  }
+
+  Future<void> getdetail() async {
+    SharedPreferences prefs= await SharedPreferences.getInstance();
+    _textFromFile= prefs.getString("therapistid");
   }
 }

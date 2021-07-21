@@ -10,6 +10,7 @@ import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/constant/AppColor.dart';
 import 'package:mental_health/data/repo/getTherapistDetailRepo.dart';
 import 'package:mental_health/models/getTherapistDetailModal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'HomeMain.dart';
 
 class MyProfile extends StatefulWidget {
@@ -129,7 +130,7 @@ class _MyProfileState extends State<MyProfile> {
                                 width: SizeConfig.screenWidth,
                                 alignment: Alignment.center,
                                 child: Text(
-                                  getHomeContentModal.therapist.firstName != "" && getHomeContentModal.therapist.firstName != null
+                                  getHomeContentModal.therapist != null && getHomeContentModal.therapist.firstName != "" && getHomeContentModal.therapist.firstName != null
                                       ? getHomeContentModal.therapist.firstName +
                                       " " +
                                       getHomeContentModal.therapist.lastName
@@ -423,58 +424,58 @@ class _MyProfileState extends State<MyProfile> {
     //SharedPrfre
   }
   getTherapistId() async {
-    SharedPreferencesTest().getTherapistId().then((value) async {
-      if (value != null && value != "") {
-        setState(() {
-          therapistId = value;
-          print(therapistId);
-        });
-        getHomeContent
-            .getTherapistDetail(
-          context: context,
-            therapistId: therapistId
-        )
-            .then((value) {
-          if (value != null) {
-            print(value.meta.status);
-            if (value.meta.status == "200") {
-              setState(() {
-                isloding = false;
-                getHomeContentModal = value;
-                print(getHomeContentModal.therapist.firstName);
-              });
-            } else {
-              setState(() {
-                isloding = false;
-              });
-              showAlertDialog(
-                context,
-                value.meta.message,
-                "",
-              );
-            }
-          } else {
-            setState(() {
-              isloding = false;
-            });
-            showAlertDialog(
-              context,
-              value.meta.message,
-              "",
-            );
-          }
-        }).catchError((error) {
+    SharedPreferences prefs= await SharedPreferences.getInstance();
+
+    print("sdvvs"+prefs.getString("therapistid"));
+    setState(() {
+      therapistId=prefs.getString("therapistid");
+    });
+    getHomeContent
+        .getTherapistDetail(
+        context: context,
+        therapistId: prefs.getString("therapistid")
+    )
+        .then((value) {
+      if (value != null) {
+        print(value.meta.status);
+        if (value.meta.status == "200") {
+          setState(() {
+            isloding = false;
+            getHomeContentModal = value;
+            print(getHomeContentModal.therapist.firstName);
+          });
+        } else {
           setState(() {
             isloding = false;
           });
           showAlertDialog(
             context,
-            error.toString(),
+            value.meta.message,
             "",
           );
+        }
+      } else {
+        setState(() {
+          isloding = false;
         });
+        showAlertDialog(
+          context,
+          value.meta.message,
+          "",
+        );
       }
+    }).catchError((error) {
+      setState(() {
+        isloding = false;
+      });
+      showAlertDialog(
+        context,
+        error.toString(),
+        "",
+      );
     });
+  }
+
 
 // });}}
-}}
+}

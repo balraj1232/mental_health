@@ -48,10 +48,9 @@ class _Price3State extends State<Price3> {
             color: Color(fontColorSteelGrey),
           ),
         ),
-        leading: Icon(
-          Icons.arrow_back_ios,
-          color: Colors.black,
-        ),
+        leading: GestureDetector(child: Icon(Icons.arrow_back_ios_rounded,color: Colors.black,),onTap: (){
+          Navigator.pop(context);
+        },),
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),

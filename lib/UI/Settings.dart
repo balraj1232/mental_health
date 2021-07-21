@@ -3,6 +3,7 @@ import 'package:mental_health/UI/LoginScreen.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SharedPref.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Settings extends StatefulWidget {
@@ -103,7 +104,9 @@ class _SettingsState extends State<Settings> {
                   )
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () async {
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  prefs.clear();
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
                         return LoginScreen();
@@ -111,6 +114,7 @@ class _SettingsState extends State<Settings> {
                   SharedPreferencesTest()
                       .checkIsLogin(
                       "2");
+
                 },
                 child: Container(
                   width: SizeConfig.screenWidth,

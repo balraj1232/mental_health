@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health/UI/HomeMain.dart';
 import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/UI/LoginScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key key}) : super(key: key);
@@ -11,14 +13,11 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String _textFromFile ;
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 2)).then((value) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return LoginScreen();
-      }));
-    });
+    getdetail();
   }
 
   @override
@@ -54,5 +53,24 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ],
             )));
+  }
+  Future<void> getdetail() async {
+    SharedPreferences prefs= await SharedPreferences.getInstance();
+    _textFromFile= prefs.getString("therapistid");
+    if(_textFromFile==null){
+      Future.delayed(Duration(seconds: 2)).then((value) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+         return LoginScreen();
+        }));
+      });
+
+    }
+    else{
+      Future.delayed(Duration(seconds: 2)).then((value) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+          return HomeMain();
+        }));
+      });
+    }
   }
 }

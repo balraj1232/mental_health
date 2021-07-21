@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health/UI/Home2.dart';
 import 'package:mental_health/UI/Price2.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/data/repo/getTherapistDetailRepo.dart';
+import 'package:mental_health/models/getTherapistDetailModal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'AlertDialog.dart';
 import 'Colors.dart';
+import 'SharedPref.dart';
 
 class DrawerMenu extends StatefulWidget {
   const DrawerMenu({Key key}) : super(key: key);
@@ -13,6 +19,18 @@ class DrawerMenu extends StatefulWidget {
 }
 
 class _DrawerMenuState extends State<DrawerMenu> {
+  bool isloding = false;
+  var getHomeContent = GetTherapistDetailRepo();
+  var first;
+  var last;
+  @override
+  void initState() {
+    getprofile();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  var getHomeContentModal = GetTherapistDetailModal();
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -45,7 +63,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     margin: EdgeInsets.only(
                         top: SizeConfig.blockSizeVertical * 2
                     ),
-                    child: Text(firstNameController.text + " " +  lastNameController.text,
+                    child: Text(first.toString()+ " " +  last.toString(),
                       style: GoogleFonts.openSans(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -73,7 +91,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                       right: SizeConfig.screenWidth * 0.2,
                     ),
                     child: LinearProgressIndicator(
-                      backgroundColor: Color(midnightBlue),
+                      backgroundColor: Colors.blue,
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       value: 0.6,
                     ),
@@ -144,5 +162,72 @@ class _DrawerMenuState extends State<DrawerMenu> {
         ),
       ),
     );
+  }
+  Future<void> getprofile() async {
+    SharedPreferences prefs= await SharedPreferences.getInstance();
+    setState(() {
+
+      first =  prefs.getString("firstname");
+      last=  prefs.getString("lastname");
+    });
+  print("klnll"+last);
+   // getTherapistId();
+    //SharedPrfre
+  }
+  getTherapistId() async {
+    SharedPreferencesTest().getTherapistId().then((value) async {
+      if (value != null && value != "") {
+        setState(() {
+          therapistId = value;
+          print(therapistId);
+        });
+        getHomeContent
+            .getTherapistDetail(
+            context: context,
+            therapistId: therapistId
+        )
+            .then((value) {
+          if (value != null) {
+            print(value.meta.status);
+            if (value.meta.status == "200") {
+              setState(() {
+                isloding = false;
+                getHomeContentModal = value;
+                print(getHomeContentModal.therapist.photo);
+              });
+            } else {
+              setState(() {
+                isloding = false;
+              });
+              showAlertDialog(
+                context,
+                value.meta.message,
+                "",
+              );
+            }
+          } else {
+            setState(() {
+              isloding = false;
+            });
+            showAlertDialog(
+              context,
+              value.meta.message,
+              "",
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isloding = false;
+          });
+          showAlertDialog(
+            context,
+            error.toString(),
+            "",
+          );
+        });
+      }
+    });
+
+// });}}
   }
 }

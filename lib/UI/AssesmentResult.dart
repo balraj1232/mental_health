@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health/Utils/Colors.dart';
+import 'package:mental_health/models/GetAvailableAssessmentModal.dart';
+import 'package:mental_health/UI/Assessments.dart';
+
+import 'AssesmentQuiz.dart';
 
 class AssesmentResult extends StatefulWidget {
   @override
@@ -65,10 +69,10 @@ class _AssesmentResultState extends State<AssesmentResult> {
                 textColor: Colors.white,
                 color: Colors.blue,
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AssesmentResult()));
+                          builder: (context) => AssesmentQuiz()));
                 },
               ),
             )

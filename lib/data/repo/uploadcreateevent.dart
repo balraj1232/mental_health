@@ -6,7 +6,7 @@ import 'package:mental_health/base/BaseRepository.dart';
 import 'package:mental_health/data/api/ApiEndPoint.dart';
 import 'package:mental_health/models/UploadImagesModal.dart';
 
-class UploadImagesRepo extends BaseRepository {
+class UploadImageseventRepo extends BaseRepository {
   Future<UploadImagesModal> uploadImage(BuildContext context,
       {File image}) async {
     FormData formData = new FormData.fromMap({
@@ -27,7 +27,7 @@ class UploadImagesRepo extends BaseRepository {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty)
       {
         try {
-          final response = await dio.put("https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist?therapist_id=pdlj",
+          final response = await dio.post(ApiEndpoint.uploadeventImages,
               data: formData,
               options: Options(
                 headers: {'content-type': 'multipart/form-data',"accept": "application/json"},

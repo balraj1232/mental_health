@@ -4,14 +4,18 @@ import 'package:mental_health/base/BaseRepository.dart';
 import 'package:dio/dio.dart';
 import 'package:mental_health/models/GetHomeContentModal.dart';
 import 'package:mental_health/models/GetTherapistContentModal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class GetHomePageContentRepo extends BaseRepository {
-
+var therapis;
   Future<GetHomeContentModal> getHomeContent({
     BuildContext context,
   }) async {
-    final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/home?therapist_id=${therapistId}';
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    therapis=prefs.getString('therapistid');
+    print("gfd"+therapis);
+    final uri = 'https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist/home?therapist_id=${therapis}';
 
     var response = await Dio().get(uri,
         options: Options(

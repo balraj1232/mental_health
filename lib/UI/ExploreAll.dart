@@ -12,6 +12,10 @@ import 'package:mental_health/data/repo/ExploreAllrepo.dart';
 import 'package:mental_health/data/repo/getHomeContentRepo.dart';
 import 'package:mental_health/models/GetHomeContentModal.dart';
 import 'package:mental_health/models/Exploreallmodle.dart';
+import 'package:mental_health/UI/videoplayer.dart';
+import 'package:mental_health/UI/Audioplayer.dart';
+import 'package:mental_health/UI/Articledetail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class ExploreAll extends StatefulWidget {
   const ExploreAll({Key key}) : super(key: key);
 
@@ -129,7 +133,7 @@ bool isloding=false;
                 vertical: SizeConfig.blockSizeVertical * 1.5,
                 horizontal: SizeConfig.screenWidth * 0.05
               ),
-              child: Text("POPULAR AUDIOS",style: GoogleFonts.openSans(
+              child: Text("POPULAR VIDEOS",style: GoogleFonts.openSans(
                 color: Color(fontColorGray),
                 fontWeight: FontWeight.w600,
               ),),
@@ -152,7 +156,7 @@ bool isloding=false;
                   vertical: SizeConfig.blockSizeVertical * 1.5,
                   horizontal: SizeConfig.screenWidth * 0.05
               ),
-              child: Text("POPULAR VIDEOS",style: GoogleFonts.openSans(
+              child: Text("POPULAR AUDIOS",style: GoogleFonts.openSans(
                 color: Color(fontColorGray),
                 fontWeight: FontWeight.w600,
               ),),
@@ -198,73 +202,72 @@ bool isloding=false;
     ));
   }
   getTherapistId() async {
-    SharedPreferencesTest().getTherapistId().then((value) async {
-      if (value != null && value != "") {
-        setState(() {
-          therapistId = value;
-          print(therapistId);
-        });
-        getHomeContent.avialabilityRepo(
-context: context,therapistId: therapistId
-        )
-            .then((value) {
+    SharedPreferences prefs= await SharedPreferences.getInstance();
 
-          if (value != null) {
-            print(value.meta.status);
-            if (value.meta.status == "200") {
-              setState(() {
-                isloding = false;
-                getHomeContentModal = value;
-               for(int i=0;i<getHomeContentModal.training.length;i++){
-                 print(getHomeContentModal.training[i].type);
-                 if(getHomeContentModal.training[i].type=="1"){
-                   print("audio");
-                   audio.add(getHomeContentModal.training[i]);
-                   print(audio);
-                 }else if(getHomeContentModal.training[i].type=="2"){
-                   video.add(getHomeContentModal.training[i]);
-                   print(video);
-                 }
-                 else{
-                   article.add(getHomeContentModal.training[i]);
-                 }
-               }
-              });
-            } else {
-              setState(() {
-                isloding = false;
-              });
-              showAlertDialog(
-                context,
-                value.meta.message,
-                "",
-              );
+    print("sdvvs"+prefs.getString("therapistid"));
+    setState(() {
+      therapistId=prefs.getString("therapistid");
+    });
+    getHomeContent.avialabilityRepo(
+        context: context,therapistId: therapistId
+    )
+        .then((value) {
+
+      if (value != null) {
+        print(value.meta.status);
+        if (value.meta.status == "200") {
+          setState(() {
+            isloding = false;
+            getHomeContentModal = value;
+            for(int i=0;i<getHomeContentModal.training.length;i++){
+              print(getHomeContentModal.training[i].type);
+              if(getHomeContentModal.training[i].type=="1"){
+                print("audio");
+                audio.add(getHomeContentModal.training[i]);
+                print(audio);
+              }else if(getHomeContentModal.training[i].type=="2"){
+                video.add(getHomeContentModal.training[i]);
+                print(video);
+              }
+              else{
+                article.add(getHomeContentModal.training[i]);
+              }
             }
-          } else {
-            setState(() {
-              isloding = false;
-            });
-            print(value.meta.status);
-            showAlertDialog(
-              context,
-              value.meta.message,
-
-              "",
-            );
-          }
-        }).catchError((error) {
+          });
+        } else {
           setState(() {
             isloding = false;
           });
           showAlertDialog(
             context,
-            error.toString(),
+            value.meta.message,
             "",
           );
+        }
+      } else {
+        setState(() {
+          isloding = false;
         });
+        print(value.meta.status);
+        showAlertDialog(
+          context,
+          value.meta.message,
+
+          "",
+        );
       }
+    }).catchError((error) {
+      setState(() {
+        isloding = false;
+      });
+      showAlertDialog(
+        context,
+        error.toString(),
+        "",
+      );
     });
   }
+
 
 
   List<Widget> getAuidos() {
@@ -272,7 +275,10 @@ context: context,therapistId: therapistId
 
     for (int i = 0; i < audio.length; i++) {
       productList.add(GestureDetector(onTap: () {
-        audioPlugin.play("https://sal-prod.s3.ap-south-1.amazonaws.com/content/8hulde0x7b.mp3");
+        var url="https://sal-prod.s3.ap-south-1.amazonaws.com/"+"${audio[i].content}";
+        print(url);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>ButterFlyAssetVideo(url:url)));
+       // audioPlugin.play("https://sal-prod.s3.ap-south-1.amazonaws.com/");
        // advancedPlayer.setUrl("https://sal-prod.s3.ap-south-1.amazonaws.com/+${audio[i].content}");
        // advancedPlayer.play("https://sal-prod.s3.ap-south-1.amazonaws.com/+${audio[i].content}");
         //   name:dishfromserver[i]['name'],
@@ -335,6 +341,9 @@ context: context,therapistId: therapistId
     for (int i = 0; i < video.length; i++) {
       productList.add(GestureDetector(onTap: () {
 
+        var url="https://sal-prod.s3.ap-south-1.amazonaws.com/"+"${video[i].content}";
+        print(url);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>PlayerPage(url:url)));
 
         //   name:dishfromserver[i]['name'],
         //   chefname: dishfromserver[i]["chef_name"]['full_name'].toString(),
@@ -396,7 +405,9 @@ context: context,therapistId: therapistId
     for (int i = 0; i < article.length; i++) {
       productList.add(GestureDetector(onTap: () {
 
-
+print(article[i].content);
+Navigator.push(context,MaterialPageRoute(builder: (context)=>Article(image:"https://sal-prod.s3.ap-south-1.amazonaws.com/"+article[i].photo,
+title:article[i].title,description:article[i].description)));
         //   name:dishfromserver[i]['name'],
         //   chefname: dishfromserver[i]["chef_name"]['full_name'].toString(),
         //   price: dishfromserver[i]['price'],

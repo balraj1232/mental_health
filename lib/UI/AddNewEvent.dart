@@ -1,8 +1,28 @@
+import 'dart:io';
+
 import 'package:date_format/date_format.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mental_health/Utils/ActionSheet.dart';
+import 'package:mental_health/Utils/AlertDialog.dart';
 import 'package:mental_health/Utils/Colors.dart';
+import 'package:mental_health/Utils/Dialogs.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
+import 'package:mental_health/data/repo/uploadcreateevent.dart';
 import 'package:intl/intl.dart';
+import 'package:nb_utils/nb_utils.dart' as utils;
+
+
+
+TextEditingController eventName = TextEditingController();
+TextEditingController eventDesc = TextEditingController();
+TextEditingController eventTopic = TextEditingController();
+TextEditingController eventDate = TextEditingController();
+TextEditingController eventTime = TextEditingController();
+int priceValue = 1;
+
+
 
 class AddNewEvent extends StatefulWidget {
   const AddNewEvent({Key key}) : super(key: key);
@@ -12,7 +32,9 @@ class AddNewEvent extends StatefulWidget {
 }
 
 class _AddNewEventState extends State<AddNewEvent> {
-
+  File image;
+  String profileImage;
+  var uploadImage = UploadImageseventRepo();
   GlobalKey<FormState> newEventFormKey = GlobalKey<FormState>();
   String topic;
   DateTime selectedDate = DateTime.now();
@@ -20,13 +42,8 @@ class _AddNewEventState extends State<AddNewEvent> {
   String _setTime;
   String _hourFrom, _minuteFrom, _timeFrom;
   String dateTimeFrom;
-  int _value = 1;
 
-  TextEditingController eventName = TextEditingController();
-  TextEditingController eventDesc = TextEditingController();
-  TextEditingController eventTopic = TextEditingController();
-  TextEditingController eventDate = TextEditingController();
-  TextEditingController eventTime = TextEditingController();
+
 
   FocusNode eventNameFn;
   FocusNode eventDescFn;
@@ -55,7 +72,7 @@ class _AddNewEventState extends State<AddNewEvent> {
     eventDateFn.dispose();
     eventTimeFn.dispose();
   }
-
+  final GlobalKey<State> loginLoader = new GlobalKey<State>();
   selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
@@ -188,6 +205,10 @@ class _AddNewEventState extends State<AddNewEvent> {
                         eventNameFn.unfocus();
                         FocusScope.of(context).requestFocus(eventDescFn);
                       },
+                      validator: (s){
+                        if(s.isEmpty) return "This field is required";
+                        return null;
+                      },
                     ),
                   ),
                   Container(
@@ -249,6 +270,10 @@ class _AddNewEventState extends State<AddNewEvent> {
                         eventDescFn.unfocus();
                         FocusScope.of(context).requestFocus(eventTopicFn);
                       },
+                      validator: (s){
+                        if(s.isEmpty) return "This field is required";
+                        return null;
+                      },
                     ),
                   ),
                   Container(
@@ -303,6 +328,9 @@ class _AddNewEventState extends State<AddNewEvent> {
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
+                          onTap: (){
+                            eventTopic.text = value;
+                          },
                           child: Text(
                             value,
                             style: TextStyle(
@@ -440,6 +468,7 @@ class _AddNewEventState extends State<AddNewEvent> {
                           controller: eventTime,
                           onChanged: (String val) {
                             _setTime = val;
+                            eventTime.text = _setTime;
                           },
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -522,14 +551,14 @@ class _AddNewEventState extends State<AddNewEvent> {
                     child: Slider(
                       min: 0,
                       max: 100,
-                      divisions: 99,
-                      value: _value.toDouble(),
-                      label: _value.toString(),
+                      divisions: 10,
+                      value: priceValue.toDouble(),
+                      label: priceValue.toString(),
                       activeColor: Color(backgroundColorBlue),
                       inactiveColor: Color(fontColorGray),
                       onChanged: (value) {
                         setState(() {
-                          _value = value.round();
+                          priceValue = value.round();
                         });
                       },
                     ),
@@ -553,7 +582,74 @@ class _AddNewEventState extends State<AddNewEvent> {
                         horizontal: SizeConfig.screenWidth * 0.03,
                         vertical: SizeConfig.blockSizeVertical),
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+
+                        FocusScope.of(context).unfocus();
+                        showCupertinoModalPopup(
+                          context: context,
+                          builder: (BuildContext context) => ActionSheet()
+                              .actionSheet(context, type: "profile",onCamera: () {
+                            FocusScope.of(context).unfocus();
+                            chooseCameraFile().then((File file) {
+                              if (file != null) {
+                              Dialogs.showLoadingDialog(context, loginLoader);
+                                uploadImage
+                                    .uploadImage(
+                                    context, image: image
+
+                                )
+                                    .then((value) {
+                                  print(profileImage);
+                                  if (value != null) {
+                                    if (value.meta.status == "200") {
+                                      setState(() {
+                                        profileImage = value.file.toString();
+                                        print(profileImage);
+                                      });
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                    } else {
+                                      Navigator.of(loginLoader.currentContext,
+                                          rootNavigator: true)
+                                          .pop();
+                                      showAlertDialog(
+                                        context,
+                                        value.meta.message,
+                                        "",
+                                      );
+                                    }
+                                  } else {
+                                    Navigator.of(loginLoader.currentContext,
+                                        rootNavigator: true)
+                                        .pop();
+                                    showAlertDialog(
+                                      context,
+                                      value.meta.message,
+                                      "",
+                                    );
+                                  }
+                                }).catchError((error) {
+                                  Navigator.of(loginLoader.currentContext,
+                                      rootNavigator: true)
+                                      .pop();
+                                  showAlertDialog(
+                                    context,
+                                    error.toString(),
+                                    "",
+                                  );
+                                });
+                              }
+                            }).catchError((onError) {});
+                          }, onGallery: () {
+                            FocusScope.of(context).unfocus();
+                            androidchooseImageFile().then((value) {
+                              setState(() {
+                                //  loading = true;
+                              });
+                            }).catchError((onError) {});
+                          }, text: "Select profile"),);
+                      },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                           side: BorderSide(
@@ -626,7 +722,7 @@ class _AddNewEventState extends State<AddNewEvent> {
                       margin: EdgeInsets.only(
                         right: SizeConfig.screenWidth * 0.03
                       ),
-                      child: Text("₹ 400",
+                      child: Text(priceValue.toString(),
                       style: TextStyle(
                         color: Color(backgroundColorBlue),
                         fontWeight: FontWeight.w600,
@@ -638,7 +734,13 @@ class _AddNewEventState extends State<AddNewEvent> {
                   width: SizeConfig.screenWidth,
                   alignment: Alignment.center,
                   child: MaterialButton(onPressed: (){
-                    Navigator.of(context).pushNamed('/EventSummary');
+                    if(newEventFormKey.currentState.validate()){
+                     if(eventTime.text.isNotEmpty && eventDate.text.isNotEmpty && eventTopic.text.isNotEmpty){
+                       Navigator.of(context).pushNamed('/EventSummary');
+                     }else{
+                       utils.toast("All Fields are required");
+                     }
+                    }
                   },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8)
@@ -653,5 +755,38 @@ class _AddNewEventState extends State<AddNewEvent> {
             ),
           ),
     ));
+  }
+  Future<File> chooseCameraFile() async {
+    await ImagePicker
+        .pickImage(
+      source: ImageSource.camera,
+    )
+        .then((value) async {
+      setState(() {
+        FocusScope.of(context).unfocus();
+        image = new File(value.path);
+      });
+      if (image.path != null) {}
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return image;
+  }
+
+  Future<File> androidchooseImageFile() async {
+    await ImagePicker
+        .pickImage(
+      source: ImageSource.gallery,
+    )
+        .then((value) async {
+      setState(() {
+        FocusScope.of(context).unfocus();
+        image = new File(value.path);
+      });
+      if (image.path != null) {}
+    }).catchError((error) {
+      print(error.toString());
+    });
+    return image;
   }
 }

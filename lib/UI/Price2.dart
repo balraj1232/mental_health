@@ -13,7 +13,7 @@ FocusNode lastNameFocusNode;
 bool selected = false;
 bool filledFn = false;
 bool filledLn = false;
-String radioValue = "";
+String genderVal = "";
 
 
 class Price2 extends StatefulWidget {
@@ -55,7 +55,9 @@ class _Price2State extends State<Price2> {
           fontWeight: FontWeight.bold,
           color: Color(fontColorSteelGrey),
         ),),
-        leading: Icon(Icons.arrow_back_ios,color: Colors.black,),
+        leading: GestureDetector(child: Icon(Icons.arrow_back_ios_rounded,color: Colors.black,),onTap: (){
+          Navigator.pop(context);
+        },),
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -236,9 +238,9 @@ class _Price2State extends State<Price2> {
             ),
             Container(
               child: RadioListTile<String>(
-                value: "Male", groupValue: radioValue.toString(), onChanged: (String value){
+                value: "Male", groupValue: genderVal.toString(), onChanged: (String value){
                 setState(() {
-                  radioValue = value;
+                  genderVal = value;
                   selected = true;
                 });
               },
@@ -248,9 +250,9 @@ class _Price2State extends State<Price2> {
             ),
             Container(
               child: RadioListTile<String>(
-                value: "Female", groupValue: radioValue.toString(), onChanged: (String value){
+                value: "Female", groupValue: genderVal.toString(), onChanged: (String value){
                 setState(() {
-                  radioValue = value;
+                  genderVal = value;
                   selected = true;
                 });
               },
@@ -260,9 +262,9 @@ class _Price2State extends State<Price2> {
             ),
             Container(
               child: RadioListTile<String>(
-                value: "Other", groupValue: radioValue.toString(), onChanged: (String value){
+                value: "Other", groupValue: genderVal.toString(), onChanged: (String value){
                 setState(() {
-                  radioValue = value;
+                  genderVal = value;
                   selected = true;
                 });
               },
@@ -277,7 +279,7 @@ class _Price2State extends State<Price2> {
         child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
         backgroundColor: selected == true &&  filledFn == true&&filledLn==true? Colors.blue : Colors.grey,
         onPressed: (){
-          if(radioValue != null && radioValue != "" && filledFn != "")
+          if(genderVal != null && genderVal != "" && filledFn != "")
           Navigator.of(context).pushNamed('/Price3');
           else
             toast("Please select details first");

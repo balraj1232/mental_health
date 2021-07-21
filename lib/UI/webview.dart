@@ -15,9 +15,7 @@ class _WebViewClassState extends State<WebViewClass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('WebView'),
-      ),
+      
       body: WebView(
         initialUrl: widget.link,
         onWebViewCreated: (WebViewController webViewController) {

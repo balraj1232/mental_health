@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    countryCode = "+91";
+    countryCode = "91";
   }
   @override
   Widget build(BuildContext context) {
@@ -44,6 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: SizeConfig.screenHeight,
               width: SizeConfig.screenWidth,
             ),
+            Container(margin:EdgeInsets.all(50),child: Image.asset('assets/logo/Group.png')),
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,

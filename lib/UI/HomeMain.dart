@@ -22,6 +22,7 @@ import 'package:mental_health/data/repo/getHomeContentRepo.dart';
 import 'package:mental_health/models/AppointmentModal.dart';
 import 'package:mental_health/models/GetHomeContentModal.dart';
 import 'package:mental_health/models/getTherapistDetailModal.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:video_player/video_player.dart';
 
 
@@ -42,7 +43,8 @@ class _HomeMainState extends State<HomeMain> {
   var getHomeContentModal = GetHomeContentModal();
   var upcomintAppointments = UpcomingAppointmentRepo();
   List<Appointments> appointments = new List();
-
+var first;
+var last;
   List<Color> colors = [
     Color.fromRGBO(42, 138, 163, 0.75),
     Color.fromRGBO(48, 37, 33, 0.75),
@@ -60,7 +62,18 @@ class _HomeMainState extends State<HomeMain> {
 
 
   getUserData() async {
+    SharedPreferences prefs= await SharedPreferences.getInstance();
+
+    print("sdvvs"+prefs.getString("therapistid"));
+
+    setState(() {
+
+      first =  prefs.getString("firstname");
+      last=  prefs.getString("lastname");
+    });
+    print("klnll"+last);
     SharedPreferencesTest().saveuserdata("get").then((value) async {
+
       if (value != null && value != "") {
         setState(() {
           Map userupdateddata = json.decode(value);
@@ -71,33 +84,25 @@ class _HomeMainState extends State<HomeMain> {
   }
 
   getTherapistId() async {
+    SharedPreferences prefs= await SharedPreferences.getInstance();
+
+    print("sdvvs"+prefs.getString("therapistid"));
+    setState(() {
+      therapistId=prefs.getString("therapistid");
+    });
     SharedPreferencesTest().getTherapistId().then((value) async {
       print("val" + value.toString());
-      if (value != null && value != "") {
-        setState(() {
-          therapistId = value;
-        });
-        getHomeContent
-            .getHomeContent(
-          context: context,
-        )
-            .then((value) {
-          if (value != null) {
-            if (value.meta.status == "200") {
-              setState(() {
-                isloading = false;
-                getHomeContentModal = value;
-              });
-            } else {
-              setState(() {
-                isloading = false;
-              });
-              showAlertDialog(
-                context,
-                value.meta.message,
-                "",
-              );
-            }
+      getHomeContent
+          .getHomeContent(
+        context: context,
+      )
+          .then((value) {
+        if (value != null) {
+          if (value.meta.status == "200") {
+            setState(() {
+              isloading = false;
+              getHomeContentModal = value;
+            });
           } else {
             setState(() {
               isloading = false;
@@ -108,21 +113,28 @@ class _HomeMainState extends State<HomeMain> {
               "",
             );
           }
-        }).catchError((error) {
+        } else {
           setState(() {
             isloading = false;
           });
           showAlertDialog(
             context,
-            error.toString(),
+            value.meta.message,
             "",
           );
+        }
+      }).catchError((error) {
+        setState(() {
+          isloading = false;
         });
+        showAlertDialog(
+          context,
+          error.toString(),
+          "",
+        );
       }
-    });
-  }
-
-
+      );
+    });}
   @override
   void initState() {
     super.initState();
@@ -244,7 +256,7 @@ class _HomeMainState extends State<HomeMain> {
                             horizontal: SizeConfig.screenWidth * 0.05,
                             vertical: SizeConfig.blockSizeVertical
                         ),
-                        child: Text("Dr. ${firstNameController.text}",
+                        child: Text("Dr. ${first}",
                             style: GoogleFonts.openSans(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,

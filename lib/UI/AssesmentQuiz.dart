@@ -151,10 +151,10 @@ class _AssesmentQuizState extends State<AssesmentQuiz> {
           ),
         ),
         body: new Container(
-         height: 600,
-          child:  Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+
+          child:  ListView(
+
+            shrinkWrap: true,
                 children: <Widget>[
                   new Text(
                     'Question 1',
@@ -261,8 +261,8 @@ class _AssesmentQuizState extends State<AssesmentQuiz> {
                         children: [
                           new Radio(
                             value: 0,
-                            groupValue: _radioValue1,
-                            onChanged: _handleRadioValueChange1,
+                            groupValue: _radioValue2,
+                            onChanged: _handleRadioValueChange2,
                           ),
                           new Text(
                             'I do not feel Sad',
@@ -274,8 +274,8 @@ class _AssesmentQuizState extends State<AssesmentQuiz> {
                         children: [
                           new Radio(
                             value: 1,
-                            groupValue: _radioValue1,
-                            onChanged: _handleRadioValueChange1,
+                            groupValue: _radioValue2,
+                            onChanged: _handleRadioValueChange2,
                           ),
                           new Text(
                             'I  feel Sad most of the time',
@@ -289,8 +289,8 @@ class _AssesmentQuizState extends State<AssesmentQuiz> {
                         children: [
                           new Radio(
                             value: 2,
-                            groupValue: _radioValue1,
-                            onChanged: _handleRadioValueChange1,
+                            groupValue: _radioValue2,
+                            onChanged: _handleRadioValueChange2,
                           ),
                           new Text(
                             'I feel Sad all the time',
@@ -302,8 +302,8 @@ class _AssesmentQuizState extends State<AssesmentQuiz> {
                         children: [
                           new Radio(
                             value: 3,
-                            groupValue: _radioValue1,
-                            onChanged: _handleRadioValueChange1,
+                            groupValue: _radioValue2,
+                            onChanged: _handleRadioValueChange2,
                           ),
                           new Text(
                             'I am extremely sad or unhappy',
