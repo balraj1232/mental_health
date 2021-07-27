@@ -29,6 +29,8 @@ class Home2 extends StatefulWidget {
 }
 
 class _Home2State extends State<Home2> {
+  var first;
+  var last;
   var getHomeContent = GetHomePageContentRepo();
   var getHomeContentModal = GetHomeContentModal();
   bool isloding = false;
@@ -62,14 +64,15 @@ class _Home2State extends State<Home2> {
 
   getTherapistId() async {
     SharedPreferences prefs= await SharedPreferences.getInstance();
-    prefs.getString("lastname");
-    prefs.getString("firstname");
+    last=   prefs.getString("lastname");
+    first =
+        prefs.getString("firstname");
     print(prefs.getString("lastname"));
     SharedPreferencesTest().getTherapistId().then((value) async {
       if (value != null && value != "") {
         setState(() {
           therapistId = value;
-          print(therapistId);
+          print("dfvff"+therapistId.toString());
         });
         getHomeContent
             .getHomeContent(
@@ -82,6 +85,7 @@ class _Home2State extends State<Home2> {
               setState(() async {
                 isloding = false;
                 getHomeContentModal = value;
+
 
               });
             } else {
@@ -193,7 +197,7 @@ class _Home2State extends State<Home2> {
                         margin: EdgeInsets.symmetric(
                             horizontal: SizeConfig.screenWidth * 0.05,
                             vertical: SizeConfig.blockSizeVertical),
-                        child: Text("Dr. ${getTherapistData != null ?getTherapistData.firstName + " " + getTherapistData.lastName:""}",
+                        child: Text("Dr. ${first + " " + last}",
                             style: GoogleFonts.openSans(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,

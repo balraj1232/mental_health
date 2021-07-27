@@ -45,16 +45,16 @@ class _Info3State extends State<Info3> {
         leading: GestureDetector(child: Icon(Icons.arrow_back_ios_rounded,color: Colors.black,),onTap: (){
           Navigator.pop(context);
         },),
-        actions: [
-          Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(SizeConfig.blockSizeVertical),
-            child: Text(
-              "Skip",
-              style: GoogleFonts.openSans(color: Colors.blue),
-            ),
-          )
-        ],
+       // actions: [
+        //   Container(
+        //     alignment: Alignment.center,
+        //     padding: EdgeInsets.all(SizeConfig.blockSizeVertical),
+        //     child: Text(
+        //       "Skip",
+        //       style: GoogleFonts.openSans(color: Colors.blue),
+        //     ),
+        //   )
+        // ],
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),

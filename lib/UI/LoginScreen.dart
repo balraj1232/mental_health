@@ -164,6 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       .then((value) {
                                     if (value != null) {
                                       if (value.meta.status == "200") {
+                                        print(value.meta.messageType);
                                         Navigator.of(loginLoader.currentContext,
                                                 rootNavigator: true)
                                             .pop();

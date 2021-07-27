@@ -442,7 +442,7 @@ class _MyProfileState extends State<MyProfile> {
           setState(() {
             isloding = false;
             getHomeContentModal = value;
-            print(getHomeContentModal.therapist.firstName);
+            print(getHomeContentModal.therapist.photo);
           });
         } else {
           setState(() {

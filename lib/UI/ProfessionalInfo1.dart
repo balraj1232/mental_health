@@ -4,6 +4,8 @@ import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import 'Price1.dart';
+
 bool anxiety = false;
 bool relationship = false;
 bool depression = false;
@@ -61,7 +63,7 @@ class _ProfessionalInfo1State extends State<ProfessionalInfo1> {
                 left: SizeConfig.screenWidth * 0.05,
                 right: SizeConfig.screenWidth * 0.05,
               ),
-              child: Text("What's your areas of expertise?",style: GoogleFonts.openSans(
+              child: Text(radioValue.toString()=="Listener"?"I Can Be Listener For:?":"What's your areas of expertise?",style: GoogleFonts.openSans(
                   fontSize: SizeConfig.blockSizeVertical * 4,
                   fontWeight: FontWeight.bold,
                   color: Color(fontColorSteelGrey)

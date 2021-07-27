@@ -30,7 +30,12 @@ class Price4 extends StatefulWidget {
 class _Price4State extends State<Price4> {
   final GlobalKey<State> loginLoader = new GlobalKey<State>();
   var createUser = CreateTherapistProfileRepo();
-
+@override
+  void initState() {
+  print(profileImage);
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -97,7 +102,7 @@ class _Price4State extends State<Price4> {
                 print(mobileController.text);
                  createUser
                     .createCounsellor(
-                    aadhar: adhaarDoc, about: aboutController.text, certificate: certificateDoc, context:context , device_id: "",education: "",email: "",experience: "",first_name: firstNameController.text,gender: "radioValue",language_ids: selectedVal.toString().replaceAll("[", "",).replaceAll("]", ""),last_name: lastNameController.text, linkedin:linkController.text ,phone: "91"+ mobileController.text,photo: profileImage,price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
+                    aadhar: adhaarDoc, about: aboutController.text, certificate: certificateDoc, context:context , device_id: "",education: "",email: "",experience: "",first_name: ";m;fd;",gender: "radioValue",language_ids: selectedVal.toString().replaceAll("[", "",).replaceAll("]", ""),last_name: "kdnsl", linkedin:linkController.text ,phone: "91"+ "9876432155",photo: "/data/user/0/com.sal_foundation.therapist/cache/image_picker6287676523104172980.jpg",price: "",price_3:"" ,price_5: "",resume: "",topic_ids:""
                 )
                     .then((value) async {
                   if (value != null) {
@@ -110,6 +115,7 @@ class _Price4State extends State<Price4> {
                         SharedPreferencesTest().checkIsLogin("0");
                         SharedPreferencesTest().saveTherapistId(value.therapistId);
                       SharedPreferences prefs= await SharedPreferences.getInstance();
+                      prefs.setString("therapistid", value.therapistId);
                         prefs.setString("firstname", firstNameController.text);
                         prefs.setString("lastname", lastNameController.text);
 ;                      Navigator.of(context).pushNamed('/Price5');
@@ -207,7 +213,7 @@ class _Price4State extends State<Price4> {
                         fontSize: SizeConfig.blockSizeVertical * 2.5),
                   ),
                   Text(
-                    "Counselling Therapist",
+                    radioValue.toString(),
                     style: GoogleFonts.openSans(
                         color: Color(fontColorGray),
                         fontWeight: FontWeight.w400,

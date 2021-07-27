@@ -12,12 +12,14 @@ import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:mental_health/data/repo/UploadImagesRepo.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import 'Price1.dart';
+
 String selectSocialProfile = "";
 bool selected = false;
 File certificateImage;
 File adhaarCardImage;
 File resumeImage;
-
+var hint;
 
 String certificateDoc;
 String adhaarDoc;
@@ -56,16 +58,16 @@ class _Info1State extends State<Info1> {
         leading:   GestureDetector(child: Icon(Icons.arrow_back_ios_rounded,color: Colors.black,),onTap: (){
           Navigator.pop(context);
         },),
-        actions: [
-          Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(SizeConfig.blockSizeVertical),
-            child: Text(
-              "Skip",
-              style: GoogleFonts.openSans(color: Colors.blue),
-            ),
-          )
-        ],
+        // actions: [
+        //   Container(
+        //     alignment: Alignment.center,
+        //     padding: EdgeInsets.all(SizeConfig.blockSizeVertical),
+        //     child: Text(
+        //       "Skip",
+        //       style: GoogleFonts.openSans(color: Colors.blue),
+        //     ),
+        //   )
+        // ],
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -73,102 +75,45 @@ class _Info1State extends State<Info1> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            LinearProgressIndicator(
-              backgroundColor: Colors.grey[300],
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-              value: 0.6,
-            ),
-            SizedBox(
-              height: SizeConfig.screenHeight * 0.15,
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                left: SizeConfig.screenWidth * 0.05,
-                right: SizeConfig.screenWidth * 0.05,
-              ),
-              child: Text(
-                "Upload your relevant Qualification Certificate",
-                style: GoogleFonts.openSans(
-                    fontSize: SizeConfig.blockSizeVertical * 4,
-                    fontWeight: FontWeight.bold,
-                    color: Color(fontColorSteelGrey)),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                left: SizeConfig.screenWidth * 0.05,
-                right: SizeConfig.screenWidth * 0.05,
-              ),
-              child: MaterialButton(
-                onPressed: () {
-                  FocusScope.of(context).unfocus();
-                  showCupertinoModalPopup(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          ActionSheet().actionSheet(context, onCamera: () {
-                            FocusScope.of(context).unfocus();
-                            chooseCertificateCamera().then((File file) {
-                              if (file != null) {
-                                Dialogs.showLoadingDialog(context, loginLoader);
-                                uploadImage
-                                    .uploadImage(
-                                    context, image: certificateImage
-                                )
-                                    .then((value) {
-                                  if (value != null) {
-                                    if (value.meta.status == "200") {
-                                      setState(() {
-                                        certificateDoc = value.file.toString();
-                                      });
-                                      Navigator.of(loginLoader.currentContext,
-                                          rootNavigator: true)
-                                          .pop();
-                                    } else {
-                                      Navigator.of(loginLoader.currentContext,
-                                          rootNavigator: true)
-                                          .pop();
-                                      showAlertDialog(
-                                        context,
-                                        value.meta.message,
-                                        "",
-                                      );
-                                    }
-                                  } else {
-                                    Navigator.of(loginLoader.currentContext,
-                                        rootNavigator: true)
-                                        .pop();
-                                    showAlertDialog(
-                                      context,
-                                      value.meta.message,
-                                      "",
-                                    );
-                                  }
-                                }).catchError((error) {
-                                  Navigator.of(loginLoader.currentContext,
-                                      rootNavigator: true)
-                                      .pop();
-                                  showAlertDialog(
-                                    context,
-                                    error.toString(),
-                                    "",
-                                  );
-                                });
-                                setState(() {
-                                  selected = true;
-                                  //   loading = true;
-                                });
-                              }
-                            }).catchError((onError) {});
-                          },
-                              onDocument: () async {
-                                await FilePicker.platform.pickFiles(
-                                  type: FileType.custom,
-                                  allowCompression: true,
-                                  withData: true,
-                                  withReadStream: true,
-                                  allowedExtensions: ['pdf', "doc", "docx"],
-                                ).then((value) {
-                                  if(value != null){
+            radioValue.toString()!="Listener"? Container(
+            child: Column(
+              children: [
+                LinearProgressIndicator(
+                  backgroundColor: Colors.grey[300],
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  value: 0.6,
+                ),
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.15,
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    left: SizeConfig.screenWidth * 0.05,
+                    right: SizeConfig.screenWidth * 0.05,
+                  ),
+                  child: Text(
+                    "Upload your relevant Qualification Certificate",
+                    style: GoogleFonts.openSans(
+                        fontSize: SizeConfig.blockSizeVertical * 4,
+                        fontWeight: FontWeight.bold,
+                        color: Color(fontColorSteelGrey)),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    left: SizeConfig.screenWidth * 0.05,
+                    right: SizeConfig.screenWidth * 0.05,
+                  ),
+                  child: MaterialButton(
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      showCupertinoModalPopup(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              ActionSheet().actionSheet(context, onCamera: () {
+                                FocusScope.of(context).unfocus();
+                                chooseCertificateCamera().then((File file) {
+                                  if (file != null) {
                                     Dialogs.showLoadingDialog(context, loginLoader);
                                     uploadImage
                                         .uploadImage(
@@ -213,383 +158,448 @@ class _Info1State extends State<Info1> {
                                         "",
                                       );
                                     });
+                                    setState(() {
+                                      selected = true;
+                                      //   loading = true;
+                                    });
                                   }
-                                  setState(() {
-                                    certificateImage = File(value.paths.elementAt(0));
-                                  });
                                 }).catchError((onError) {});
-                              },onGallery: () {
-                            FocusScope.of(context).unfocus();
-                            chooseCertificateGallery().then((File file) {
-                              if (file != null) {
-                                Dialogs.showLoadingDialog(context, loginLoader);
-                                uploadImage
-                                    .uploadImage(
-                                    context, image: certificateImage
-                                )
-                                    .then((value) {
-                                  if (value != null) {
-                                    if (value.meta.status == "200") {
+                              },
+                                  onDocument: () async {
+                                    await FilePicker.platform.pickFiles(
+                                      type: FileType.custom,
+                                      allowCompression: true,
+                                      withData: true,
+                                      withReadStream: true,
+                                      allowedExtensions: ['pdf', "doc", "docx","jpeg"],
+                                    ).then((value) {
+                                      if(value != null){
+                                        Dialogs.showLoadingDialog(context, loginLoader);
+                                        uploadImage
+                                            .uploadImage(
+                                            context, image: certificateImage
+                                        )
+                                            .then((value) {
+                                          if (value != null) {
+                                            if (value.meta.status == "200") {
+                                              setState(() {
+                                                certificateDoc = value.file.toString();
+                                              });
+                                              Navigator.of(loginLoader.currentContext,
+                                                  rootNavigator: true)
+                                                  .pop();
+                                            } else {
+                                              Navigator.of(loginLoader.currentContext,
+                                                  rootNavigator: true)
+                                                  .pop();
+                                              showAlertDialog(
+                                                context,
+                                                value.meta.message,
+                                                "",
+                                              );
+                                            }
+                                          } else {
+                                            Navigator.of(loginLoader.currentContext,
+                                                rootNavigator: true)
+                                                .pop();
+                                            showAlertDialog(
+                                              context,
+                                              value.meta.message,
+                                              "",
+                                            );
+                                          }
+                                        }).catchError((error) {
+                                          Navigator.of(loginLoader.currentContext,
+                                              rootNavigator: true)
+                                              .pop();
+                                          showAlertDialog(
+                                            context,
+                                            error.toString(),
+                                            "",
+                                          );
+                                        });
+                                      }
                                       setState(() {
-                                        certificateDoc = value.file.toString();
+                                        certificateImage = File(value.paths.elementAt(0));
                                       });
-                                      Navigator.of(loginLoader.currentContext,
-                                          rootNavigator: true)
-                                          .pop();
-                                    } else {
-                                      Navigator.of(loginLoader.currentContext,
-                                          rootNavigator: true)
-                                          .pop();
-                                      showAlertDialog(
-                                        context,
-                                        value.meta.message,
-                                        "",
-                                      );
-                                    }
-                                  } else {
-                                    Navigator.of(loginLoader.currentContext,
-                                        rootNavigator: true)
-                                        .pop();
-                                    showAlertDialog(
-                                      context,
-                                      value.meta.message,
-                                      "",
-                                    );
-                                  }
-                                }).catchError((error) {
-                                  Navigator.of(loginLoader.currentContext,
-                                      rootNavigator: true)
-                                      .pop();
-                                  showAlertDialog(
-                                    context,
-                                    error.toString(),
-                                    "",
-                                  );
-                                });
-                                setState(() {
-                                  selected = true;
-                                  //   loading = true;
-                                });
-                              }
+                                    }).catchError((onError) {});
+                                  },onGallery: () {
+                                    FocusScope.of(context).unfocus();
+                                    chooseCertificateGallery().then((File file) {
+                                      if (file != null) {
+                                        Dialogs.showLoadingDialog(context, loginLoader);
+                                        uploadImage
+                                            .uploadImage(
+                                            context, image: certificateImage
+                                        )
+                                            .then((value) {
+                                          if (value != null) {
+                                            if (value.meta.status == "200") {
+                                              setState(() {
+                                                certificateDoc = value.file.toString();
+                                              });
+                                              Navigator.of(loginLoader.currentContext,
+                                                  rootNavigator: true)
+                                                  .pop();
+                                            } else {
+                                              Navigator.of(loginLoader.currentContext,
+                                                  rootNavigator: true)
+                                                  .pop();
+                                              showAlertDialog(
+                                                context,
+                                                value.meta.message,
+                                                "",
+                                              );
+                                            }
+                                          } else {
+                                            Navigator.of(loginLoader.currentContext,
+                                                rootNavigator: true)
+                                                .pop();
+                                            showAlertDialog(
+                                              context,
+                                              value.meta.message,
+                                              "",
+                                            );
+                                          }
+                                        }).catchError((error) {
+                                          Navigator.of(loginLoader.currentContext,
+                                              rootNavigator: true)
+                                              .pop();
+                                          showAlertDialog(
+                                            context,
+                                            error.toString(),
+                                            "",
+                                          );
+                                        });
+                                        setState(() {
+                                          selected = true;
+                                          //   loading = true;
+                                        });
+                                      }
 
-                              setState(() {
-                                selected = true;
-                                //  loading = true;
-                              });
-                            }).catchError((onError) {});
-                          }, text: "Select document"));
-                },
-                child: Container(
-                  alignment: Alignment.topCenter,
-                  child:
+                                      setState(() {
+                                        selected = true;
+                                        //  loading = true;
+                                      });
+                                    }).catchError((onError) {});
+                                  }, text: "Select document"));
+                    },
+                    child: Container(
+                      alignment: Alignment.topCenter,
+                      child:
                       certificateImage != null && certificateImage.path != null
                           ? Text(
-                              certificateImage.path.split("/").last,
-                              style: GoogleFonts.openSans(
-                                  fontSize: SizeConfig.blockSizeVertical * 2),
-                            )
+                        certificateImage.path.split("/").last,
+                        style: GoogleFonts.openSans(
+                            fontSize: SizeConfig.blockSizeVertical * 2),
+                      )
                           : Text(
-                              "UPLOAD CERTIFICATE",
-                              style: GoogleFonts.openSans(
-                                  fontSize: SizeConfig.blockSizeVertical * 2),
-                            ),
-                ),
-                minWidth: SizeConfig.screenWidth,
-                textColor: Colors.blue,
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(color: Colors.blue)),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                left: SizeConfig.screenWidth * 0.05,
-                right: SizeConfig.screenWidth * 0.05,
-                top: SizeConfig.blockSizeVertical * 5,
-              ),
-              child: Text(
-                "Share with us your",
-                style: GoogleFonts.openSans(
-                    fontSize: SizeConfig.blockSizeVertical * 4,
-                    fontWeight: FontWeight.bold,
-                    color: Color(fontColorSteelGrey)),
-              ),
-            ),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 2,
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                left: SizeConfig.screenWidth * 0.05,
-                right: SizeConfig.screenWidth * 0.05,
-              ),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey)),
-              child: RadioListTile<String>(
-                dense: true,
-                value: "Resume",
-                groupValue: selectSocialProfile,
-                onChanged: (value) {
-                  setState(() {
-                    selectSocialProfile = value;
-                    print(":gdcj" + selectSocialProfile.toString());
-                    selected = true;
-                  });
-                },
-                title: Text(
-                  "RESUME",
-                  style: GoogleFonts.openSans(color: Color(fontColorGray)),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 2,
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                left: SizeConfig.screenWidth * 0.05,
-                right: SizeConfig.screenWidth * 0.05,
-              ),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey)),
-              child: RadioListTile<String>(
-                dense: true,
-                value: "Linked In",
-                groupValue: selectSocialProfile,
-                onChanged: (value) {
-                  setState(() {
-                    selectSocialProfile = value;
-                    print("cjsjc" + selectSocialProfile.toString());
-                    selected = true;
-                  });
-                },
-                title: Text(
-                  "LINKEDIN",
-                  style: GoogleFonts.openSans(color: Color(fontColorGray)),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 2,
-            ),
-            Form(
-              key: formKey,
-              child:             Container(
-                margin: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.05,
-                  right: SizeConfig.screenWidth * 0.05,
-                ),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.grey)),
-                child: selectSocialProfile == "Linked In"  ? TextFormField(
-                  controller: linkController,
-                  validator: (s) {
-                    return validateLink(linkController.text);
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Enter Link",
-                    hintStyle: GoogleFonts.openSans(color: Color(fontColorGray)),
-                    contentPadding:
-                    EdgeInsets.all(SizeConfig.blockSizeVertical * 2),
-                    border: InputBorder.none,
-                    suffixIcon: Icon(Icons.link),
-
+                        "UPLOAD CERTIFICATE(pdf. docx.. are Allowed)",
+                        style: GoogleFonts.openSans(
+                            fontSize: SizeConfig.blockSizeVertical * 1.5),
+                      ),
+                    ),
+                    minWidth: SizeConfig.screenWidth,
+                    textColor: Colors.blue,
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(color: Colors.blue)),
                   ),
-                ):GestureDetector(
-                  onTap: (){
-                    FocusScope.of(context).unfocus();
-                    showCupertinoModalPopup(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            ActionSheet().actionSheet(context, type: "Document",onCamera: () {
-                              FocusScope.of(context).unfocus();
-                              adhaarCameraFile().then((File file) {
-                                if (file != null) {
-                                  Dialogs.showLoadingDialog(context, loginLoader);
-                                  uploadImage
-                                      .uploadImage(
-                                      context, image: resumeImage
-                                  )
-                                      .then((value) {
-                                    if (value != null) {
-                                      if (value.meta.status == "200") {
-                                        setState(() {
-                                          resumeDoc = value.file.toString();
-                                        });
-                                        Navigator.of(loginLoader.currentContext,
-                                            rootNavigator: true)
-                                            .pop();
-                                      } else {
-                                        Navigator.of(loginLoader.currentContext,
-                                            rootNavigator: true)
-                                            .pop();
-                                        showAlertDialog(
-                                          context,
-                                          value.meta.message,
-                                          "",
-                                        );
-                                      }
-                                    } else {
-                                      Navigator.of(loginLoader.currentContext,
-                                          rootNavigator: true)
-                                          .pop();
-                                      showAlertDialog(
-                                        context,
-                                        value.meta.message,
-                                        "",
-                                      );
-                                    }
-                                  }).catchError((error) {
-                                    Navigator.of(loginLoader.currentContext,
-                                        rootNavigator: true)
-                                        .pop();
-                                    showAlertDialog(
-                                      context,
-                                      error.toString(),
-                                      "",
-                                    );
-                                  });
-                                  setState(() {
-                                    selected = true;
-                                    //   loading = true;
-                                  });
-                                }
-                              }).catchError((onError) {});
-                            },onDocument: () async {
-                              await FilePicker.platform.pickFiles(
-                                type: FileType.custom,
-                                allowCompression: true,
-                                allowedExtensions: ['pdf', "doc", "docx"],
-                              ).then((value) {
-                                if(value != null){
-                                  Dialogs.showLoadingDialog(context, loginLoader);
-                                  uploadImage
-                                      .uploadImage(
-                                      context, image: resumeImage
-                                  )
-                                      .then((value) {
-                                    if (value != null) {
-                                      if (value.meta.status == "200") {
-                                        setState(() {
-                                          resumeDoc = value.file.toString();
-                                        });
-                                        Navigator.of(loginLoader.currentContext,
-                                            rootNavigator: true)
-                                            .pop();
-                                      } else {
-                                        Navigator.of(loginLoader.currentContext,
-                                            rootNavigator: true)
-                                            .pop();
-                                        showAlertDialog(
-                                          context,
-                                          value.meta.message,
-                                          "",
-                                        );
-                                      }
-                                    } else {
-                                      Navigator.of(loginLoader.currentContext,
-                                          rootNavigator: true)
-                                          .pop();
-                                      showAlertDialog(
-                                        context,
-                                        value.meta.message,
-                                        "",
-                                      );
-                                    }
-                                  }).catchError((error) {
-                                    Navigator.of(loginLoader.currentContext,
-                                        rootNavigator: true)
-                                        .pop();
-                                    showAlertDialog(
-                                      context,
-                                      error.toString(),
-                                      "",
-                                    );
-                                  });
-                                }
-                                setState(() {
-                                  resumeImage = File(value.paths.elementAt(0));
-                                  getImage = resumeImage.path.split("/");
-                                });
-                              }).catchError((onError) {});
-                            },
-                                onGallery: () {
-                              FocusScope.of(context).unfocus();
-                              adhaarchooseImageFile().then((value) {
-                                if(value != null){
-                                  Dialogs.showLoadingDialog(context, loginLoader);
-                                  uploadImage
-                                      .uploadImage(
-                                      context, image: resumeImage
-                                  )
-                                      .then((value) {
-                                    if (value != null) {
-                                      if (value.meta.status == "200") {
-                                        setState(() {
-                                          resumeDoc = value.file.toString();
-                                        });
-                                        Navigator.of(loginLoader.currentContext,
-                                            rootNavigator: true)
-                                            .pop();
-                                      } else {
-                                        Navigator.of(loginLoader.currentContext,
-                                            rootNavigator: true)
-                                            .pop();
-                                        showAlertDialog(
-                                          context,
-                                          value.meta.message,
-                                          "",
-                                        );
-                                      }
-                                    } else {
-                                      Navigator.of(loginLoader.currentContext,
-                                          rootNavigator: true)
-                                          .pop();
-                                      showAlertDialog(
-                                        context,
-                                        value.meta.message,
-                                        "",
-                                      );
-                                    }
-                                  }).catchError((error) {
-                                    Navigator.of(loginLoader.currentContext,
-                                        rootNavigator: true)
-                                        .pop();
-                                    showAlertDialog(
-                                      context,
-                                      error.toString(),
-                                      "",
-                                    );
-                                  });
-                                }
-                                setState(() {
-                                  selected = true;
-                                  //  loading = true;
-                                });
-                              }).catchError((onError) {});
-                            }, text: "Select document"));
-
-                  },
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      maxLines: 1,
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    left: SizeConfig.screenWidth * 0.05,
+                    right: SizeConfig.screenWidth * 0.05,
+                    top: SizeConfig.blockSizeVertical * 5,
+                  ),
+                  child: Text(
+                    "Share with us your",
+                    style: GoogleFonts.openSans(
+                        fontSize: SizeConfig.blockSizeVertical * 4,
+                        fontWeight: FontWeight.bold,
+                        color: Color(fontColorSteelGrey)),
+                  ),
+                ),
+                SizedBox(
+                  height: SizeConfig.blockSizeVertical * 2,
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    left: SizeConfig.screenWidth * 0.05,
+                    right: SizeConfig.screenWidth * 0.05,
+                  ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.grey)),
+                  child: RadioListTile<String>(
+                    dense: true,
+                    value: "Resume",
+                    groupValue: selectSocialProfile,
+                    onChanged: (value) {
+                      setState(() {
+                        selectSocialProfile = value;
+                        hint="Upload LInk";
+                        print(":gdcj" + selectSocialProfile.toString());
+                        selected = true;
+                      });
+                    },
+                    title: Text(
+                      "RESUME",
+                      style: GoogleFonts.openSans(color: Color(fontColorGray)),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: SizeConfig.blockSizeVertical * 2,
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    left: SizeConfig.screenWidth * 0.05,
+                    right: SizeConfig.screenWidth * 0.05,
+                  ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.grey)),
+                  child: RadioListTile<String>(
+                    dense: true,
+                    value: "Linked In",
+                    groupValue: selectSocialProfile,
+                    onChanged: (value) {
+                      setState(() {
+                        selectSocialProfile = value;
+                        hint="Enter LInk";
+                        print("cjsjc" + selectSocialProfile.toString());
+                        selected = true;
+                      });
+                    },
+                    title: Text(
+                      "LINKEDIN",
+                      style: GoogleFonts.openSans(color: Color(fontColorGray)),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: SizeConfig.blockSizeVertical * 2,
+                ),
+                Form(
+                  key: formKey,
+                  child:             Container(
+                    margin: EdgeInsets.only(
+                      left: SizeConfig.screenWidth * 0.05,
+                      right: SizeConfig.screenWidth * 0.05,
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.grey)),
+                    child: selectSocialProfile == "Linked In"  ? TextFormField(
+                      controller: linkController,
+                      validator: (s) {
+                        return validateLink(linkController.text);
+                      },
                       decoration: InputDecoration(
-                        hintText: resumeImage != null && resumeImage != "" ? getImage[7].toString() : "Enter Link",
+                        hintText: "Enter Link",
                         hintStyle: GoogleFonts.openSans(color: Color(fontColorGray)),
                         contentPadding:
                         EdgeInsets.all(SizeConfig.blockSizeVertical * 2),
                         border: InputBorder.none,
                         suffixIcon: Icon(Icons.link),
+
+                      ),
+                    ):GestureDetector(
+                      onTap: (){
+                        FocusScope.of(context).unfocus();
+                        showCupertinoModalPopup(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                ActionSheet().actionSheet(context, type: "Document",onCamera: () {
+                                  FocusScope.of(context).unfocus();
+                                  adhaarCameraFile().then((File file) {
+                                    if (file != null) {
+                                      Dialogs.showLoadingDialog(context, loginLoader);
+                                      uploadImage
+                                          .uploadImage(
+                                          context, image: resumeImage
+                                      )
+                                          .then((value) {
+                                        if (value != null) {
+                                          if (value.meta.status == "200") {
+                                            setState(() {
+                                              resumeDoc = value.file.toString();
+                                            });
+                                            Navigator.of(loginLoader.currentContext,
+                                                rootNavigator: true)
+                                                .pop();
+                                          } else {
+                                            Navigator.of(loginLoader.currentContext,
+                                                rootNavigator: true)
+                                                .pop();
+                                            showAlertDialog(
+                                              context,
+                                              value.meta.message,
+                                              "",
+                                            );
+                                          }
+                                        } else {
+                                          Navigator.of(loginLoader.currentContext,
+                                              rootNavigator: true)
+                                              .pop();
+                                          showAlertDialog(
+                                            context,
+                                            value.meta.message,
+                                            "",
+                                          );
+                                        }
+                                      }).catchError((error) {
+                                        Navigator.of(loginLoader.currentContext,
+                                            rootNavigator: true)
+                                            .pop();
+                                        showAlertDialog(
+                                          context,
+                                          error.toString(),
+                                          "",
+                                        );
+                                      });
+                                      setState(() {
+                                        selected = true;
+                                        //   loading = true;
+                                      });
+                                    }
+                                  }).catchError((onError) {});
+                                },onDocument: () async {
+                                  await FilePicker.platform.pickFiles(
+                                    type: FileType.custom,
+                                    allowCompression: true,
+                                    allowedExtensions: ['pdf', "doc", "docx"],
+                                  ).then((value) {
+                                    if(value != null){
+                                      Dialogs.showLoadingDialog(context, loginLoader);
+                                      uploadImage
+                                          .uploadImage(
+                                          context, image: resumeImage
+                                      )
+                                          .then((value) {
+                                        if (value != null) {
+                                          if (value.meta.status == "200") {
+                                            setState(() {
+                                              resumeDoc = value.file.toString();
+                                            });
+                                            Navigator.of(loginLoader.currentContext,
+                                                rootNavigator: true)
+                                                .pop();
+                                          } else {
+                                            Navigator.of(loginLoader.currentContext,
+                                                rootNavigator: true)
+                                                .pop();
+                                            showAlertDialog(
+                                              context,
+                                              value.meta.message,
+                                              "",
+                                            );
+                                          }
+                                        } else {
+                                          Navigator.of(loginLoader.currentContext,
+                                              rootNavigator: true)
+                                              .pop();
+                                          showAlertDialog(
+                                            context,
+                                            value.meta.message,
+                                            "",
+                                          );
+                                        }
+                                      }).catchError((error) {
+                                        Navigator.of(loginLoader.currentContext,
+                                            rootNavigator: true)
+                                            .pop();
+                                        showAlertDialog(
+                                          context,
+                                          error.toString(),
+                                          "",
+                                        );
+                                      });
+                                    }
+                                    setState(() {
+                                      resumeImage = File(value.paths.elementAt(0));
+                                      getImage = resumeImage.path.split("/");
+                                    });
+                                  }).catchError((onError) {});
+                                },
+                                    onGallery: () {
+                                      FocusScope.of(context).unfocus();
+                                      adhaarchooseImageFile().then((value) {
+                                        if(value != null){
+                                          Dialogs.showLoadingDialog(context, loginLoader);
+                                          uploadImage
+                                              .uploadImage(
+                                              context, image: resumeImage
+                                          )
+                                              .then((value) {
+                                            if (value != null) {
+                                              if (value.meta.status == "200") {
+                                                setState(() {
+                                                  resumeDoc = value.file.toString();
+                                                });
+                                                Navigator.of(loginLoader.currentContext,
+                                                    rootNavigator: true)
+                                                    .pop();
+                                              } else {
+                                                Navigator.of(loginLoader.currentContext,
+                                                    rootNavigator: true)
+                                                    .pop();
+                                                showAlertDialog(
+                                                  context,
+                                                  value.meta.message,
+                                                  "",
+                                                );
+                                              }
+                                            } else {
+                                              Navigator.of(loginLoader.currentContext,
+                                                  rootNavigator: true)
+                                                  .pop();
+                                              showAlertDialog(
+                                                context,
+                                                value.meta.message,
+                                                "",
+                                              );
+                                            }
+                                          }).catchError((error) {
+                                            Navigator.of(loginLoader.currentContext,
+                                                rootNavigator: true)
+                                                .pop();
+                                            showAlertDialog(
+                                              context,
+                                              error.toString(),
+                                              "",
+                                            );
+                                          });
+                                        }
+                                        setState(() {
+                                          selected = true;
+                                          //  loading = true;
+                                        });
+                                      }).catchError((onError) {});
+                                    }, text: "Select document"));
+
+                      },
+                      child: AbsorbPointer(
+                        child: TextFormField(
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                            hintText: resumeImage != null && resumeImage != "" ? getImage[7].toString() : "Upload Document(pdf,docs are allowed)",
+                            hintStyle: GoogleFonts.openSans(color: Color(fontColorGray),fontSize: 10),
+                            contentPadding:
+                            EdgeInsets.all(SizeConfig.blockSizeVertical * 2),
+                            border: InputBorder.none,
+                            suffixIcon: Icon(Icons.link),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
+          ):Container(),
 
             Container(
               margin: EdgeInsets.only(
@@ -790,9 +800,9 @@ class _Info1State extends State<Info1> {
                             fontSize: SizeConfig.blockSizeVertical * 2),
                       )
                     : Text(
-                        "UPLOAD ADHAAR CARD(Only Pdf.,Doc,Docs extensions are allowed)",
+                        "UPLOAD ADHAAR CARD(Only Pdf.,Doc,  are allowed)",
                         style: GoogleFonts.openSans(
-                            fontSize: SizeConfig.blockSizeVertical * 2),
+                            fontSize: SizeConfig.blockSizeVertical * 1.5),
                       ),
                 minWidth: SizeConfig.screenWidth,
                 textColor: Colors.blue,
@@ -812,7 +822,15 @@ class _Info1State extends State<Info1> {
         ),
         backgroundColor: selected == true&& adhar==true? Colors.blue : Colors.grey,
         onPressed: () {
-          if(formKey.currentState.validate()){
+          if( radioValue.toString()=="Listener"){
+            if( adhaarCardImage != null &&
+                adhaarCardImage != ""){
+              Navigator.of(context).pushNamed('/Info2');
+            }else{
+              toast("Please upload required docs");
+            }
+          }
+         else if(formKey.currentState.validate()){
             if (certificateImage != null &&
                 certificateImage != "" &&
                 adhaarCardImage != null &&

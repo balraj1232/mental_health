@@ -4,6 +4,8 @@ import 'package:mental_health/Utils/Colors.dart';
 import 'package:mental_health/Utils/SizeConfig.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import 'Price1.dart';
+
 TextEditingController firstNameController = TextEditingController();
 TextEditingController lastNameController = TextEditingController();
 FocusNode firstNameFocusNode;
@@ -14,6 +16,7 @@ bool selected = false;
 bool filledFn = false;
 bool filledLn = false;
 String genderVal = "";
+String ageVal = "";
 
 
 class Price2 extends StatefulWidget {
@@ -272,6 +275,81 @@ class _Price2State extends State<Price2> {
                     color: Color(fontColorGray)
                 ),),),
             ),
+         radioValue.toString()=="Listener"?  Column(children: [
+             Container(
+               margin: EdgeInsets.only(
+                   left: SizeConfig.screenWidth * 0.05,
+                   right: SizeConfig.screenWidth * 0.05,
+                   top: SizeConfig.blockSizeVertical * 1.5
+               ),
+               child: Text("What's Your Age Group",style: GoogleFonts.openSans(
+                   fontSize: SizeConfig.blockSizeVertical * 4,
+                   fontWeight: FontWeight.bold,
+                   color: Color(fontColorSteelGrey)
+               ),),
+             ),
+             Container(
+               child: RadioListTile<String>(
+                 value: "18-25", groupValue: ageVal.toString(), onChanged: (String value){
+                 setState(() {
+                   ageVal = value;
+                   selected = true;
+                 });
+               },
+                 title: Text("18-25 Years",style: TextStyle(
+                     color: Color(fontColorGray)
+                 ),),),
+             ),
+             Container(
+               child: RadioListTile<String>(
+                 value: "26-35", groupValue: ageVal.toString(), onChanged: (String value){
+                 setState(() {
+                   ageVal = value;
+                   selected = true;
+                 });
+               },
+                 title: Text("26-35 Years",style: TextStyle(
+                     color: Color(fontColorGray)
+                 ),),),
+             ),
+             Container(
+               child: RadioListTile<String>(
+                 value: "36-45", groupValue: ageVal.toString(), onChanged: (String value){
+                 setState(() {
+                   ageVal = value;
+                   selected = true;
+                 });
+               },
+                 title: Text("36-45 Years",style: TextStyle(
+                     color: Color(fontColorGray)
+                 ),),),
+             ),
+             Container(
+               child: RadioListTile<String>(
+                 value: "46-50", groupValue: ageVal.toString(), onChanged: (String value){
+                 setState(() {
+                   ageVal = value;
+                   selected = true;
+                 });
+               },
+                 title: Text("45-50 Years",style: TextStyle(
+                     color: Color(fontColorGray)
+                 ),),),
+             ),
+             Container(
+               child: RadioListTile<String>(
+                 value: "50+", groupValue: ageVal.toString(), onChanged: (String value){
+                 setState(() {
+                   ageVal = value;
+                   selected = true;
+                 });
+               },
+                 title: Text("50+ Years",style: TextStyle(
+                     color: Color(fontColorGray)
+                 ),),),
+             ),
+           ],):Container()
+
           ],
         ),
       ),

@@ -27,16 +27,19 @@ class UploadImagesRepo extends BaseRepository {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty)
       {
         try {
-          final response = await dio.put("https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist?therapist_id=pdlj",
+          final response = await dio.put("https://yvsdncrpod.execute-api.ap-south-1.amazonaws.com/prod/therapist?therapist_id=wkkp5",
               data: formData,
               options: Options(
                 headers: {'content-type': 'multipart/form-data',"accept": "application/json"},
               )
           );
+          print(response.statusCode);
+          print(response.request);
           final passEntity = UploadImagesModal.fromJson(response.data);
           return passEntity;
         } catch (error, stacktrace)
         {
+          print(error);
           return UploadImagesModal( );
         }
       }
